@@ -8,7 +8,7 @@ PACKAGE_NAME = 'template_package'
 AUTHOR = 'Cameron Matthew'
 AUTHOR_EMAIL = 'cambobmat@icloud.com'
 URL = 'https://github.com/Quantum-Computing-GP-3/Simulated-Quantum-Computer'
-LICENSE = 'GNU General Public License v3.0'
+LICENSE = 'GPL-3.0'
 
 DESCRIPTION = 'Short package description'
 LONG_DESC_TYPE = "text/markdown"
