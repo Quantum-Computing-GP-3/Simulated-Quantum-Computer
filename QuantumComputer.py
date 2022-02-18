@@ -30,6 +30,8 @@ def main():
     
     # One can check reg_new is correct by checking the coefficients of each basis state.
     print(reg_new[1,0,0,0])
+    # This checks the coefficient of the basis state |1000>, which should be -i / sqrt(10) 
+    # in this case
 
 
 
