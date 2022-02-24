@@ -22,6 +22,7 @@ class QuantumGate(object):
         -------
         None.
         """
+        # hello again
         self.matrix = matrix
         
         # self.size is the number of qubits the gate is designed to act on.
