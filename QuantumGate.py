@@ -22,16 +22,15 @@ class QuantumGate(object):
         -------
         None.
         """
-        # hello again
         self.matrix = matrix
         
         # self.size is the number of qubits the gate is designed to act on.
         # Can be obtained by looking at the number of rows in its matrix representation.
-        self.size = int(matrix.shape[0] / 2)
-        
+        self.size = int(np.round(np.log2(matrix.shape[0])))
+  
         # self.tensor is the tensor representation of the quantum gate, which is needed
         # for the tensor calculations of its action on the quantum register.
-        self.tensor = np.reshape(matrix, (2,)*matrix.shape[0])
+        self.tensor = np.reshape(matrix, (2,)*2*self.size)
         
         
     def acts_on(self, q, reg):
@@ -40,7 +39,7 @@ class QuantumGate(object):
         specified in the list q. 
         
         For example, if q = [0,1], the quantum gate will act on the first and second
-        qubit of the register.
+        qubit of the register.   
 
         Parameters
         ----------
@@ -102,7 +101,7 @@ def cartesian_product_n_qubits(n):
     
     For example, for a four qubit system it would yield the following values:
         (0,0,0,0), (0,0,0,1), (0,0,1,0),(0,0,1,1), [...], (1,1,1,1)
-    
+
     Equivalent to n-nested for loops. We use yield instead of return because there
     is no need to remember the list of all index combinations. Saves memory.
 
@@ -123,7 +122,7 @@ def cartesian_product_n_qubits(n):
     for pool in pools:
         result = [x+[y] for x in result for y in pool]
     for product in result:
-        yield tuple(product)  
+        yield tuple(product)
 
 
 
