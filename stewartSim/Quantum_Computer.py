@@ -4,11 +4,11 @@ Access to the simulated quantum computer
 import time
 import random
 import numpy as np
-from Quantum_Gate import Quantum_Gate as QGate
-from Quantum_Algorithm import Quantum_Algorithm as QAlg
-from Quantum_Register import Quantum_Register as QReg
-from ListQuantumGates import H, CNOT, O, G
-from ListQuantumAlgorithms import Grover
+from .Quantum_Gate import Quantum_Gate as QGate
+from .Quantum_Algorithm import Quantum_Algorithm as QAlg
+from .Quantum_Register import Quantum_Register as QReg
+from .ListQuantumGates import H, CNOT, O, G
+from .ListQuantumAlgorithms import Grover
 import matplotlib.pyplot as plt
 
 def main():
