@@ -2,11 +2,11 @@
 A series of quantum computer simulations for Edinburgh University School of Physics and Astronomy "Quantum Computing Project" course.
 
 ## Contents
-- [Package Structure]()
-- [Usage]()
-  - [Requirements]()
-  - [Installation]()
-  - [Entry Points]()
+- [Package Structure](#package-structure)
+- [Usage](#usage)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Entry Points](#entry-points)
 
 ## Package Structure
 A minimal python package requires this structure:
