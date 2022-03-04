@@ -3,7 +3,7 @@
 Uses the QuantumGate class to create all the quantum gates that the quantum
 computer will need.
 """
-from QuantumGate import QuantumGate
+from .QuantumGate import QuantumGate
 import numpy as np 
 import sys
 

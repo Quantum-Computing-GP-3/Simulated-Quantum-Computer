@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from QuantumGate import QuantumGate
+from .QuantumGate import QuantumGate
 import numpy as np
 
 def main():

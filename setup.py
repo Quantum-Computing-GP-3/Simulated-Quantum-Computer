@@ -3,14 +3,14 @@ from setuptools import setup, find_packages
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 
-VERSION = '0.0.0'
-PACKAGE_NAME = 'template_package'
+VERSION = '2.0.0'
+PACKAGE_NAME = 'Simulated-Quantum-Computer'
 AUTHOR = 'Cameron Matthew'
 AUTHOR_EMAIL = 'cambobmat@icloud.com'
 URL = 'https://github.com/Quantum-Computing-GP-3/Simulated-Quantum-Computer'
 LICENSE = 'GPL-3.0'
 
-DESCRIPTION = 'Short package description'
+DESCRIPTION = 'A series of quantum computer simulations for Edinburgh University School of Physics and Astronomy "Quantum Computing Project" course'
 LONG_DESC_TYPE = "text/markdown"
 README_PATH = os.path.join(HERE, "README.md")
 
@@ -38,7 +38,8 @@ setup(name=PACKAGE_NAME,
       packages=find_packages(),
       entry_points={
           'console_scripts': [
-              'sample = template_package.console_entry_point:main'
+                "pabloSim = pabloSim.Grover:main",
+                "stewartSim = stewartSim.Quantum_Computer:main",
               ]
           }
       )

@@ -1,7 +1,7 @@
 import numpy as np
 import sys
-from ListQuantumGates import H, CNOT, O, G
-from Quantum_Gate import get_state_index
+from .ListQuantumGates import H, CNOT, O, G
+from .Quantum_Gate import get_state_index
 
 
 
