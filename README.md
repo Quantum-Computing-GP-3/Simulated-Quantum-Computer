@@ -15,14 +15,14 @@ Simulated-Quantum-Computer/
   pabloSim/
     __init__.py
     ...
-  stewartSim/
+  stuartSim/
     __init__.py
     ...
   README.md
   requirements.txt
   setup.py
 ```
-- `stewartSim` Is a python package containing version 2.0 of the simulated quantum computer, in this version each operator has a bespoke `acts_on` method allowing for decreased computation time.
+- `stuartSim` Is a python package containing version 2.0 of the simulated quantum computer, in this version each operator has a bespoke `acts_on` method allowing for decreased computation time.
 - `pabloSim` Is a python package containing version 1.0 of the simulated quantum computer, implementing our first attempt at Grover's algorithm.
 - The `README.md` file contains long-form documentation for the package. See [Make a README](https://www.makeareadme.com/).
 - The `requirements.txt` file contains a list of all third party python packages required to run this package. These are automatically installed by pip when this package is installed.
@@ -51,8 +51,8 @@ This package is configured such that the simulation can run from the command lin
 ```bash
 $ pabloSim
 ```
-To run Grover's algorithm as written in stewartSim, run:
+To run Grover's algorithm as written in stuartSim, run:
 ```bash
-$ stewartSim
+$ stuartSim
 ```
 

@@ -39,7 +39,7 @@ setup(name=PACKAGE_NAME,
       entry_points={
           'console_scripts': [
                 "pabloSim = pabloSim.Grover:main",
-                "stewartSim = stewartSim.Quantum_Computer:main",
+                "stuartSim = stuartSim.Quantum_Computer:main",
               ]
           }
       )
