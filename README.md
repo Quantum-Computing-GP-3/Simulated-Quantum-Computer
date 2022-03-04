@@ -9,7 +9,7 @@ A series of quantum computer simulations for Edinburgh University School of Phys
   - [Entry Points](#entry-points)
 
 ## Package Structure
-A minimal python package requires this structure:
+This repository has the following structure:
 ```
 Simulated-Quantum-Computer/
   pabloSim/
@@ -23,7 +23,7 @@ Simulated-Quantum-Computer/
   setup.py
 ```
 - `stewartSim` Is a python package containing version 2.0 of the simulated quantum computer, in this version each operator has a bespoke `acts_on` method allowing for decreased computation time.
-- `pabloSim` Is a python package containing version 1.0 of the simulated quantum computer, implementing our first attempy at grover's algorithm
+- `pabloSim` Is a python package containing version 1.0 of the simulated quantum computer, implementing our first attempt at Grover's algorithm.
 - The `README.md` file contains long-form documentation for the package. See [Make a README](https://www.makeareadme.com/).
 - The `requirements.txt` file contains a list of all third party python packages required to run this package. These are automatically installed by pip when this package is installed.
 - The `setup.py` file is the file used to install our package. It contains key package information such as version, authors, dependencies, entry points etc...
