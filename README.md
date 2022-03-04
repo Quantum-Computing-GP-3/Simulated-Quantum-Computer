@@ -1,7 +1,14 @@
 # Simulated Quantum Computer
 A series of quantum computer simulations for Edinburgh University School of Physics and Astronomy "Quantum Computing Project" course.
 
-# Package Structure
+## Contents
+- [Package Structure]()
+- [Usage]()
+  - [Requirements]()
+  - [Installation]()
+  - [Entry Points]()
+
+## Package Structure
 A minimal python package requires this structure:
 ```
 Simulated-Quantum-Computer/
@@ -21,13 +28,13 @@ Simulated-Quantum-Computer/
 - The `requirements.txt` file contains a list of all third party python packages required to run this package. These are automatically installed by pip when this package is installed.
 - The `setup.py` file is the file used to install our package. It contains key package information such as version, authors, dependencies, entry points etc...
 
-# Usage
+## Usage
 
-## Requirements
+### Requirements
 - [Python 3.8](https://www.python.org/downloads/) or greater
 - [pip](https://pip.pypa.io/en/stable/installation/)
 
-## Installation
+### Installation
 To install package dependencies and console entry points, navigate to the `Simulated-Quantum-Computer` directory in your terminal/console and run:
 
 ```bash
@@ -39,7 +46,7 @@ You may need to uninstall then reinstall this package if you edit `setup.py`. To
 ```bash
 $ pip uninstall Simulated-Quantum-Computer
 ```
-## Entry Points
+### Entry Points
 This package is configured such that the simulation can run from the command line using custom commands. To run Grover's algorithm as written in pabloSim, then run:
 ```bash
 $ pabloSim
