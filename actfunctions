@@ -1,8 +1,39 @@
+#version for our structure
+#qubits from riht to left like in binary!!!
+
 #if you have a register array with integer only, it will stay integer!!!! DANGER
 #e.g. 0 0 -2 0 use 0. 0. -2. 0.
 #i counted from right to left!!!!!!!!
 
+#also: hadamard vs cnotccnot: one uses if and step the other uses algorithm to do +=
+#TODo: error catching, rename indices, especially unused ones
+# decide against if structure
+#test ends if it works till N
+#run comparison to stuarts version
+#what if q is out of bounds with n?????
+#error q larger than size of register
+#error toffoli not exactly 3 cnot not exactly 2 qubits
+#what if all in toffoli or cnot
+#what do we seriously need to have as arguments of function
+
+
 def norm(self,Reg_obj, q = None, all = False, state = None):
+    '''
+    function to normalize state
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether gate should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+    #errorcatching:
+    if all == True:
+        return 1
+    
     sum = 0
     reg = Reg_obj.Reg
     for i in range (2**(Reg_obj.n)):
@@ -32,17 +63,17 @@ def act_H(self,Reg_obj, q = None, all = False, state = None):
 
     reg = Reg_obj.Reg
     size = 2**(Reg_obj.n)
-    for j in q: 
+    for qbit in q: 
         i = 0
-        while i <= size-2**j:       
+        while i <= size-2**qbit:        
             a = reg[i]
-            b = reg[i+2**j]
+            b = reg[i+2**qbit]
         
             reg[i] = 1/np.sqrt(2) * (a+b)
-            reg[i+2**j] = 1/np.sqrt(2) * (a-b)
+            reg[i+2**qbit] = 1/np.sqrt(2) * (a-b)
 
-            if (i+1)%(2**j) ==0:
-                step = 2**j+1
+            if (i+1)%(2**qbit) ==0:
+                step = 2**qbit+1
             else:
                 step = 1
             i += step
@@ -50,6 +81,183 @@ def act_H(self,Reg_obj, q = None, all = False, state = None):
 
 
 
+def act_Hv2(self,Reg_obj, q = None, all = False, state = None):    
+    '''
+    function to act Hadamard
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether Hadamard should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+    if all == True:
+        q = [i for i in range(Reg_obj.n)]
+
+    reg = Reg_obj.Reg
+    size = 2**(Reg_obj.n)
+
+    start = time.time()
+    for qbit in q: 
+        i = 0
+        #print(j)
+        while i <= size-2**qbit:    
+            for _ in range (2**qbit):
+                #print('i',i)     
+                a = reg[i]
+                b = reg[i+2**qbit]
+                #print(a,b, a+b, a-b)
+                reg[i] = 1/np.sqrt(2) * (a+b)
+                reg[i+2**qbit] = 1/np.sqrt(2) * (a-b)
+                #print(i, reg[i], i+2**j, reg[i+2**j], -2/np.sqrt(2))
+                i +=1
+            i += 2**qbit
+            #print(i, reg)
+        #print(reg)
+    end = time.time()
+    #print('\n zeithada2', end-start,'\n')
+    return reg
+
+
+
+def act_X(self,Reg_obj, q = None, all = False, state = None):    
+    '''
+    function to act X
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether X should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+    if all == True:
+        q = [i for i in range(Reg_obj.n)]
+
+    reg = Reg_obj.Reg
+    size = 2**(Reg_obj.n)
+
+    #error if q is not ???
+    
+    for qbit in q:
+        i=0
+        while i <= size-2**qbit:
+            a = reg[i]
+            b = reg[i+2**qbit]
+            #print(i, reg[i], reg[i+2**qbit])
+            reg[i] = b
+            reg[i+2**qbit] = a
+            
+            if (i+1)%(2**qbit) == 0:
+                step = 2**qbit +1
+            else:
+                step = 1
+            #print(i, reg[i], reg[i+2**qbit], step)
+            i += step
+    return reg
+
+
+def act_Xv2(self,Reg_obj, q = None, all = False, state = None):    
+    '''
+    function to act X
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether X should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+    if all == True:
+        q = [i for i in range(Reg_obj.n)]
+
+    reg = Reg_obj.Reg
+    size = 2**(Reg_obj.n)
+    #error if q is not ???
+    for qbit in q:
+        i=0
+        while i <= size-2**qbit:
+            #print(i)
+            for _ in range (2**qbit):
+                a = reg[i]
+                b = reg[i+2**qbit]
+                reg[i] = b
+                reg[i+2**qbit] = a
+                i += 1
+            i += 2**qbit
+    return reg
+
+def act_Z(self,Reg_obj, q = None, all = False, state = None):    
+    '''
+    function to act Z
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether Z should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+    if all == True:
+        q = [i for i in range(Reg_obj.n)]
+
+    reg = Reg_obj.Reg
+    size = 2**(Reg_obj.n)
+    #error if q is not ???
+    
+    for qbit in q:
+        i= 2**qbit
+        while i <= size-1:
+            reg[i] *= -1
+            #print(reg[i])
+            if (i+1)%(2**qbit) == 0:
+                step = 2**qbit +1
+            else:
+                step = 1
+            i += step
+    return reg
+
+
+def act_Zv2(self,Reg_obj, q = None, all = False, state = None):    
+    '''
+    function to act Z
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether Z should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+    if all == True:
+        q = [i for i in range(Reg_obj.n)]
+
+    reg = Reg_obj.Reg
+    size = 2**(Reg_obj.n)
+    #error if q is not ???
+    
+    for qbit in q:
+        print(qbit)
+        i= 2**qbit
+        while i <= size-1:
+            for _ in range(2**qbit):
+                #print(i)
+                reg[i] = reg[i]* (-1)
+                #print(reg[i])
+                i += 1
+            i += 2**qbit
+    return reg
 
 def act_CNOT(self,Reg_obj, q = None, all = False, state = None):
 
@@ -61,7 +269,7 @@ def act_CNOT(self,Reg_obj, q = None, all = False, state = None):
     :param q: list
         qubits to act on
     :param all: bool
-        whether Hadamard should be acted on all qubits
+        whether CNOT should be acted on all qubits
     :param state:
         state for oracle
 
@@ -69,18 +277,22 @@ def act_CNOT(self,Reg_obj, q = None, all = False, state = None):
     size = 2**(Reg_obj.n)
     reg = Reg_obj.Reg
 
+    if all == True:
+        return 1 # error!!!!!!
+
+
     c= q[0]  # control position
     t= q[1]  # target position
     
     i = 0
-    qprime = np.sort(q)
+    qprime = np.sort(q) #yes I am sorting a list of size 2
     cond1 = 2**qprime[0]
     cond2 = 2**qprime[1]
     between = cond2/(cond1*2)
     i = 2**(c)
     while i < size-1:
-        for l in range(int(between)):
-            for j in range (cond1):
+        for _ in range(int(between)):
+            for _ in range (cond1):
                 a = reg[i]
                 b = reg[i+2**t]
                 reg[i] = b
@@ -89,9 +301,6 @@ def act_CNOT(self,Reg_obj, q = None, all = False, state = None):
             i += cond1
         i += cond2
     return reg
-
-
-
 
 
 
@@ -114,10 +323,13 @@ def act_TOFFOLI(self,Reg_obj, q = None, all = False, state = None):
     size = 2**(Reg_obj.n)
     reg = Reg_obj.Reg
     
+    if all == True:
+        return 1 # error!
+
     c1= q[0]  # control position
     c2= q[1]  # control position2
     t = q[2]
-    qprime = np.sort(q)
+    qprime = np.sort(q) # sorting a list with 3 entries
     
     cond1 = 2**qprime[0]
     cond2 = 2**qprime[1]
@@ -128,9 +340,9 @@ def act_TOFFOLI(self,Reg_obj, q = None, all = False, state = None):
     i = 2**(c1) +2**(c2)
 
     while i < size-1:
-        for lct in range(int(between2)):
-            for l1 in range (int(between1)):
-                for l2 in range (cond1):
+        for _ in range(int(between2)):
+            for _ in range (int(between1)):
+                for _ in range (cond1):
                     a = reg[i]
                     b = reg[i+2**t]
                     reg[i] = b
@@ -140,3 +352,6 @@ def act_TOFFOLI(self,Reg_obj, q = None, all = False, state = None):
             i += cond2
         i += cond3
     return reg
+
+
+
