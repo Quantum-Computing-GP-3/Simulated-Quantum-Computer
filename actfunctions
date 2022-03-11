@@ -34,7 +34,7 @@ def act_H(self,Reg_obj, q = None, all = False, state = None):
     size = 2**(Reg_obj.n)
     for j in q: 
         i = 0
-        while i <= size-2**j:  #why 2**j????????       
+        while i <= size-2**j:       
             a = reg[i]
             b = reg[i+2**j]
         
