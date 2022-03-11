@@ -1,0 +1,142 @@
+#if you have a register array with integer only, it will stay integer!!!! DANGER
+#e.g. 0 0 -2 0 use 0. 0. -2. 0.
+#i counted from right to left!!!!!!!!
+
+def norm(self,Reg_obj, q = None, all = False, state = None):
+    sum = 0
+    reg = Reg_obj.Reg
+    for i in range (2**(Reg_obj.n)):
+        sum += reg[i]**2
+    Norm = 1/np.sqrt(sum)
+    return Norm
+
+
+def act_H(self,Reg_obj, q = None, all = False, state = None):
+    #register array, size of register, 
+    # qubit positions q for qubits that H acts on, q is array
+    '''
+    function to act Hadamard
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether Hadamard should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+
+    if all == True:
+        q = [i for i in range(Reg_obj.n)]
+
+    reg = Reg_obj.Reg
+    size = 2**(Reg_obj.n)
+    for j in q: 
+        i = 0
+        while i <= size-2**j:  #why 2**j????????       
+            a = reg[i]
+            b = reg[i+2**j]
+        
+            reg[i] = 1/np.sqrt(2) * (a+b)
+            reg[i+2**j] = 1/np.sqrt(2) * (a-b)
+
+            if (i+1)%(2**j) ==0:
+                step = 2**j+1
+            else:
+                step = 1
+            i += step
+
+
+
+
+
+def act_CNOT(self,Reg_obj, q = None, all = False, state = None):
+
+    #error catching if q is not a 2 tupel
+    '''
+    function to act CNOT
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether Hadamard should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+    size = 2**(Reg_obj.n)
+    reg = Reg_obj.Reg
+
+    c= q[0]  # control position
+    t= q[1]  # target position
+    
+    i = 0
+    qprime = np.sort(q)
+    cond1 = 2**qprime[0]
+    cond2 = 2**qprime[1]
+    between = cond2/(cond1*2)
+    i = 2**(c)
+    while i < size-1:
+        for l in range(int(between)):
+            for j in range (cond1):
+                a = reg[i]
+                b = reg[i+2**t]
+                reg[i] = b
+                reg[i+2**t] = a
+                i+=1
+            i += cond1
+        i += cond2
+    return reg
+
+
+
+
+
+
+
+def act_TOFFOLI(self,Reg_obj, q = None, all = False, state = None):
+
+    #error catching if q is not a 3 tupel
+    '''
+    function to act CNOT
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether Hadamard should be acted on all qubits
+    :param state:
+        state for oracle
+
+    '''
+    size = 2**(Reg_obj.n)
+    reg = Reg_obj.Reg
+    
+    c1= q[0]  # control position
+    c2= q[1]  # control position2
+    t = q[2]
+    qprime = np.sort(q)
+    
+    cond1 = 2**qprime[0]
+    cond2 = 2**qprime[1]
+    cond3 = 2**qprime[2]
+    between1 = cond2/(cond1*2)
+    between2 = cond3/(cond2*2)
+         
+    i = 2**(c1) +2**(c2)
+
+    while i < size-1:
+        for lct in range(int(between2)):
+            for l1 in range (int(between1)):
+                for l2 in range (cond1):
+                    a = reg[i]
+                    b = reg[i+2**t]
+                    reg[i] = b
+                    reg[i+2**t] = a
+                    i+=1 
+                i += cond1
+            i += cond2
+        i += cond3
+    return reg
