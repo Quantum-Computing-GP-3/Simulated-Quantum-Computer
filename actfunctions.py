@@ -41,54 +41,12 @@ def norm(self,Reg_obj, q = None, all = False, state = None):
     for i in range (2**(Reg_obj.n)):
         sum += reg[i]**2
     Norm = 1/np.sqrt(sum)
-    return Norm
-
-
-def act_H(self,Reg_obj, q = None, all = False, state = None):
-    #register array, size of register, 
-    # qubit positions q for qubits that H acts on, q is array
-    '''
-    function to act Hadamard
-    :param Reg_obj: obj
-        register
-    :param q: list
-        qubits to act on
-    :param all: bool
-        whether Hadamard should be acted on all qubits
-    :param state:
-        state for oracle
-
-    '''
-
-    if all == True:
-        q = [i for i in range(Reg_obj.n)]
-
-    reg = Reg_obj.Reg
-    size = 2**(Reg_obj.n)
-    for qbit in q: 
-        i = 0
-        while i <= size-2**qbit:        
-            a = reg[i]
-            b = reg[i+2**qbit]
-            #for H acting on state i, we need to find out the two states that are the result of H acting on i
-            #those are i and i+2**qbit
-            # since those are the same as the states involved for H acting on i+2**qbit, we take care of the
-            # action of H on both states at once -> less looping 
-            
-            reg[i] = 1/np.sqrt(2) * (a+b)
-            reg[i+2**qbit] = 1/np.sqrt(2) * (a-b)
-            #then we need to redefine the amplitudes of states i and i+2**qbit, considering the action of H
-
-            if (i+1)%(2**qbit) ==0:
-                step = 2**qbit+1
-            else:
-                step = 1
-            i += step
-            #this condition achieves that we don't loop over any second state i+2**qbit again that we already took care of
+    return Norm*reg
 
 
 
-def act_Hv2(self,Reg_obj, q = None, all = False, state = None):    
+
+def act_H(self,Reg_obj, q = None, all = False, state = None):    
     '''
     function to act Hadamard
     :param Reg_obj: obj
@@ -110,10 +68,9 @@ def act_Hv2(self,Reg_obj, q = None, all = False, state = None):
     start = time.time()
     for qbit in q: 
         i = 0
-        #print(j)
+        
         while i <= size-2**qbit:    
-            for _ in range (2**qbit):
-                #print('i',i)     
+            for _ in range (2**qbit): 
                 a = reg[i]
                 b = reg[i+2**qbit]
                 #for H acting on state i, we need to find out the two states that are the result of H acting on i
@@ -125,18 +82,12 @@ def act_Hv2(self,Reg_obj, q = None, all = False, state = None):
                 reg[i] = 1/np.sqrt(2) * (a+b)
                 reg[i+2**qbit] = 1/np.sqrt(2) * (a-b)
                 #then we need to redefine the amplitudes of states i and i+2**qbit, considering the action of H
-
-
-                #print(i, reg[i], i+2**j, reg[i+2**j], -2/np.sqrt(2))
                 i +=1
             i += 2**qbit
             #the variation of the step width achieves that we don't loop over any second state i+2**qbit again that we already took care of
 
-
-            #print(i, reg)
-        #print(reg)
     end = time.time()
-    #print('\n zeithada2', end-start,'\n')
+    
     return reg
 
 
@@ -159,60 +110,10 @@ def act_X(self,Reg_obj, q = None, all = False, state = None):
 
     reg = Reg_obj.Reg
     size = 2**(Reg_obj.n)
-
-    #error if q is not ???
-    
-    for qbit in q:
-        i=0
-        while i <= size-2**qbit:
-            a = reg[i]
-            b = reg[i+2**qbit]
-            #for X acting on state i, we need to find out the stat that is the result of the action
-            # this is i+2**qbit
-            # since on the opposite i is the result of X acting on i+2**qbit,
-            # we take care of the action of X on both states at once -> less looping 
-                
-
-            #print(i, reg[i], reg[i+2**qbit])
-            reg[i] = b
-            reg[i+2**qbit] = a
-            
-            if (i+1)%(2**qbit) == 0:
-                step = 2**qbit +1
-            else:
-                step = 1
-            #print(i, reg[i], reg[i+2**qbit], step)
-            i += step
-
-            #the variation of the step width achieves that we don't loop over any second state i+2**qbit again that we already took care of
-
-
-    return reg
-
-
-def act_Xv2(self,Reg_obj, q = None, all = False, state = None):    
-    '''
-    function to act X
-    :param Reg_obj: obj
-        register
-    :param q: list
-        qubits to act on
-    :param all: bool
-        whether X should be acted on all qubits
-    :param state:
-        state for oracle
-
-    '''
-    if all == True:
-        q = [i for i in range(Reg_obj.n)]
-
-    reg = Reg_obj.Reg
-    size = 2**(Reg_obj.n)
     #error if q is not ???
     for qbit in q:
         i=0
         while i <= size-2**qbit:
-            #print(i)
             for _ in range (2**qbit):
                 #for X acting on state i, we need to find out the stat that is the result of the action
                 # this is i+2**qbit
@@ -222,12 +123,12 @@ def act_Xv2(self,Reg_obj, q = None, all = False, state = None):
                 b = reg[i+2**qbit]
                 reg[i] = b
                 reg[i+2**qbit] = a
-
                 i += 1
             i += 2**qbit
             #the variation of the step width achieves that we don't loop over any second state i+2**qbit again that we already took care of
 
     return reg
+
 
 def act_Z(self,Reg_obj, q = None, all = False, state = None):    
     '''
@@ -255,48 +156,8 @@ def act_Z(self,Reg_obj, q = None, all = False, state = None):
 
         i= 2**qbit
         while i <= size-1:
-
-            reg[i] *= -1
-            #print(reg[i])
-            if (i+1)%(2**qbit) == 0:
-                step = 2**qbit +1
-            else:
-                step = 1
-            i += step
-    return reg
-
-
-def act_Zv2(self,Reg_obj, q = None, all = False, state = None):    
-    '''
-    function to act Z
-    :param Reg_obj: obj
-        register
-    :param q: list
-        qubits to act on
-    :param all: bool
-        whether Z should be acted on all qubits
-    :param state:
-        state for oracle
-
-    '''
-    if all == True:
-        q = [i for i in range(Reg_obj.n)]
-
-    reg = Reg_obj.Reg
-    size = 2**(Reg_obj.n)
-    #error if q is not ???
-    
-    for qbit in q:
-        # Z acts by flipping the sign on all states where qbit is 1
-        #loop over all those states
-
-        #print(qbit)
-        i= 2**qbit
-        while i <= size-1:
             for _ in range(2**qbit):
-                #print(i)
                 reg[i] = reg[i]* (-1)
-                #print(reg[i])
                 i += 1
             i += 2**qbit
     return reg
