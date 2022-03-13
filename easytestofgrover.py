@@ -68,6 +68,10 @@ def act_R( total_state, projection_state):
 
 
 #main******************************
+n_desired = 5
+N_desired = 2**n_desired
+#desired length of register
+
 
 state_list= [0,9]  #which state is the one we are looking for, as given in index form (e.g. 6 = 0110)
 #using multiple states is easy: we need to have a list anyways and it can be rather long
@@ -75,10 +79,14 @@ number_right_answers = len(state_list)
 n_required = len(bin(max(state_list)))-2       
 N_required = 2**n_required
 
-state_list_as_Reg_obj = np.zeros(N_required)
+
+if n_required > n_desired:
+    print('error')
+
+state_list_as_Reg_obj = np.zeros(N_desired)
 for i in range (number_right_answers):
     state_list_as_Reg_obj [state_list[i]] = 1
-print('desired state in register form',state_list_as_Reg_obj)
+#print('desired state in register form',state_list_as_Reg_obj)
 #now we got a register only with the desired states marked
 #we will need that for the Oracle reflection function
 #if you can think of a better way to get the states across to act_R, that'd be awesome
@@ -88,15 +96,15 @@ print('desired state in register form',state_list_as_Reg_obj)
 
 #now we can test it out
 
-Reg_1 = np.zeros(N_required)
+Reg_1 = np.zeros(N_desired)
 Reg_1 [0] = 1
 initial_state = np.copy(Reg_1)
 initial_state = act_H(initial_state, all = True)
 Reg = act_H(Reg_1, all = True)
-print('initialized state',Reg)
+#print('initialized state',Reg)
 
 
-n_iter = int(np.pi / 4 * np.sqrt(N_required)/number_right_answers)
+n_iter = int(np.pi / 4 * np.sqrt(N_desired)/number_right_answers)
 
 #now we do O and G, both with a call to the reflection operator
 # O reflects Reg around our desired states
@@ -107,6 +115,8 @@ for _ in range (n_iter):
     #print('\n Reg after Oracle call \n',Reg)
     Reg = act_R(Reg, initial_state)
     
-print('\n Reg_final', Reg)
+#print('\n Reg_final', Reg)
+print([Reg[i] for i in state_list])
+# %%
 
 # %%
