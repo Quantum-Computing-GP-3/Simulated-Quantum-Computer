@@ -32,7 +32,12 @@ class Quantum_Gate(object):
                 "Hadamard": self.Hadamard_init,
                 "CNOT": self.CNOT_init,
                 "O": self.O_init,
-                "G": self.G_init
+                "G": self.G_init,
+                "X": self.X_init,
+                "Z": self.Z_init,
+                "R": self.R_init,
+                "Toffoli": self.T_init
+
             }
 
             # check if gate in dict
@@ -54,8 +59,6 @@ class Quantum_Gate(object):
             self.size = self.matrix.size
             self.tensor = np.reshape(matrix, (2,)*2*self.size)
 
-
-
     def Hadamard_init(self):
 
         """
@@ -69,7 +72,52 @@ class Quantum_Gate(object):
         self.tensor = np.reshape(self.matrix, (2,2))
 
         #reroutes to act_choose
-        self.act = self.act_choose
+        #self.act = self.act_choose
+
+        self.act = self.act_H
+    def act_H(self, Reg_obj, q=None, all=False, state=None):
+        #cosiv2
+        '''
+        function to act Hadamard
+        :param Reg_obj: obj
+            register
+        :param q: list
+            qubits to act on
+        :param all: bool
+            whether Hadamard should be acted on all qubits
+        :param state:
+            state for oracle
+        '''
+        if all == True:
+            q = [i for i in range(Reg_obj.n)]
+
+        reg = Reg_obj.Reg
+        size = 2 ** (Reg_obj.n)
+
+
+        for qbit in q:
+            i = 0
+            # print(j)
+            while i <= size - 2 ** qbit:
+                for _ in range(2 ** qbit):
+                    # print('i',i)
+                    a = reg[i]
+                    b = reg[i + 2 ** qbit]
+                    # for H acting on state i, we need to find out the two states that are the result of H acting on i
+                    # those are i and i+2**qbit
+                    # since those are the same as the states involved for H acting on i+2**qbit, we take care of the
+                    # action of H on both states at once -> less looping
+
+                    # print(a,b, a+b, a-b)
+                    reg[i] = 1 / np.sqrt(2) * (a + b)
+                    reg[i + 2 ** qbit] = 1 / np.sqrt(2) * (a - b)
+                    # then we need to redefine the amplitudes of states i and i+2**qbit, considering the action of H
+
+                    # print(i, reg[i], i+2**j, reg[i+2**j], -2/np.sqrt(2))
+                    i += 1
+                i += 2 ** qbit
+                # the variation of the step width achieves that we don't loop over any second state i+2**qbit again that we already took care of
+        Reg_obj.Reg = reg
 
 
 
@@ -90,6 +138,48 @@ class Quantum_Gate(object):
 
         self.size = int(np.round(np.log2(self.matrix.shape[0])))
         self.tensor = np.reshape(self.matrix, (2,2,2,2))
+    def act_CNOT(self, Reg_obj, q=None, all=False, state=None):
+        #cosiv2
+        # error catching if q is not a 2 tupel
+        '''
+        function to act CNOT
+        :param Reg_obj: obj
+            register
+        :param q: list
+            qubits to act on
+        :param all: bool
+            whether CNOT should be acted on all qubits
+        :param state:
+            state for oracle
+        '''
+        size = 2 ** (Reg_obj.n)
+        reg = Reg_obj.Reg
+
+        if all == True:
+            return 1  # error!!!!!!
+
+        c = q[0]  # control position
+        t = q[1]  # target position
+
+        i = 0
+        qprime = np.sort(q)  # yes I am sorting a list of size 2
+        cond1 = 2 ** qprime[0]
+        cond2 = 2 ** qprime[1]
+        between = cond2 / (cond1 * 2)
+        i = 2 ** (c)
+        while i < size - 1:
+            for _ in range(int(between)):
+                for _ in range(cond1):
+                    a = reg[i]
+                    b = reg[i + 2 ** t]
+                    reg[i] = b
+                    reg[i + 2 ** t] = a
+                    i += 1
+                i += cond1
+            i += cond2
+
+        Reg_obj.Reg = reg
+
 
 
     def O_init(self):
@@ -99,6 +189,39 @@ class Quantum_Gate(object):
         """
         #if act called, it calls act_O
         self.act = self.act_O
+    def act_O(self, Reg_obj,state_list):
+        """
+        function to act oracle
+        :param Reg_obj: obj
+            Register object
+        :param q: list
+            qubit(s) to act on
+        :param all: bool
+            Whether or not th egate should be acted on all qubits
+        :param state: string of 1&0's etc "1100"
+            state for oracle
+        :return:
+        """
+        n = Reg_obj.n
+        """
+        #original matrix implimentation which is slower:
+        matrix_O = np.eye(2**n)
+
+        #applying a -1 in the matrix for each state in state_list
+        for i in range(len(state_list)):
+            matrix_O[state_list[i], state_list[i]] = -1
+
+
+        #if the gate is actually an operator (like G or O)
+        Reg_obj.Reg = np.matmul(matrix_O, Reg_obj.Reg)
+
+        """
+        #new, non matrix implimentation
+        for i in range(len(state_list)):
+            #assumes numerical state
+            idx = state_list[i]
+            Reg_obj.Reg[idx] = - Reg_obj.Reg[idx]
+
 
 
     def G_init(self):
@@ -108,6 +231,270 @@ class Quantum_Gate(object):
         """
         #if act called, it calls act_G
         self.act = self.act_G
+    def act_G(self,Reg_obj, q = None, all = False, state = None):
+        """
+        function to act grovers operator thingy
+        :param Reg_obj: obj
+            Register object
+        :param q: list
+            qubit(s) to act on
+        :param all: bool
+            Whether or not th egate should be acted on all qubits
+        :param state: string of 1&0's etc "1100"
+            state for oracle
+        :return:
+        """
+
+        #original implimentation
+        n = Reg_obj.n
+        N = 2**n
+        matrix_G = np.ones((N, N)) * 2 / N
+
+        for i in range(N):
+            matrix_G[i, i] -= 1
+
+        Reg_obj.Reg = np.matmul(matrix_G, Reg_obj.Reg)
+        """
+        #new cosi implimentation, way slower
+        n = Reg_obj.n
+        N = Reg_obj.N
+
+        diag = 2/N-1
+        rest = 2/N
+
+        reg_old = Reg_obj.Reg
+        reg_new = np.zeros(N, dtype = "complex")
+
+        for i in range(N):
+            for j in range(N):
+                if i==j:
+                    reg_new[i] += diag * reg_old[j]
+                else:
+                    reg_new[i] += rest * reg_old[j]
+
+        Reg_obj.Reg = reg_new
+        """
+
+
+
+    def X_init(self):
+        """
+        initialise X gate
+        calculated algorithmically, so pass self.act to own act function, act_X
+        """
+        #if act called, it calls act_X
+        self.act = self.act_X
+    def act_X(self,Reg_obj, q = None, all = False):
+        '''
+        function to act X
+        :param Reg_obj: obj
+            register
+        :param q: list
+            qubits to act on
+        :param all: bool
+            whether X should be acted on all qubits
+        :param state:
+            state for oracle
+        '''
+        if all == True:
+            q = [i for i in range(Reg_obj.n)]
+
+        reg = Reg_obj.Reg
+        size = 2**(Reg_obj.n)
+        #error if q is not ???
+        for qbit in q:
+            i=0
+            while i <= size-2**qbit:
+                #print(i)
+                for _ in range (2**qbit):
+                    a = reg[i]
+                    b = reg[i+2**qbit]
+                    reg[i] = b
+                    reg[i+2**qbit] = a
+                    i += 1
+                i += 2**qbit
+        Reg_obj.Reg = reg
+
+
+
+    def Z_init(self):
+        """
+        initialise Z gate
+        calculated algorithmically, so pass self.act to own act function, act_Z
+        """
+        #if act called, it calls act_Z
+        self.act = self.act_Z
+    def act_Z(self,Reg_obj, q = None, all = False):
+        '''
+        function to act Z
+        :param Reg_obj: obj
+            register
+        :param q: list
+            qubits to act on
+        :param all: bool
+            whether Z should be acted on all qubits
+        :param state:
+            state for oracle
+        '''
+        if all == True:
+            q = [i for i in range(Reg_obj.n)]
+
+        reg = Reg_obj.Reg
+        size = 2**(Reg_obj.n)
+        #error if q is not ???
+
+        for qbit in q:
+            print(qbit)
+            i= 2**qbit
+            while i <= size-1:
+                for _ in range(2**qbit):
+                    reg[i] = reg[i]* (-1)
+                    i += 1
+                i += 2**qbit
+        Reg_obj.Reg = reg
+
+
+
+
+
+    def R_init(self):
+        """
+        initialise Reflection gate
+        calculated algorithmically, so pass self.act to own act function, act_R
+        """
+        #if act called, it calls act_R
+        self.act = self.act_R
+    def act_R(self,Reg_obj, projection_state, oracle = False):
+        """
+        explanations and eceptions
+        """
+
+
+        N = Reg_obj.N
+        m = Reg_obj.n
+
+        Reg_obj.Norm
+
+
+        save_total_state = np.copy(Reg_obj.Reg)
+        new_state = np.copy(save_total_state)
+
+        for i in range(N):
+            new_state_entryi = 0
+            for j in range(N):
+                new_state_entryi += projection_state[i] * projection_state[j] * save_total_state[j]
+            # print(new_state_entryi,projection_state[i])
+            new_state[i] = new_state_entryi
+            # print(new_state, save_total_state)
+        refl = 2 * new_state - 1 * save_total_state
+        refl =norm(refl)
+        if oracle == False:
+            Reg_obj.Reg = refl
+        if oracle == True:
+            Reg_obj.Reg = -refl
+
+
+
+
+    def T_init(self):
+        """
+        initialise Z gate
+        calculated algorithmically, so pass self.act to own act function, act_Z
+        """
+        #if act called, it calls act_Z
+        self.act = self.act_T
+    def act_T(self,Reg_obj, q = None, all = False, state = None):
+
+        #error catching if q is not a 3 tupel
+        '''
+        function to act CNOT
+        :param Reg_obj: obj
+            register
+        :param q: list
+            qubits to act on
+        :param all: bool
+            whether Hadamard should be acted on all qubits
+        :param state:
+            state for oracle
+        '''
+        size = 2**(Reg_obj.n)
+        reg = Reg_obj.Reg
+
+        if all == True:
+            return 1 # error!
+
+        c1= q[0]  # control position
+        c2= q[1]  # control position2
+        t = q[2]
+        qprime = np.sort(q) # sorting a list with 3 entries
+
+        cond1 = 2**qprime[0]
+        cond2 = 2**qprime[1]
+        cond3 = 2**qprime[2]
+        between1 = cond2/(cond1*2)
+        between2 = cond3/(cond2*2)
+
+        i = 2**(c1) +2**(c2)
+
+        while i < size-1:
+            for _ in range(int(between2)):
+                for _ in range (int(between1)):
+                    for _ in range (cond1):
+                        a = reg[i]
+                        b = reg[i+2**t]
+                        reg[i] = b
+                        reg[i+2**t] = a
+                        i+=1
+                    i += cond1
+                i += cond2
+            i += cond3
+        Reg_obj.Reg = reg
+
+
+
+
+
+
+def norm(Reg_obj, q = None, all = False, state = None):
+    '''
+    function to normalize state
+    :param Reg_obj: obj
+        register
+    :param q: list
+        qubits to act on
+    :param all: bool
+        whether gate should be acted on all qubits
+    :param state:
+        state for oracle
+    '''
+    #errorcatching:
+    if all == True:
+        return 1
+
+    sum = 0
+    reg = Reg_obj.Reg
+    for i in range (2**(Reg_obj.n)):
+        sum += reg[i]**2
+    Norm = 1/np.sqrt(sum)
+    return Norm*reg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     def act_choose(self, Reg_obj, q=None, all=False, state=None):
         """
@@ -133,107 +520,6 @@ class Quantum_Gate(object):
 
 
 
-    def act_O(self, Reg_obj, q = None, all = False, state = None):
-        """
-        function to act oracle
-        :param Reg_obj: obj
-            Register object
-        :param q: list
-            qubit(s) to act on
-        :param all: bool
-            Whether or not th egate should be acted on all qubits
-        :param state: string of 1&0's etc "1100"
-            state for oracle
-        :return:
-        """
-        n = Reg_obj.n
-        matrix_O = np.eye(2**n)
-
-
-        # We check that "state" has the same length as the number of qubits in the register.
-        if len(state) != n:
-            sys.exit("The state the oracle should single out is not a valid basis state of the quantum register.")
-        # "state" is then converted to decimal in order to modify the correct diagonal entry of the Oracle matrix representation.
-        matrix_O[int(state, 2), int(state, 2)] = -1
-
-        #if the gate is actually an operator (like G or O)
-        Reg_obj.Reg = np.matmul(matrix_O, Reg_obj.Reg)
-
-
-    def act_G(self,Reg_obj, q = None, all = False, state = None):
-        """
-        function to act grovers operator thingy
-        :param Reg_obj: obj
-            Register object
-        :param q: list
-            qubit(s) to act on
-        :param all: bool
-            Whether or not th egate should be acted on all qubits
-        :param state: string of 1&0's etc "1100"
-            state for oracle
-        :return:
-        """
-        n = Reg_obj.n
-        N = 2**n
-        matrix_G = np.ones((N, N)) * 2 / N
-
-        for i in range(N):
-            matrix_G[i, i] -= 1
-
-        Reg_obj.Reg = np.matmul(matrix_G, Reg_obj.Reg)
-
-
-    def act_CNOT(self,Reg_obj, q = None, all = False, state = None):
-        """
-        function toa ct CNOT, remembering that all cnot does is swap the amplitude of qubits
-        ALGORITHMIC METHOD, NOT MATRIX METHOD
-
-        :param Reg_obj: obj
-            Register object
-        :param q: list
-            qubit(s) to act on
-        :param all: bool
-            Whether or not th egate should be acted on all qubits
-        :param state: string of 1&0's etc "1100"
-            state for oracle
-        :return:
-        """
-
-        # Reg_obj is register object, Reg is Quantum_Register class function, reg is what I will call the tensor register in this function
-        reg = Reg_obj.Reg
-        n = Reg_obj.n
-
-        reg_new = np.zeros_like(reg)
-
-        c = q[0]
-        t = q[1]
-
-        # array of cartesian products
-        carts = stu_cartesian_product_n_qubits(n)
-
-        #loop through cartesian products
-        for count, cart in enumerate(carts):
-            """CHANGE CART INDEX SO YOU CAN SWAP THE AMPLITUDES!!!!!!!!!!!"""
-
-            # if c qubit is 1, apply swap t (ie. switch t qubit from state 1 to 0)
-            if cart[c] == 1:
-                l = 1
-
-                # swap target
-                if cart[t] == 1:
-                    carts[count][t] = 0
-                else:
-                    carts[count][t] = 1
-
-
-            # and if c qubit is 1, leave t alone
-
-
-        # swap amplitudes
-        for i in range(len(carts)):
-            ind = get_state_index(carts[i], n)
-            reg_new[i] = reg[ind]
-        Reg_obj.Reg = reg_new
 
 
 
@@ -551,4 +837,16 @@ def stu_cartesian_product_n_qubits(n):
     for pool in pools:
         result = [x + [y] for x in result for y in pool]
     return result
+
+def norm(Reg_obj, q=None, all=False, state=None):
+    if all == True:
+        return 1
+    N = len(Reg_obj)
+    n = int(np.log2(N))
+    sum = 0
+    reg = Reg_obj
+    for i in range(N):
+        sum += reg[i] ** 2
+    Norm = 1 / np.sqrt(sum)
+    return Norm * reg
 

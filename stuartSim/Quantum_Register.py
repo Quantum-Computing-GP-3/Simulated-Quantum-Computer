@@ -20,7 +20,9 @@ class Quantum_Register(object):
 
 
         self.n = n
+        self.N = 2**n
         self.Reg = reg
+
 
         #useful sometimes for visualisation and troubleshooting particularly cnot
         if increasing_integers == True:
@@ -56,3 +58,13 @@ class Quantum_Register(object):
             self.Reg[i] = i
         return
 
+
+
+    def Norm(self):
+
+        sum = 0
+
+        for i in range (self.N):
+            sum += self.Reg[i]**2
+        Norm = 1/np.sqrt(sum)
+        self.Reg = Norm*self.Reg

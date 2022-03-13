@@ -1,0 +1,1 @@
+print(Reg_1.Reg)print(Reg_1.Reg)

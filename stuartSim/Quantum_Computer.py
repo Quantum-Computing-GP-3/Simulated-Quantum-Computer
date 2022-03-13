@@ -4,12 +4,13 @@ Access to the simulated quantum computer
 import time
 import random
 import numpy as np
-from .Quantum_Gate import Quantum_Gate as QGate
-from .Quantum_Algorithm import Quantum_Algorithm as QAlg
-from .Quantum_Register import Quantum_Register as QReg
-from .ListQuantumGates import H, CNOT, O, G
-from .ListQuantumAlgorithms import Grover
+from Quantum_Gate import Quantum_Gate as QGate
+from Quantum_Algorithm import Quantum_Algorithm as QAlg
+from Quantum_Register import Quantum_Register as QReg
+from ListQuantumGates import H, CNOT, O, G, T
+from ListQuantumAlgorithms import Grover, Shor
 import matplotlib.pyplot as plt
+
 
 def main():
     """
@@ -69,17 +70,40 @@ def main():
 
 
     """
-
-
-
-
-
-    #test grover
-    #can do up to about 10 or 11 qubits almost instantaneously, any more takes longer
-    Reg_1 = QReg(6)
-    Grover.act(Reg_1, state = "110000")
     """
-    
+    #Dont think this works yet... 
+    #cosi plz have a look and tell me if it is vaguelly correct
+    #TEST ERROR CORRECTION
+    Reg_1 = QReg(9)
+    print(Reg_1.Reg)
+    Shor.act(Reg_1)
+    print(Reg_1.Reg)
+    """
+
+
+
+    """
+    #test toffoli
+    Reg_1 = QReg(3, increasing_integers = True)
+    print(Reg_1.Reg)
+    T.act(Reg_1, [0,1,2])
+    print(Reg_1.Reg)
+    """
+
+
+    # test grover
+    #only works for a couple of states for some reason??
+    Reg_1 = QReg(3)
+    #Grover.act(Reg_1, state="110000")
+    state_list =[2]
+    Grover.act(Reg_1, state_list )
+    #print(Reg_1.Reg)
+
+
+
+
+    """
+
     #test CNOT
     Reg_1 = QReg(3, increasing_integers = True)
     print(Reg_1.Reg)
@@ -87,12 +111,11 @@ def main():
     print(Reg_1.Reg)
     """
 
-
     """
-    TEST GROVER EFFICIENCY WITH QUBITS
-    
-    
-    Function to create random binary string for oracle
+    #TEST GROVER EFFICIENCY WITH QUBITS
+
+
+    #Function to create random binary string for oracle
     #wee function just copied from web
     def rand_key(p):
 
@@ -114,26 +137,22 @@ def main():
 
         return (key1)
 
-    
 
-    start = time.time()
-    print("hello")
-    end = time.time()
-    print(end - start)
+
 
     #test grover efficiency
     time_elapsed =[]
-    nrange = np.arange(3,14)
+    nrange = np.arange(3,9)
     print(nrange)
     for i in nrange:
-        state = rand_key(i)
 
         #start timer
         start = time.time()
 
         #enact grovers
         Reg_1 = QReg(i)
-        Grover.act(Reg_1, state=state)
+        state_list = np.random.randint(0,Reg_1.N-1,1)
+        Grover.act(Reg_1, state_list)
 
         #end timer
         end = time.time()
@@ -141,17 +160,12 @@ def main():
         elapsed = end-start
         time_elapsed.append(elapsed)
     print("finished!")
-    plt.title("Time taken to act grover's algorithm for any number of qubits")
+    plt.title("Time taken to act grover's algorithm for any number of qubits old G")
     plt.xlabel("Number of qubits")
     plt.ylabel("Time taken (s)")
     plt.plot(nrange, time_elapsed)
     plt.show()
     """
-
-
-
-
-
 
 
 
