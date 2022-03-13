@@ -47,6 +47,7 @@ def act_R( total_state, projection_state):
     N = len(total_state)
     n = np.log2(N)
     #print(projection_state, total_state)
+    projection_state = norm(projection_state)
     total_state = norm(total_state)
     #print('total_state after norm', total_state)
     
@@ -59,9 +60,9 @@ def act_R( total_state, projection_state):
             new_state_entryi += projection_state[i]*projection_state[j]*total_state[j]
         #print(new_state_entryi,projection_state[i])
         new_state[i] = new_state_entryi    
-    #print(new_state, save_total_state)             
+    print(new_state, save_total_state)             
     refl = 2*new_state - 1*save_total_state
-    #print('\n\n reflection', refl)
+    print('\n\n reflection', refl)
     return refl
 
 
@@ -73,7 +74,7 @@ N_desired = 2**n_desired
 #desired length of register
 
 
-state_list= [0,9]  #which state is the one we are looking for, as given in index form (e.g. 6 = 0110)
+state_list= [0,5]  #which state is the one we are looking for, as given in index form (e.g. 6 = 0110)
 #using multiple states is easy: we need to have a list anyways and it can be rather long
 number_right_answers = len(state_list)
 n_required = len(bin(max(state_list)))-2       
@@ -105,14 +106,14 @@ Reg = act_H(Reg_1, all = True)
 
 
 n_iter = int(np.pi / 4 * np.sqrt(N_desired)/number_right_answers)
-
+n_iter = 1
 #now we do O and G, both with a call to the reflection operator
 # O reflects Reg around our desired states
 #don't forget *(-1): since effect is '1 - projection on s'
 # G reflecs our new Reg around the initial state of equal probability superpositions
 for _ in range (n_iter):
     Reg = -act_R(Reg, state_list_as_Reg_obj) #minus that!!!
-    #print('\n Reg after Oracle call \n',Reg)
+    print('\n Reg after Oracle call \n',Reg)
     Reg = act_R(Reg, initial_state)
     
 #print('\n Reg_final', Reg)
