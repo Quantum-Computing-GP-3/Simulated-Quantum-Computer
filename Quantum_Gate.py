@@ -182,12 +182,12 @@ class Quantum_Gate(object):
             q = [i for i in range(Reg_obj.n)]
 
         reg = Reg_obj.Reg
-        size = 2**(Reg_obj.n)
+        N = 2**(Reg_obj.n)
 
         start = time.time()
         for qbit in q: 
             i = 0
-            while i <= size-2**qbit:    
+            while i <= N-2**qbit:    
                 for _ in range (2**qbit):   
                     a = reg[i]
                     b = reg[i+2**qbit]
@@ -220,11 +220,11 @@ class Quantum_Gate(object):
             q = [i for i in range(Reg_obj.n)]
 
         reg = Reg_obj.Reg
-        size = 2**(Reg_obj.n)
+        N = 2**(Reg_obj.n)
         #error if q is not ???
         for qbit in q:
             i=0
-            while i <= size-2**qbit:
+            while i <= N-2**qbit:
                 #print(i)
                 for _ in range (2**qbit):
                     a = reg[i]
@@ -254,13 +254,13 @@ class Quantum_Gate(object):
             q = [i for i in range(Reg_obj.n)]
 
         reg = Reg_obj.Reg
-        size = 2**(Reg_obj.n)
+        N = 2**(Reg_obj.n)
         #error if q is not ???
         
         for qbit in q:
             print(qbit)
             i= 2**qbit
-            while i <= size-1:
+            while i <= N-1:
                 for _ in range(2**qbit):
                     #print(i)
                     reg[i] = reg[i]* (-1)
@@ -284,7 +284,7 @@ class Quantum_Gate(object):
             state for oracle
 
         '''
-        size = 2**(Reg_obj.n)
+        N = 2**(Reg_obj.n)
         reg = Reg_obj.Reg
 
         if all == True:
@@ -300,7 +300,7 @@ class Quantum_Gate(object):
         cond2 = 2**qprime[1]
         between = cond2/(cond1*2)
         i = 2**(c)
-        while i < size-1:
+        while i < N-1:
             for _ in range(int(between)):
                 for _ in range (cond1):
                     a = reg[i]
@@ -330,7 +330,7 @@ class Quantum_Gate(object):
             state for oracle
 
         '''
-        size = 2**(Reg_obj.n)
+        N = 2**(Reg_obj.n)
         reg = Reg_obj.Reg
         
         if all == True:
@@ -349,7 +349,7 @@ class Quantum_Gate(object):
             
         i = 2**(c1) +2**(c2)
 
-        while i < size-1:
+        while i < N-1:
             for _ in range(int(between2)):
                 for _ in range (int(between1)):
                     for _ in range (cond1):

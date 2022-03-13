@@ -63,13 +63,13 @@ def act_H(self,Reg_obj, q = None, all = False, state = None):
         q = [i for i in range(Reg_obj.n)]
 
     reg = Reg_obj.Reg
-    size = 2**(Reg_obj.n)
+    N = 2**(Reg_obj.n)
 
     start = time.time()
     for qbit in q: 
         i = 0
         
-        while i <= size-2**qbit:    
+        while i <= N-2**qbit:    
             for _ in range (2**qbit): 
                 a = reg[i]
                 b = reg[i+2**qbit]
@@ -184,7 +184,7 @@ def act_CNOT(self,Reg_obj, q = None, all = False, state = None):
         state for oracle
 
     '''
-    size = 2**(Reg_obj.n)
+    N = 2**(Reg_obj.n)
     reg = Reg_obj.Reg
 
     if all == True:
@@ -201,7 +201,7 @@ def act_CNOT(self,Reg_obj, q = None, all = False, state = None):
     between = cond2/(cond1*2)
 
     i = 2**(c) #starting index (state)
-    while i < size-1:
+    while i < N-1:
         for _ in range(int(between)):
             for _ in range (cond1):
                 a = reg[i]
@@ -231,7 +231,7 @@ def act_TOFFOLI(self,Reg_obj, q = None, all = False, state = None):
         state for oracle
 
     '''
-    size = 2**(Reg_obj.n)
+    N = 2**(Reg_obj.n)
     reg = Reg_obj.Reg
     
     if all == True:
@@ -250,7 +250,7 @@ def act_TOFFOLI(self,Reg_obj, q = None, all = False, state = None):
          
     i = 2**(c1) +2**(c2)
 
-    while i < size-1:
+    while i < N-1:
         for _ in range(int(between2)):
             for _ in range (int(between1)):
                 for _ in range (cond1):
