@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 
-from .gate import Gate
+from gate import Gate
 
 
 class Oracle(Gate):

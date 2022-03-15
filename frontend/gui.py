@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 from os.path import join
+import matplotlib.pyplot as plt
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox
@@ -8,6 +9,9 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox
 from algorithms.grover import Grover
 from algorithms.shor import Shor
 
+plt.plot(1,1)
+plt.show()
+sys.exit("hi")
 
 PKG_PATH = Path(__file__).parent.parent  # Simulated-Quantum-Computer package path
 ALGORITHMS = ["Grover", "Shor"]  # List of algorithms

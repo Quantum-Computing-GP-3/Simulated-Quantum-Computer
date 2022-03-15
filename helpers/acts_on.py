@@ -1,8 +1,8 @@
 import sys
 import numpy as np
 
-from .misc import stu_kron
-from .cartesian_products import cartesian_product_n_qubits
+from misc import stu_kron
+from cartesian_products import cartesian_product_n_qubits
 
 
 def acts_on(Reg_obj, q, tensor, size):
