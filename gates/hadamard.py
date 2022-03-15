@@ -3,25 +3,13 @@ import numpy as np
 
 from gates.gate import Gate
 #from helpers.acts_on import Stu_acts_on, acts_on_all
-
+import math
 from gates.gate import Gate
 #from helpers.acts_on import Stu_acts_on, acts_on_all
 
 
 
 class Hadamard(Gate):
-
-    def __init__(self, all=None):
-        """
-        Initialise Hadamard gate
-        """
-        self.matrix = 1/np.sqrt(2)*np.array([[1, 1],
-                                             [1, -1]])
-        self.size = int(np.round(np.log2(self.matrix.shape[0])))
-
-        self.tensor = np.reshape(self.matrix, (2, 2))
-
-        self.all = all
 
     def acts_on(self, Reg_obj, q = None, all = None):
         # cosiv2
@@ -56,8 +44,8 @@ class Hadamard(Gate):
                     # action of H on both states at once -> less looping
 
                     # print(a,b, a+b, a-b)
-                    reg[i] = 1 / np.sqrt(2) * (a + b)
-                    reg[i + 2 ** qbit] = 1 / np.sqrt(2) * (a - b)
+                    reg[i] = 1 / math.sqrt(2) * (a + b)
+                    reg[i + 2 ** qbit] = 1 / math.sqrt(2) * (a - b)
                     # then we need to redefine the amplitudes of states i and i+2**qbit, considering the action of H
 
                     # print(i, reg[i], i+2**j, reg[i+2**j], -2/np.sqrt(2))

@@ -5,6 +5,7 @@ from gates.grover import Grover
 from gates.oracle import Oracle
 from helpers.register import QuantumRegister as QReg
 import numpy as np
+import math
 
 
 H = Hadamard()
@@ -54,11 +55,11 @@ class Grover(Algorithm):
         # act hadamard on all qubits
         H.acts_on(Reg_obj, all=True)
 
-        if (np.max(state_list) + 1) ** (1 / n) > 2:
+        if (max(state_list) + 1) ** (1 / n) > 2:
             sys.exit("An index given is too large for the register")
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.
-        n_iter = int((np.pi / 4 * np.sqrt(2 ** n))/len(state_list))
+        n_iter = int((math.pi / 4 * math.sqrt(2 ** n))/len(state_list))
         if n_iter == 0:
             print("n = 0 so do once")
             n_iter = 1
@@ -86,4 +87,4 @@ def main(n,state_list):
 
 
 if __name__ == "__main__":
-    main(3,[0,1,2])
+    main(3,[0,3])

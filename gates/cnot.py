@@ -49,7 +49,10 @@ class CNOT(Gate):
         t = q[1]  # target position
 
         i = 0
-        qprime = np.sort(q)  # yes I am sorting a list of size 2
+        #qprime = np.sort(q)  # yes I am sorting a list of size 2
+
+        qprime = sorted(q)
+        print(qprime)
         cond1 = 2 ** qprime[0]
         cond2 = 2 ** qprime[1]
         between = cond2 / (cond1 * 2)

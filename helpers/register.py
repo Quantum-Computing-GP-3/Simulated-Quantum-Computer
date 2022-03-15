@@ -1,6 +1,7 @@
 import numpy as np
 from gates.pauli_X import Pauli_X as X
 from gates.pauli_Z import Pauli_Z as Z
+import math
 X = X()
 Z = Z()
 
@@ -19,9 +20,13 @@ class QuantumRegister(object):
         """
 
         # First step is to initialise a quantum register of n qubits to the 0 state.
-        reg = np.zeros((2 ** n), dtype=complex)
+        #reg = np.zeros((2 ** n), dtype=complex)
         # For now, initialise with the first state = 1
+        #reg[0] = 1
+        #print(reg)
+        reg = [0,]*2**n
         reg[0] = 1
+        print(reg)
 
 
         self.n = n
@@ -117,8 +122,15 @@ class QuantumRegister(object):
 
         for i in range(2 ** (Reg_obj.n)):
             sum += Reg_obj.Reg[i] ** 2
-        Norm = 1 / np.sqrt(sum)
-        Reg_obj.Reg *= Norm
+        Norm = 1 / math.sqrt(sum)
+
+        print("hi")
+        print(Reg_obj.Reg)
+        print(Norm)
+
+        Reg_obj.Reg = [Norm * i for i in Reg_obj.Reg]
+
+        #Reg_obj.Reg *= Norm
 
 
 

@@ -36,7 +36,10 @@ class Shor(Algorithm):
         Reg_obj = QReg(n, q)
         Reg_obj.Reg[0] = alpha
         Reg_obj.Reg[1] = beta
-        print('alpha', alpha, 'beta', beta)
+        print('alpha', Reg_obj.Reg[0], 'beta', Reg_obj.Reg[1])
+        Reg_obj.norm()
+
+        print('alpha', Reg_obj.Reg[0], 'beta', Reg_obj.Reg[1])
 
         # we always act with C(NOT) and T on the same configuration of qubits,
         # therefore that way of writing it is easier
@@ -91,4 +94,4 @@ def main(n,q, alpha, beta,pbit=0., psign=0. ):
 
 
 if __name__ == "__main__":
-    main(9,0, 0.3,0.7, 0.8,0.8)
+    main(9,0, 0.2,0.7, 0.8,0.8)

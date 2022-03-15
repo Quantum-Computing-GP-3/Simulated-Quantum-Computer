@@ -29,8 +29,8 @@ class Toffoli(Gate):
         c1 = q[0]  # control position
         c2 = q[1]  # control position2
         t = q[2]
-        qprime = np.sort(q)  # sorting a list with 3 entries
-
+        #qprime = np.sort(q)  # sorting a list with 3 entries
+        qprime = sorted(q)
         cond1 = 2 ** qprime[0]
         cond2 = 2 ** qprime[1]
         cond3 = 2 ** qprime[2]
