@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 
-VERSION = '2.0.0'
+VERSION = '2.1.0'
 PACKAGE_NAME = 'Simulated-Quantum-Computer'
 AUTHOR = 'Cameron Matthew'
 AUTHOR_EMAIL = 'cambobmat@icloud.com'
@@ -21,7 +21,7 @@ if os.path.isfile(README_PATH):
 REQUIREMENETS = os.path.join(HERE, "requirements.txt")
 INSTALL_REQUIRES = []
 
-DATA_FILES = [('resource', ['resource/mainpage.ui'])]
+DATA_FILES = [('resource', ['resource/mainpage.ui', 'resource/grover.ui'])]
 
 if os.path.isfile(REQUIREMENETS):
     with open(REQUIREMENETS) as f:
@@ -41,7 +41,9 @@ setup(name=PACKAGE_NAME,
       data_files=DATA_FILES,
       entry_points={
           'console_scripts': [
-                "qStart = frontend.gui:main"
+                "qStart = frontend.gui:main",  # Start the GUI
+                "grover = algorithms.grover:main",  # Run grover from command line
+                "shor = algorithms.shor:main"  # Run shor from command line
               ]
           }
       )
