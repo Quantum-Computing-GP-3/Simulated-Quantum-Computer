@@ -64,7 +64,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="State"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">

@@ -3,7 +3,7 @@ from pathlib import Path
 from os.path import join
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox, QSpinBox, QLineEdit
 
 from algorithms.grover import Grover
 from algorithms.shor import Shor
@@ -58,12 +58,18 @@ class GroverGUI(QWidget):
         self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
         self.LAUNCH_GROVER.clicked.connect(self.grover_launch)
 
+        self.QBIT_SELECTION = self.findChild(QSpinBox, "RegisterSize")
+        self.STATE_SELECTION = self.findChild(QLineEdit, "State")
+
+
         # Display GUI- should always run last in constructor
         self.show()
 
     # Launch Grover's algorithm
     def grover_launch(self):
-        grover = Grover()
+        n_qbits = self.QBIT_SELECTION.value()
+        state = self.STATE_SELECTION.text()
+        grover = Grover(n_qbits, state)
         grover.launch()
 
 
@@ -77,7 +83,11 @@ class ShorGUI(QWidget):
 
         # Display GUI- should always run last in constructor
         self.show()
-        
+
+    # Launch Shor's algorithm
+    def shor_launch(self):
+        shor = Shor()
+        shor.launch()
 
 def main():
     """

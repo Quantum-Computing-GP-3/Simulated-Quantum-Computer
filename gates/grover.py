@@ -5,7 +5,7 @@ from .gate import Gate
 
 class Grover(Gate):
 
-    def acts_on(Reg_obj, q):
+    def acts_on(self, Reg_obj, q):
         """
         function to act grovers operator thingy
         :param Reg_obj: obj
@@ -22,5 +22,5 @@ class Grover(Gate):
             matrix_G[i, i] -= 1
 
         Reg_obj.Reg = np.matmul(matrix_G, Reg_obj.Reg)
-        Reg_obj.tensor_notation()
+        Reg_obj.vector_notation()
         return Reg_obj

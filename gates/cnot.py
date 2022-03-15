@@ -35,7 +35,7 @@ def CNOT(Gate):
         :return Reg_obj: Updated register
         """
 
-        # Reg_obj is register object, Reg is Quantum_Register class function, reg is what I will call the tensor register in this function
+        # Reg_obj is register object, Reg is QuantumRegister class function, reg is what I will call the tensor register in this function
         reg = Reg_obj.Reg
         n = Reg_obj.n
 
@@ -70,5 +70,5 @@ def CNOT(Gate):
             ind = get_state_index(carts[i], n)
             reg_new[i] = reg[ind]
         Reg_obj.Reg = reg_new
-        Reg_obj.tensor_notation()
+        Reg_obj.vector_notation()
         return Reg_obj

@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class Quantum_Register(object):
+class QuantumRegister(object):
 
     def __init__(self, n, increasing_integers = False):
         """
@@ -16,15 +16,15 @@ class Quantum_Register(object):
 
         # First step is to initialise a quantum register of n qubits to the 0 state.
         reg = np.zeros((2 ** n), dtype=complex)
-        #for now, initialise with the first state = 1
+        # For now, initialise with the first state = 1
         reg[0] = 1
 
 
         self.n = n
         self.Reg = reg
 
-        #useful sometimes for visualisation and troubleshooting particularly cnot
-        if increasing_integers == True:
+        # Useful sometimes for visualisation and troubleshooting particularly cnot
+        if increasing_integers:
             self.inc_int_vector()
 
     def tensor_notation(self):

@@ -33,7 +33,7 @@ def acts_on(Reg_obj, q, tensor, size):
     # Complex array to store the resulting quantum register after the quantum
     # gate has been applied.
 
-    # Reg_obj is register object, Reg is Quantum_Register class function, reg is what I will call the tensor register in this function
+    # Reg_obj is register object, Reg is QuantumRegister class function, reg is what I will call the tensor register in this function
     Reg_obj.tensor_notation()
     reg = Reg_obj.Reg
 
@@ -73,7 +73,7 @@ def acts_on(Reg_obj, q, tensor, size):
             # We are now able to do the tensor product with the correct indices.
             reg_new[xs] += tensor[xs_gate] * reg[xs_prime]
         Reg_obj.Reg = reg_new
-        Reg_obj.tensor_notation()
+        Reg_obj.vector_notation()
     return Reg_obj
 
 
@@ -92,7 +92,7 @@ def Stu_acts_on(Reg_obj, q, matrix, size):
 
 
     """
-    # Reg_obj is register object, Reg is Quantum_Register class function, reg is what I will call the tensor register in this function
+    # Reg_obj is register object, Reg is QuantumRegister class function, reg is what I will call the tensor register in this function
     reg = Reg_obj.Reg
     n = Reg_obj.n
 
@@ -128,7 +128,7 @@ def Stu_acts_on(Reg_obj, q, matrix, size):
 
         reg_new = np.matmul(M, reg)
         Reg_obj.Reg = reg_new
-        Reg_obj.tensor_notation()
+        Reg_obj.vector_notation()
         return Reg_obj
         
 
@@ -145,7 +145,7 @@ def acts_on_all(Reg_obj, matrix):
         Register object
     :return:
     """
-    # Reg_obj is register object, Reg is Quantum_Register class function, reg is what I will call the tensor register in this function
+    # Reg_obj is register object, Reg is QuantumRegister class function, reg is what I will call the tensor register in this function
     reg = Reg_obj.Reg
     n = Reg_obj.n
 
@@ -161,5 +161,5 @@ def acts_on_all(Reg_obj, matrix):
     # Matrix multiply the matrix we have built, and the state vector for new reg
     reg_new = np.matmul(M, reg)
     Reg_obj.Reg = reg_new
-    Reg_obj.tensor_notation()
+    Reg_obj.vector_notation()
     return Reg_obj

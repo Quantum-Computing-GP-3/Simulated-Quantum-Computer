@@ -30,5 +30,5 @@ class Oracle(Gate):
 
         #if the gate is actually an operator (like G or O)
         Reg_obj.Reg = np.matmul(matrix_O, Reg_obj.Reg)
-        Reg_obj.tensor_notation()
+        Reg_obj.vector_notation()
         return Reg_obj
