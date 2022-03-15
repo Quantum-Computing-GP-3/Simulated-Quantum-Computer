@@ -1,5 +1,6 @@
 from .algorithm import Algorithm
 
+
 class Shor(Algorithm):
     """
     Runs Shor's algorithm

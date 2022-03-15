@@ -1,5 +1,6 @@
 from .algorithm import Algorithm
 
+
 class Grover(Algorithm):
     """
     Runs Grover's algorithm

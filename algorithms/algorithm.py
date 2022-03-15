@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Algorithm(ABC):
     """
     Abstract class acting as a template for our quantum algorithms
