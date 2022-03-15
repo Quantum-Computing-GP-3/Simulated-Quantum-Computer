@@ -6,7 +6,7 @@ from gates.gate import Gate
 
 class Toffoli(Gate):
 
-    def act_T(self, Reg_obj, q=None, all=False, state=None):
+    def acts_on(self, Reg_obj, q=None, all=False, state=None):
 
         # error catching if q is not a 3 tupel
         '''

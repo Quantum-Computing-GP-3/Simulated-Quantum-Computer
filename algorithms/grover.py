@@ -1,12 +1,11 @@
 from algorithm import Algorithm
-<<<<<<< Updated upstream
-=======
+
 from gates.hadamard import Hadamard
 from gates.grover import Grover
 from gates.oracle import Oracle
 from helpers.register import QuantumRegister as QReg
 import numpy as np
->>>>>>> Stashed changes
+
 
 H = Hadamard()
 G = Grover()
@@ -25,11 +24,9 @@ class Grover(Algorithm):
         """
         Triggers the start of Grover's algorithm
         """
-<<<<<<< Updated upstream
+
         print("WOo Grover worked")
         print("Hi")
-=======
->>>>>>> Stashed changes
 
         """
                 Function to act grover using Qgate objects, a QReg object and a given state
@@ -89,4 +86,4 @@ def main(n,state_list):
 
 
 if __name__ == "__main__":
-    main(3,[0,1,2,3,4])
+    main(3,[0,1,2])

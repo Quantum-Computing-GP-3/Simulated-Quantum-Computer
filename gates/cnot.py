@@ -1,10 +1,8 @@
 import numpy as np
 
-<<<<<<< Updated upstream
-from gate import Gate
-=======
+
 from gates.gate import Gate
->>>>>>> Stashed changes
+
 from helpers.cartesian_products import stu_cartesian_product_n_qubits
 from helpers.misc import get_state_index
 

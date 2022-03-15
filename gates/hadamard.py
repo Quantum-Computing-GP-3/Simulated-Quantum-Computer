@@ -1,12 +1,12 @@
 import numpy as np
 
-<<<<<<< Updated upstream
-from gate import Gate
-from helpers.acts_on import Stu_acts_on, acts_on_all
-=======
+
 from gates.gate import Gate
 #from helpers.acts_on import Stu_acts_on, acts_on_all
->>>>>>> Stashed changes
+
+from gates.gate import Gate
+#from helpers.acts_on import Stu_acts_on, acts_on_all
+
 
 
 class Hadamard(Gate):

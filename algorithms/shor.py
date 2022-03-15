@@ -1,19 +1,24 @@
 from algorithm import Algorithm
-<<<<<<< Updated upstream
-=======
+
 from gates.hadamard import Hadamard
 from gates.grover import Grover
 from gates.oracle import Oracle
 from gates.cnot import CNOT
+from gates.toffoli import Toffoli
+from gates.hadamard import Hadamard
+from gates.pauli_X import Pauli_X as X
+from gates.pauli_Z import Pauli_Z as Z
 
 
 from helpers.register import QuantumRegister as QReg
 import numpy as np
 
-
+H = Hadamard()
 CNOT = CNOT()
+T = Toffoli()
+X = X()
+Z = Z()
 
->>>>>>> Stashed changes
 
 
 class Shor(Algorithm):
@@ -21,14 +26,18 @@ class Shor(Algorithm):
     Runs Shor's algorithm
     """
 
-    def launch(self, n, q, pbit=0., psign=0.):
+    def launch(self, n, q, alpha, beta, pbit=0., psign=0.):
         """
         I DONT THINK THIS WORKS YET
         this runs the Shor code for one qubit in state Psi
         this is qubit 0
         it needs 8 ancilla states
         """
-        Reg_obj = QReg(n)
+        Reg_obj = QReg(n, q)
+        Reg_obj.Reg[0] = alpha
+        Reg_obj.Reg[1] = beta
+        print('alpha', alpha, 'beta', beta)
+
         # we always act with C(NOT) and T on the same configuration of qubits,
         # therefore that way of writing it is easier
         C_list1 = [[0, 1], [3, 4], [6, 7]]
@@ -72,13 +81,14 @@ class Shor(Algorithm):
                 alpha_new += Reg_obj.Reg[i]
             else:  # 1 coefficients
                 beta_new += Reg_obj.Reg[i]
-        print(alpha_new, beta_new)
+        print('alphanew',alpha_new,'betanew', beta_new)
 
 
-def main(n,q):
+
+def main(n,q, alpha, beta,pbit=0., psign=0. ):
     shor = Shor()
-    shor.launch(n,q)
+    shor.launch(n,q, alpha, beta,pbit, psign)
 
 
 if __name__ == "__main__":
-    main(9,0)
+    main(9,0, 0.3,0.7, 0.8,0.8)

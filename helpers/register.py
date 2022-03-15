@@ -1,4 +1,8 @@
 import numpy as np
+from gates.pauli_X import Pauli_X as X
+from gates.pauli_Z import Pauli_Z as Z
+X = X()
+Z = Z()
 
 
 class QuantumRegister(object):
@@ -21,11 +25,18 @@ class QuantumRegister(object):
 
 
         self.n = n
+        self.N = 2**n
         self.Reg = reg
 
         # Useful sometimes for visualisation and troubleshooting particularly cnot
         if increasing_integers:
             self.inc_int_vector()
+
+
+
+
+
+
 
     def tensor_notation(self):
         """
@@ -75,14 +86,40 @@ class QuantumRegister(object):
 
         if corruptionbit < pbit:
             print('bitcorruption')
-            X.act(self.Reg, q)
+            X.acts_on(self, q)
         else:
             print('no bitcorruption')
 
         if corruptionsign < psign:
             print('signcorruption')
-            Z.act(self.Reg, q)
+            Z.acts_on(self, q)
         else:
             print('no signcorruption')
+
+    def norm(Reg_obj, q=None, all=False, state=None):
+        '''
+        function to normalize state
+        :param Reg_obj: obj
+            register
+        :param q: list
+            qubits to act on
+        :param all: bool
+            whether gate should be acted on all qubits
+        :param state:
+            state for oracle
+        '''
+        # errorcatching:
+        if all == True:
+            return 1
+
+        sum = 0
+
+
+        for i in range(2 ** (Reg_obj.n)):
+            sum += Reg_obj.Reg[i] ** 2
+        Norm = 1 / np.sqrt(sum)
+        Reg_obj.Reg *= Norm
+
+
 
 

@@ -1,11 +1,10 @@
 import sys
 import numpy as np
 
-<<<<<<< Updated upstream
-from gate import Gate
-=======
+
+
 from gates.gate import Gate
->>>>>>> Stashed changes
+
 
 
 class Oracle(Gate):
