@@ -10,3 +10,4 @@ class Grover(Algorithm):
         Triggers the start of Grover's algorithm
         """
         print("WOo Grover worked")
+        

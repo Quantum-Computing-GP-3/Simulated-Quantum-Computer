@@ -11,4 +11,3 @@ class Algorithm(ABC):
         Method used to start running the simulation 
         """
         pass
-
