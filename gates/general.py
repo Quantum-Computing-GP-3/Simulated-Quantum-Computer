@@ -1,7 +1,11 @@
 import numpy as np
 
 from gate import Gate
+<<<<<<< Updated upstream
 from helpers.acts_on import Stu_acts_on, acts_on_all
+=======
+#from helpers.acts_on import Stu_acts_on, acts_on_all
+>>>>>>> Stashed changes
 
 
 class General(Gate):

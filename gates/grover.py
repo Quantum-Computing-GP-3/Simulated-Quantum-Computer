@@ -1,11 +1,15 @@
 import numpy as np
 
+<<<<<<< Updated upstream
 from gate import Gate
+=======
+from gates.gate import Gate
+>>>>>>> Stashed changes
 
 
 class Grover(Gate):
 
-    def acts_on(self, Reg_obj, q):
+    def acts_on(self, Reg_obj):
         """
         function to act grovers operator thingy
         :param Reg_obj: obj

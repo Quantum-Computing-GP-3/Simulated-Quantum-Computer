@@ -7,7 +7,7 @@ class Gate(ABC):
     """
 
     @abstractmethod
-    def acts_on(self, Reg_obj, q):
+    def acts_on(self, Reg_obj, q = None, all = None):
         """
         Method that acts the current quantum gate onto a supplied qbit
         """

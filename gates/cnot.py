@@ -1,6 +1,10 @@
 import numpy as np
 
+<<<<<<< Updated upstream
 from gate import Gate
+=======
+from gates.gate import Gate
+>>>>>>> Stashed changes
 from helpers.cartesian_products import stu_cartesian_product_n_qubits
 from helpers.misc import get_state_index
 
@@ -24,50 +28,43 @@ class CNOT(Gate):
         self.tensor = np.reshape(self.matrix, (2, 2, 2, 2))
 
     def acts_on(self, Reg_obj, q):
-        """
-        function to act CNOT, remembering that all cnot does is swap the amplitude of qubits
-        ALGORITHMIC METHOD, NOT MATRIX METHOD
-
+        #cosiv2
+        # error catching if q is not a 2 tupel
+        '''
+        function to act CNOT
         :param Reg_obj: obj
-            Register object
+            register
         :param q: list
-            qubit(s) to act on
-        :return Reg_obj: Updated register
-        """
-
-        # Reg_obj is register object, Reg is QuantumRegister class function,
-        # reg is what I will call the tensor register in this function
+            qubits to act on
+        :param all: bool
+            whether CNOT should be acted on all qubits
+        :param state:
+            state for oracle
+        '''
+        size = 2 ** (Reg_obj.n)
         reg = Reg_obj.Reg
-        n = Reg_obj.n
 
-        reg_new = np.zeros_like(reg)
+        if all == True:
+            return 1  # error!!!!!!
 
-        c = q[0]
-        t = q[1]
+        c = q[0]  # control position
+        t = q[1]  # target position
 
-        # array of cartesian products
-        carts = stu_cartesian_product_n_qubits(n)
+        i = 0
+        qprime = np.sort(q)  # yes I am sorting a list of size 2
+        cond1 = 2 ** qprime[0]
+        cond2 = 2 ** qprime[1]
+        between = cond2 / (cond1 * 2)
+        i = 2 ** (c)
+        while i < size - 1:
+            for _ in range(int(between)):
+                for _ in range(cond1):
+                    a = reg[i]
+                    b = reg[i + 2 ** t]
+                    reg[i] = b
+                    reg[i + 2 ** t] = a
+                    i += 1
+                i += cond1
+            i += cond2
 
-        # loop through cartesian products
-        for count, cart in enumerate(carts):
-            """CHANGE CART INDEX SO YOU CAN SWAP THE AMPLITUDES!!!!!!!!!!!"""
-
-            # if c qubit is 1, apply swap t (ie. switch t qubit from state 1 to 0)
-            if cart[c] == 1:
-                l = 1
-
-                # swap target
-                if cart[t] == 1:
-                    carts[count][t] = 0
-                else:
-                    carts[count][t] = 1
-
-            # and if c qubit is 1, leave t alone
-
-        # swap amplitudes
-        for i in range(len(carts)):
-            ind = get_state_index(carts[i], n)
-            reg_new[i] = reg[ind]
-        Reg_obj.Reg = reg_new
-        Reg_obj.vector_notation()
-        return Reg_obj
+        Reg_obj.Reg = reg

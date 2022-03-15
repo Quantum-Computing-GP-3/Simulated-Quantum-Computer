@@ -55,3 +55,34 @@ class QuantumRegister(object):
             self.Reg[i] = i
         return
 
+    def error_channel(self, q, pbit=0., psign=0.):
+        # YES THIS NEEDS PBIT AND PSIGN
+        # MAYBE A **KWARGS ARGUMENT WOULD BE BETTER FOR THE QUANTUM GATE CLASS
+        """
+        error channel is the channel that corrupts the single qubit with certain probability
+        pbit: prob of bitflip
+        psign: prob of signflip
+        it acts on a qubit q. for the easiest case of just shor's algorithm there is only one
+        possible qubit to act on and that is qbit 0
+        since it acts using X and Z, it is a Quantum
+        """
+
+        # now decide randomly if qbit will be corrupted
+        # this depends on the corruption probability
+        # with this one can tune the noise up or down
+        corruptionbit = np.random.random()
+        corruptionsign = np.random.random()
+
+        if corruptionbit < pbit:
+            print('bitcorruption')
+            X.act(self.Reg, q)
+        else:
+            print('no bitcorruption')
+
+        if corruptionsign < psign:
+            print('signcorruption')
+            Z.act(self.Reg, q)
+        else:
+            print('no signcorruption')
+
+
