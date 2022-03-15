@@ -21,6 +21,8 @@ if os.path.isfile(README_PATH):
 REQUIREMENETS = os.path.join(HERE, "requirements.txt")
 INSTALL_REQUIRES = []
 
+DATA_FILES = [('resource', ['resource/mainpage.ui'])]
+
 if os.path.isfile(REQUIREMENETS):
     with open(REQUIREMENETS) as f:
         INSTALL_REQUIRES = f.read().splitlines()
@@ -36,10 +38,10 @@ setup(name=PACKAGE_NAME,
       url=URL,
       install_requires=INSTALL_REQUIRES,
       packages=find_packages(),
+      data_files=DATA_FILES,
       entry_points={
           'console_scripts': [
-                "pabloSim = pabloSim.Grover:main",
-                "stuartSim = stuartSim.Quantum_Computer:main",
+                "qStart = frontend.gui:main"
               ]
           }
       )

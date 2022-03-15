@@ -39,8 +39,8 @@ class Quantum_Register(object):
 
     def vector_notation(self):
         """
-        converts self.Reg from vector to tensor notation
-        useful for using with pablo's original act_on
+        converts self.Reg from tensor to vector notation
+        useful for using with Stuart's algorithms
         :return:
         """
         self.Reg = self.Reg.flatten()
