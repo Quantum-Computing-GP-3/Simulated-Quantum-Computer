@@ -10,3 +10,4 @@ class Shor(Algorithm):
         Triggers the start of Shor's algorithm
         """
         print("WOo Shor worked")
+        
