@@ -5,6 +5,7 @@ class Grover(Algorithm):
     """
     Runs Grover's algorithm
     """
+
     def __init__(self, n_qbits, state):
         self.n_qbits = n_qbits
         self.state = state

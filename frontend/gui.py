@@ -58,9 +58,9 @@ class GroverGUI(QWidget):
         self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
         self.LAUNCH_GROVER.clicked.connect(self.grover_launch)
 
+        # Parameters for Grover
         self.QBIT_SELECTION = self.findChild(QSpinBox, "RegisterSize")
         self.STATE_SELECTION = self.findChild(QLineEdit, "State")
-
 
         # Display GUI- should always run last in constructor
         self.show()
@@ -88,6 +88,7 @@ class ShorGUI(QWidget):
     def shor_launch(self):
         shor = Shor()
         shor.launch()
+
 
 def main():
     """
