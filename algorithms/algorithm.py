@@ -7,7 +7,7 @@ class Algorithm(ABC):
     """
 
     @abstractmethod
-    def launch():
+    def launch(self):
         """
         Method used to start running the simulation 
         """
