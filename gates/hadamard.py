@@ -4,17 +4,17 @@ from gate import Gate
 from helpers.acts_on import Stu_acts_on, acts_on_all
 
 
-def Hadamard(Gate):
+class Hadamard(Gate):
 
     def __init__(self, all=False):
         """
         Initialise Hadamard gate
         """
-        self.matrix = 1/np.sqrt(2)*np.array([[1,1],
-                                              [1,-1]])
+        self.matrix = 1/np.sqrt(2)*np.array([[1, 1],
+                                             [1, -1]])
         self.size = int(np.round(np.log2(self.matrix.shape[0])))
 
-        self.tensor = np.reshape(self.matrix, (2,2))
+        self.tensor = np.reshape(self.matrix, (2, 2))
 
         self.all = all
 
