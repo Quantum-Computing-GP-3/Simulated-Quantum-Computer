@@ -45,6 +45,8 @@ class MainGUI(QWidget):
             self.widget = GroverGUI()
         elif alg_to_run == "Shor":
             self.widget = ShorGUI()
+        else:
+            sys.exit("ERROR: Invalid Algorithm in Selector.")
 
 
 class GroverGUI(QWidget):
