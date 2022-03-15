@@ -1,6 +1,6 @@
-from .gate import Gate
 import numpy as np
 
+from .gate import Gate
 from helpers.cartesian_products import stu_cartesian_product_n_qubits
 from helpers.misc import get_state_index
 
