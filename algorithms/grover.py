@@ -11,4 +11,12 @@ class Grover(Algorithm):
         Triggers the start of Grover's algorithm
         """
         print("WOo Grover worked")
-        
+
+
+def main():
+    grover = Grover()
+    grover.launch()
+
+
+if __name__ == "__main__":
+    main()
