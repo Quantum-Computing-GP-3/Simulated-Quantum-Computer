@@ -1,4 +1,4 @@
-from gate import Gate
+from .gate import Gate
 import numpy as np
 
 from helpers.cartesian_products import stu_cartesian_product_n_qubits
