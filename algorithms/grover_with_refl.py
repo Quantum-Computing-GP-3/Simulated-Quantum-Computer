@@ -12,12 +12,10 @@ from pauli_X import Pauli_X as X
 from pauli_Z import Pauli_Z as Z
 import copy
 from reflection import Reflection
-
+import time
 from register import QuantumRegister as QReg
 import numpy as np
 import math
-
-
 H = Hadamard()
 R = Reflection()
 
@@ -54,9 +52,14 @@ class Grover_Reflection(Algorithm):
         Reg_obj_marked = QReg(n)
         
 
-        
+        a = 0
         for elm in marked_list:
             Reg_obj_marked.Reg[elm] = 1
+            if elm == 0:
+                a += 1 
+        if a == 0:
+            Reg_obj_marked.Reg[0] = 0
+
         Reg_obj_marked.norm
         Reg_obj_state.norm
         """
@@ -113,13 +116,18 @@ def main(n,marked_list):
 
 
 if __name__ == "__main__":
-    print('5,    [0,3] \n')
-    main(5,[0,3])
-    print('6,    [2] \n')
-    main(6,[2])
-    print('4,    [1,2,3] \n')
-    main(4,[1,2,3])
-    print('5,    [0,30] \n')
-    main(5,[0, 30])
-    print('5,    [10] \n')
-    main(5,[10])
+   # print('5,    [0,3] refl \n')
+    #main(5,[0,3])
+    #print('6,    [2] refl \n')
+    #main(6,[2])
+    #print('4,    [1,2,3] refl \n')
+    #main(4,[1,2,3])
+    #print('5,    [0,30] refl \n')
+    #main(5,[0, 30])
+    #print('5,    [10] refl \n')
+    #main(5,[10])
+    t1 = time.time()
+    main(10, [3])
+    t2 = time.time()
+    dif= t2-t1
+    print(round(dif,3))
