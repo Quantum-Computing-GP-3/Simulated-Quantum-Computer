@@ -1,7 +1,7 @@
 from gate import Gate
 #from helpers.acts_on import Stu_acts_on, acts_on_all
 import math
-
+import numpy as np
 
 
 class Hadamard(Gate):
@@ -17,7 +17,7 @@ class Hadamard(Gate):
             whether Hadamard should be acted on all qubits
         '''
         
-        """
+        """ERRORS
         #max(q) does not work
         print('test', Reg_obj.n, max(q))
         #errors************
@@ -55,8 +55,8 @@ class Hadamard(Gate):
                     # action of H on both states at once -> less looping
 
                     #then we need to redefine the amplitudes of states i and i+2**qbit, considering the action of H
-                    Reg_obj.Reg[i] = 1 / math.sqrt(2) * (a + b)
-                    Reg_obj.Reg[i + 2 ** qbit] = 1 / math.sqrt(2) * (a - b)
+                    Reg_obj.Reg[i] = 1 / np.sqrt(2) * (a + b)
+                    Reg_obj.Reg[i + 2 ** qbit] = 1 / np.sqrt(2) * (a - b)
                     
                     i += 1
                 i += 2 ** qbit

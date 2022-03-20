@@ -15,8 +15,6 @@ from reflection import Reflection
 from register import QuantumRegister as QReg
 import numpy as np
 import math
-
-
 H = Hadamard()
 G = Grover()
 O = Oracle()
@@ -33,26 +31,19 @@ class Grover(Algorithm):
     def launch(self,n,marked_list):
         """
         Triggers the start of Grover's algorithm
+        Function to act grover using Qgate objects, a QReg object and a given state
+            :param Reg_obj: QReg object
+                register object
+            :param state: string of 1&0's etc "1100"
+                state for oracle
+            :return:
         """
-
-        print("WOo Grover worked")
-        print("Hi")
-
-        """
-                Function to act grover using Qgate objects, a QReg object and a given state
-                :param Reg_obj: QReg object
-                    register object
-                :param state: string of 1&0's etc "1100"
-                    state for oracle
-                :return:
-                """
 
         # Reg_obj is register object, Reg is Quantum_Register class function
-        # define number of qubits in register
-
+        # define number n of qubits in register
         Reg_obj = QReg(n)
 
-        """
+        """IS THIS NECESSARY???????????
         #make the state into a list of 1's and 0's
         state_list = list(state)
         for i in range(len(state_list)):
@@ -64,15 +55,19 @@ class Grover(Algorithm):
         # act hadamard on all qubits
         H.acts_on(Reg_obj, all=True)
 
+        #errors: IS THIS RIGHT????????
         if (max(marked_list) + 1) ** (1 / n) > 2:
             sys.exit("An index given is too large for the register")
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.
+        #the number of Grover iterations is given by the following calculation
         n_iter = int((math.pi / 4 * math.sqrt(2 ** n))/len(marked_list))
+        
         if n_iter == 0:
             print("n = 0 so do once")
             n_iter = 1
-        print(n_iter)
+
+        #do Grover iteration
         for i in range(n_iter):
             O.acts_on(Reg_obj, marked_list)
             G.acts_on(Reg_obj)

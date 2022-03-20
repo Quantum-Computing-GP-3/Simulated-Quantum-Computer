@@ -17,7 +17,7 @@ class Pauli_X(Gate):
             whether X should be acted on all qubits
         '''
 
-
+        """
         #errors *********
 
         #q indices need to be within the register size
@@ -32,7 +32,7 @@ class Pauli_X(Gate):
         for qbit in q:
             if isinstance(qbit, (int)) == False:
                 raise TypeError('Error: gate expects list of integer qubit arguments')
-
+        """
         #****************
 
         if all == True:
@@ -40,6 +40,8 @@ class Pauli_X(Gate):
 
         
         for qbit in q:
+            #X flips 0 and 1 for qbit
+            #it switches the entries of states i and 2**qbit
             i = 0
             while i <= Reg_obj.N - 2 ** qbit:
                 for _ in range(2 ** qbit):

@@ -19,7 +19,7 @@ class Pauli_Z(Gate):
                 '''
 
         #errors***************
-
+        """
        #q indices need to be within the register size
         if max(q) -1 > Reg_obj.n:
             raise IndexError ('Error: the qubits you want to act on exceed the Register size')
@@ -32,12 +32,13 @@ class Pauli_Z(Gate):
         for qbit in q:
             if isinstance(qbit, (int)) == False:
                 raise TypeError('Error: gate expects list of integer qubit arguments')
-
+        """
         #*********************
 
         if all == True:
             q = [i for i in range(Reg_obj.n)]
 
+        #action of Z: signflip if qbit is 1
         for qbit in q:
             i = 2 ** qbit
             while i <= Reg_obj.N - 1:

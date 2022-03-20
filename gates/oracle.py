@@ -19,7 +19,7 @@ class Oracle(Gate):
         """
 
         #errors***************
-
+        """
         #state indices need to be within the register size
         if max(marked_list) -1 > Reg_obj.N:
             raise IndexError ('Error: the states you want to act on exceed the Register size')
@@ -33,7 +33,7 @@ class Oracle(Gate):
             if isinstance(state, (int)) == False:
                 raise TypeError('Error: gate expects list of integer qubit arguments')
 
-
+        """
         #*********************
 
 
