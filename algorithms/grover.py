@@ -12,7 +12,6 @@ from pauli_X import Pauli_X as X
 from pauli_Z import Pauli_Z as Z
 import copy
 from reflection import Reflection
-
 from register import QuantumRegister as QReg
 import numpy as np
 import math

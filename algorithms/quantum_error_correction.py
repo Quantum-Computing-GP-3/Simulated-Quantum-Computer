@@ -38,8 +38,9 @@ class QECorrection(Algorithm):
         Reg_obj = QReg(n, q)
         Reg_obj.Reg[0] = alpha
         Reg_obj.Reg[1] = beta
+        
         Reg_obj.norm() #necessary normalization since alpha and beta can be chosen arbitrarily by user
-
+        #print('regob',Reg_obj.Reg)
         print('alpha', Reg_obj.Reg[0], 'beta', Reg_obj.Reg[1])
 
         # we always act with C(NOT) and T on the same configuration of qubits,
@@ -50,7 +51,7 @@ class QECorrection(Algorithm):
 
         CNOT.acts_on(Reg_obj, [0, 3])
         CNOT.acts_on(Reg_obj, [0, 6])
-        CNOT.acts_on(Reg_obj, [0, 3, 6])
+        H.acts_on(Reg_obj, [0, 3, 6])
 
         for i in range(3):
             CNOT.acts_on(Reg_obj, C_list1[i])
@@ -59,7 +60,6 @@ class QECorrection(Algorithm):
             CNOT.acts_on(Reg_obj, C_list2[i])
 
         Reg_obj.error_channel([0], pbit, psign)
-
         for i in range(3):
             CNOT.acts_on(Reg_obj, C_list1[i])
 
@@ -78,6 +78,7 @@ class QECorrection(Algorithm):
         # but alpha and beta stayed the same!!!:
         alpha_new = 0
         beta_new = 0
+        print(Reg_obj.Reg)
         for i in range(Reg_obj.N):
             if i % 2 == 0:  # 0-coefficients
                 alpha_new += Reg_obj.Reg[i]
@@ -93,5 +94,5 @@ def __main__(n,q, alpha, beta,pbit=0., psign=0. ):
 
 
 if __name__ == "__main__":
-    __main__(9,0, 0.2,0.7, 0.8,0.8)
+    __main__(9,0, 0.2,0.7, 0.,0.)
 

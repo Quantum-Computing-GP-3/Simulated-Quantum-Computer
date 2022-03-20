@@ -3,6 +3,8 @@ import sys
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
+#sys.path.append('../')
+
 from hadamard import Hadamard
 from grover_gate import Grover
 from oracle import Oracle
