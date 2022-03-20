@@ -90,7 +90,7 @@ class Grover_Reflection(Algorithm):
         for _ in range (n_iter):
             R.acts_on(Reg_obj_state, Reg_obj_marked) 
             Reg_obj_state.Reg *= (-1)
-            print(Reg_obj_state.Reg)
+            #print(Reg_obj_state.Reg)
             R.acts_on (Reg_obj_state, Reg_obj_Psi_0)
             
             
@@ -113,4 +113,13 @@ def main(n,marked_list):
 
 
 if __name__ == "__main__":
+    print('5,    [0,3] \n')
     main(5,[0,3])
+    print('6,    [2] \n')
+    main(6,[2])
+    print('4,    [1,2,3] \n')
+    main(4,[1,2,3])
+    print('5,    [0,30] \n')
+    main(5,[0, 30])
+    print('5,    [10] \n')
+    main(5,[10])

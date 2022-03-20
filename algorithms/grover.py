@@ -1,9 +1,19 @@
 from algorithm import Algorithm
+import sys
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
+from hadamard import Hadamard
+from grover_gate import Grover
+from oracle import Oracle
+from cnot import CNOT
+from toffoli import Toffoli
+from pauli_X import Pauli_X as X
+from pauli_Z import Pauli_Z as Z
+import copy
+from reflection import Reflection
 
-from gates.hadamard import Hadamard
-from gates.grover_gate import Grover
-from gates.oracle import Oracle
-from helpers.register import QuantumRegister as QReg
+from register import QuantumRegister as QReg
 import numpy as np
 import math
 
@@ -85,4 +95,13 @@ def main(n,marked_list):
 
 
 if __name__ == "__main__":
-    main(3,[0,3])
+    print('5,    [0,3] \n')
+    main(5,[0,3])
+    print('6,    [2] \n')
+    main(6,[2])
+    print('4,    [1,2,3] \n')
+    main(4,[1,2,3])
+    print('5,    [0,30] \n')
+    main(5,[0, 30])
+    print('5,    [10] \n')
+    main(5,[10])
