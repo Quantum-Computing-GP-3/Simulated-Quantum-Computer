@@ -1,7 +1,10 @@
 import numpy as np
-from gates.pauli_X import Pauli_X as X
-from gates.pauli_Z import Pauli_Z as Z
+import sys
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
+from pauli_X import Pauli_X as X
+from pauli_Z import Pauli_Z as Z
 import math
+import numpy as np
 X = X()
 Z = Z()
 
@@ -24,9 +27,9 @@ class QuantumRegister(object):
         # For now, initialise with the first state = 1
         #reg[0] = 1
         #print(reg)
-        reg = [0,]*2**n
+        reg = np.array([0,]*2**n, dtype='complex')
         reg[0] = 1
-        print(reg)
+        #print(reg)
 
 
         self.n = n
@@ -81,7 +84,7 @@ class QuantumRegister(object):
         """
 
         #errors*************
-
+        """
         #q index needs to be within the register size
         if q -1 > self.n:
             raise IndexError ('Error: the qubit you want to act on with error_channel exceeds the Register size')
@@ -89,6 +92,7 @@ class QuantumRegister(object):
         #type of q is int (qbit number from 0 to n-1)
         if isinstance(q, (int)) == False:
             raise TypeError('Error: error_channel expects list of integer qubit arguments')
+        """
         #*******************
 
 
@@ -126,19 +130,20 @@ class QuantumRegister(object):
         #*******************************
 
         sum = 0
-
+        #sprint('testnorm')
 
         for i in range(2 ** (self.n)):
             sum += self.Reg[i] ** 2
-        Norm = 1 / math.sqrt(sum)
+            #print('within norm', self.Reg[i]**2)
+        Norm = 1 / np.sqrt(sum)
 
-        print("hi")
-        print(self.Reg)
-        print(Norm)
+        #print("hi")
+        #print(self.Reg)
+        #print(Norm)
 
-        self.Reg = [Norm * i for i in self.Reg]
+        #self.Reg = [Norm * i for i in self.Reg]
 
-        #Reg_obj.Reg *= Norm
+        self.Reg *= Norm
 
 
 

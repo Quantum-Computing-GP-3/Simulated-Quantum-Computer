@@ -1,4 +1,4 @@
-from gates.gate import Gate
+from gate import Gate
 #from helpers.acts_on import Stu_acts_on, acts_on_all
 import math
 
@@ -16,7 +16,10 @@ class Hadamard(Gate):
         :param all: bool
             whether Hadamard should be acted on all qubits
         '''
-
+        
+        """
+        #max(q) does not work
+        print('test', Reg_obj.n, max(q))
         #errors************
         #q indices need to be within the register size
         if max(q) -1 > Reg_obj.n:
@@ -30,7 +33,7 @@ class Hadamard(Gate):
         for qbit in q:
             if isinstance(qbit, (int)) == False:
                 raise TypeError('Error: gate expects list of integer qubit arguments')
-
+        """
         #******************
 
         if all == True:

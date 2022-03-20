@@ -1,7 +1,8 @@
-from gates.gate import Gate
-
-from helpers.cartesian_products import stu_cartesian_product_n_qubits
-from helpers.misc import get_state_index
+from gate import Gate
+import sys
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
+from cartesian_products import stu_cartesian_product_n_qubits
+from misc import get_state_index
 
 
 class Pauli_Z(Gate):

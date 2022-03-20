@@ -1,6 +1,6 @@
 import numpy as np
 
-from gates.gate import Gate
+from gate import Gate
 #from helpers.acts_on import Stu_acts_on, acts_on_all
 
 
@@ -16,7 +16,7 @@ class Toffoli(Gate):
         '''
 
         #errors******************
-
+        """
         #q needs to be triple with nonidentical entries
         if len(q)!= 3 or len(q) != len(set(q)):
             raise ValueError('Error: gate expects 3 nonidentical qubit arguments')
@@ -31,7 +31,7 @@ class Toffoli(Gate):
         for qbit in q:
             if isinstance(qbit, (int)) == False:
                 raise TypeError('Error: gate expects list of integer qubit arguments')
-
+        """
                 
         #************************
 

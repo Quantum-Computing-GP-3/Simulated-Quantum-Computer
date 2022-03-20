@@ -1,5 +1,5 @@
 import sys
-from gates.gate import Gate
+from gate import Gate
 
 
 

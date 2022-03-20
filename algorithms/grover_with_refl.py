@@ -1,10 +1,19 @@
 from algorithm import Algorithm
 import sys
-from gates.hadamard import Hadamard
-from gates.grover_gate import Grover
-from gates.reflection import Reflection
-from gates.oracle import Oracle
-from helpers.register import QuantumRegister as QReg
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
+from hadamard import Hadamard
+from grover_gate import Grover
+from oracle import Oracle
+from cnot import CNOT
+from toffoli import Toffoli
+from pauli_X import Pauli_X as X
+from pauli_Z import Pauli_Z as Z
+import copy
+from reflection import Reflection
+
+from register import QuantumRegister as QReg
 import numpy as np
 import math
 
@@ -44,9 +53,12 @@ class Grover_Reflection(Algorithm):
         Reg_obj_state = QReg(n)
         Reg_obj_marked = QReg(n)
         
+
+        
         for elm in marked_list:
-            Reg_obj_marked[elm] = 1
+            Reg_obj_marked.Reg[elm] = 1
         Reg_obj_marked.norm
+        Reg_obj_state.norm
         """
         #make the state into a list of 1's and 0's
         state_list = list(state)
@@ -59,7 +71,7 @@ class Grover_Reflection(Algorithm):
         # act hadamard on all qubits
         H.acts_on(Reg_obj_state, all=True)
 
-        Reg_obj_Psi_0 = Reg_obj_state.Reg.copy()
+        Reg_obj_Psi_0 =  copy.deepcopy(Reg_obj_state)
 
         if (max(marked_list) + 1) ** (1 / n) > 2:
             sys.exit("An index given is too large for the register")
@@ -76,7 +88,9 @@ class Grover_Reflection(Algorithm):
         #don't forget *(-1): since effect is '1 - projection on s'
         # G reflecs our new Reg around the initial state of equal probability superpositions
         for _ in range (n_iter):
-            -R.acts_on(-Reg_obj_state, Reg_obj_marked) 
+            R.acts_on(Reg_obj_state, Reg_obj_marked) 
+            Reg_obj_state.Reg *= (-1)
+            print(Reg_obj_state.Reg)
             R.acts_on (Reg_obj_state, Reg_obj_Psi_0)
             
             
@@ -84,7 +98,7 @@ class Grover_Reflection(Algorithm):
         print(Reg_obj_state.Reg)
         for i in range(len(marked_list)):
             print(Reg_obj_state.Reg[marked_list[i]])
-
+            
 
 
 
@@ -94,9 +108,9 @@ class Grover_Reflection(Algorithm):
 
 def main(n,marked_list):
 
-    grover = Grover(n, marked_list)
+    grover = Grover_Reflection(n, marked_list)
     grover.launch(n,marked_list)
 
 
 if __name__ == "__main__":
-    main(3,[0,3])
+    main(5,[0,3])

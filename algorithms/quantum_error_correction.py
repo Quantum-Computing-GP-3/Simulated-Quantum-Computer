@@ -1,16 +1,18 @@
 from algorithm import Algorithm
+import sys
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
+sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
+from hadamard import Hadamard
+from grover_gate import Grover
+from oracle import Oracle
+from cnot import CNOT
+from toffoli import Toffoli
+from pauli_X import Pauli_X as X
+from pauli_Z import Pauli_Z as Z
 
-from gates.hadamard import Hadamard
-from gates.grover_gate import Grover
-from gates.oracle import Oracle
-from gates.cnot import CNOT
-from gates.toffoli import Toffoli
-from gates.hadamard import Hadamard
-from gates.pauli_X import Pauli_X as X
-from gates.pauli_Z import Pauli_Z as Z
 
-
-from helpers.register import QuantumRegister as QReg
+from register import QuantumRegister as QReg
 import numpy as np
 
 H = Hadamard()
@@ -85,10 +87,11 @@ class QECorrection(Algorithm):
 
 
 
-def main(n,q, alpha, beta,pbit=0., psign=0. ):
+def __main__(n,q, alpha, beta,pbit=0., psign=0. ):
     shor = QECorrection()
     shor.launch(n,q, alpha, beta,pbit, psign)
 
 
 if __name__ == "__main__":
-    main(9,0, 0.2,0.7, 0.8,0.8)
+    __main__(9,0, 0.2,0.7, 0.8,0.8)
+
