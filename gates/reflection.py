@@ -66,4 +66,5 @@ class Reflection(Gate):
         
         Reg_obj_state.Reg = 2*Reg_obj_state.Reg - reg_original.Reg
         Reg_obj_state.norm()
+        print('iteration reflection', max(Reg_obj_state.Reg)**2)
         #print('nononom',Reg_obj_state.Reg, '\n\n')

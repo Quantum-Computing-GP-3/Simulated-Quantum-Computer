@@ -95,6 +95,7 @@ def main(n,marked_list):
 
 
 if __name__ == "__main__":
+    """
     print('5,    [0,3] \n')
     main(5,[0,3])
     print('6,    [2] \n')
@@ -104,4 +105,5 @@ if __name__ == "__main__":
     print('5,    [0,30] \n')
     main(5,[0, 30])
     print('5,    [10] \n')
-    main(5,[10])
+    """
+    main(10,[10])
