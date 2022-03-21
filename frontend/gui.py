@@ -40,7 +40,12 @@ class MainGUI(QWidget):
     def launch_callback(self):
         alg_to_run = self.ALG_MENU.currentText()
         if alg_to_run == "Grover (O & G gates)":
-            self.widget = GroverOGGUI()  # Launch Grover GUI
+            self.widget = GroverOGGUI()  # Launch Grover O&G GUI
+        elif alg_to_run == "Grover (Reflection gates)":
+            self.widget = GroverRefGUI() # Launch Grover Reflection GUI
+        elif alg_to_run == "Grover (Tensor representation)":
+            # self.widget = GroverRefGUI() # Launch Grover Tensor GUI
+            pass
         elif alg_to_run == "Quantum Error Correction":
             self.widget = QECGUI()  # Launch Shor GUI
         else:
@@ -49,11 +54,11 @@ class MainGUI(QWidget):
 
 class GroverOGGUI(QWidget):
     """
-    PyQt5 GUI object for visualising Grover's algorithm
+    PyQt5 GUI object for visualising Grover's algorithm using O and G gates
     """
     def __init__(self):
         super(GroverOGGUI, self).__init__()
-        uic.loadUi(join(PKG_PATH, 'resource', 'grover.ui'), self)
+        uic.loadUi(join(PKG_PATH, 'resource', 'groverOG.ui'), self)
 
         # Connect launch button to Grover's algorithm
         self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
@@ -73,10 +78,62 @@ class GroverOGGUI(QWidget):
         grover = Grover(n_qbits, state)
         grover.launch()
 
+class GroverRefGUI(QWidget):
+    """
+    PyQt5 GUI object for visualising Grover's algorithm using reflections
+    """
+    def __init__(self):
+        super(GroverRefGUI, self).__init__()
+        uic.loadUi(join(PKG_PATH, 'resource', 'groverRef.ui'), self)
+
+        # Connect launch button to Grover's algorithm
+        self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
+        self.LAUNCH_GROVER.clicked.connect(self.grover_launch)
+
+        # Parameters for Grover
+        self.QBIT_SELECTION = self.findChild(QSpinBox, "RegisterSize")
+        self.STATE_SELECTION = self.findChild(QLineEdit, "State")
+
+        # Display GUI- should always run last in constructor
+        self.show()
+
+    # Launch Grover's algorithm
+    def grover_launch(self):
+        n_qbits = self.QBIT_SELECTION.value()
+        state = self.STATE_SELECTION.text()
+        grover = Grover_Reflection(n_qbits, state)
+        grover.launch()
+
+class GroverTensGUI(QWidget):
+    """
+    PyQt5 GUI object for visualising Grover's algorithm using tensor notation
+    """
+    def __init__(self):
+        super(GroverTensGUI, self).__init__()
+        uic.loadUi(join(PKG_PATH, 'resource', 'groverTens.ui'), self)
+
+        # Connect launch button to Grover's algorithm
+        self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
+        self.LAUNCH_GROVER.clicked.connect(self.grover_launch)
+
+        # Parameters for Grover
+        self.QBIT_SELECTION = self.findChild(QSpinBox, "RegisterSize")
+        self.STATE_SELECTION = self.findChild(QLineEdit, "State")
+
+        # Display GUI- should always run last in constructor
+        self.show()
+
+    # Launch Grover's algorithm
+    def grover_launch(self):
+        n_qbits = self.QBIT_SELECTION.value()
+        state = self.STATE_SELECTION.text()
+        # grover = Grover(n_qbits, state)
+        # grover.launch()
+
 
 class QECGUI(QWidget):
     """
-    PyQt5 GUI object for visualising Shor's algorithm
+    PyQt5 GUI object for visualising Quantum Error Correction
     """
 
     def __init__(self):
@@ -85,10 +142,10 @@ class QECGUI(QWidget):
         # Display GUI- should always run last in constructor
         self.show()
 
-    # Launch Shor's algorithm
-    def shor_launch(self):
-        shor = QECorrection()
-        shor.launch()
+    # Launch Error Correction algorithm
+    def QEC_launch(self):
+        qec = QECorrection()
+        qec.launch()
 
 
 def main():
