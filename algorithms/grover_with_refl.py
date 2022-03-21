@@ -8,6 +8,7 @@ from gates.reflection import Reflection
 import time
 from helpers.register import QuantumRegister as QReg
 import math
+import matplotlib.pyplot as plt
 H = Hadamard()
 R = Reflection()
 
@@ -32,6 +33,10 @@ class Grover_Reflection(Algorithm):
             :return:
 
                 """
+
+        if len(marked_list)>=2**(self.n_qbits-1):
+            raise TypeError("Error: The number of searching states supplied must be less than half the size of the register")
+
 
         # Reg_obj_state is register object describing the whole statevector
         # Reg_obj_marked is register object containing the states-to-be-marked
@@ -82,13 +87,45 @@ class Grover_Reflection(Algorithm):
             
             
         print("The resulting quantum register should have a certain state (or states) amplified:")
-        print(Reg_obj_state.Reg)
+        #print(Reg_obj_state.Reg)
         for i in range(len(marked_list)):
             print(Reg_obj_state.Reg[marked_list[i]])
-            
+
+        self.barchart(Reg_obj_state)
 
 
 
+    def barchart(self,Reg_obj):
+
+
+        Reals = np.real(Reg_obj.Reg)
+        Reals = np.abs(Reals)
+
+        maximum = np.max(Reals)
+        arg_max = np.argwhere(np.isclose(Reals, maximum))
+        max_arr = Reals[arg_max]
+        strings = []
+
+        for n in range(0,len(arg_max[:,0])):
+            strings.append(str(bin(arg_max[n,0])))
+
+
+        #find binary string values
+        for s in range(len(strings)):
+            string = strings[s].lstrip("0")
+            string = string.lstrip("b")
+            strings[s] = string
+
+        strings.append("all others")
+        minimum = np.min(Reals)
+        full_arr = np.append(max_arr, minimum)
+
+
+        plt.title("Amplified states")
+        plt.xlabel("Binary state")
+        plt.ylabel("Probability")
+        plt.bar(strings, np.real(full_arr**2), color = "teal")
+        plt.show()
 
 
 
@@ -112,8 +149,8 @@ if __name__ == "__main__":
     #main(5,[10])
     t1 = time.time()
 
-    main(3, [0,1,3,5,6,7])
-    main(6, [3])
+    #main(5, [0,1,3])
+    main(3, [1,2,3])
     t2 = time.time()
     dif= t2-t1
     print(round(dif,3))
