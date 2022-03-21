@@ -28,25 +28,6 @@ class QuantumRegister(object):
             self.inc_int_vector()
 
 
-    def tensor_notation(self):
-        """
-        converts self.Reg from vector to tensor notation
-        useful for using with pablo's original act_on
-        :return:
-        """
-        self.Reg = np.reshape(self.Reg, (2,)*self.n)
-
-        return
-
-    def vector_notation(self):
-        """
-        converts self.Reg from tensor to vector notation
-        useful for using with Stuart's algorithms
-        :return:
-        """
-        self.Reg = self.Reg.flatten()
-        return
-
     def inc_int_vector(self):
         """
         useful sometimes for visualisation and troubleshooting particularly cnot
@@ -55,45 +36,6 @@ class QuantumRegister(object):
         for i in range(2**self.n):
             self.Reg[i] = i
         return
-
-
-    def error_channel(self, q, pbit=0., psign=0.):
-        """
-        :param q: integer
-            qubit that the error_channel actson
-        :param pbit: real number between 0 and 1
-            probability of bitflip
-        :param psign: real number between 0 and 1
-            probability of signflip
-
-        error channel is the channel that corrupts the single qubit with certain probability
-        it acts on a qubit q. for the easiest case of shor's algorithm, there is only one
-        possible qubit to act on and that is qbit 0
-        """
-
-        #errors*************
-
-
-
-
-        # now decide randomly if qbit will be corrupted
-        # this depends on the corruption probability
-        # with this one can tune the noise up or down
-        corruptionbit = np.random.random()
-        corruptionsign = np.random.random()
-
-        if corruptionsign < psign:
-            print('signcorruption')
-            Z.acts_on(self, q)
-        else:
-            print('no signcorruption')
-
-        if corruptionbit < pbit:
-            print('bitcorruption')
-            X.acts_on(self, q)
-        else:
-            print('no bitcorruption')
-
 
 
     def norm(self):
