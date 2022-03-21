@@ -8,11 +8,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox, QSpin
 
 from algorithms.grover import Grover
 from algorithms.quantum_error_correction import QECorrection
-from algorithms.grover_with_refl import Grover_with_Refl
-
-plt.plot(1,1)
-plt.show()
-sys.exit("hi")
+from algorithms.grover_with_refl import Grover_Reflection
 
 PKG_PATH = Path(__file__).parent.parent  # Simulated-Quantum-Computer package path
 ALGORITHMS = ["Grover", "Shor"]  # List of algorithms
@@ -24,7 +20,7 @@ class MainGUI(QWidget):
     """
     def __init__(self):
         super(MainGUI, self).__init__()
-        uic.loadUi(join(PKG_PATH, 'resource/mainpage.ui'), self)
+        uic.loadUi(join(PKG_PATH, 'resource', 'mainpage.ui'), self)
         self.widget = None
 
         # Add Algorithms listed in the appropriate directory
@@ -57,7 +53,7 @@ class GroverGUI(QWidget):
     """
     def __init__(self):
         super(GroverGUI, self).__init__()
-        uic.loadUi(join(PKG_PATH, 'resource/grover.ui'), self)
+        uic.loadUi(join(PKG_PATH, 'resource', 'grover.ui'), self)
 
         # Connect launch button to Grover's algorithm
         self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")

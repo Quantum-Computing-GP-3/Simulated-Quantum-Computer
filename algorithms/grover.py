@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-from algorithm import Algorithm
+from .algorithm import Algorithm
 from gates.hadamard import Hadamard
 from gates.grover_gate import Grover
 from gates.oracle import Oracle

@@ -1,5 +1,5 @@
 import numpy as np
-from algorithm import Algorithm
+from .algorithm import Algorithm
 from gates.hadamard import Hadamard
 from gates.cnot import CNOT
 from gates.toffoli import Toffoli

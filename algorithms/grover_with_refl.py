@@ -1,20 +1,12 @@
-from algorithm import Algorithm
+from .algorithm import Algorithm
 import sys
-"""
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
-"""
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/gates')
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/register')
 
 import numpy as np
-from hadamard import Hadamard
+from gates.hadamard import Hadamard
 import copy
-from reflection import Reflection
+from gates.reflection import Reflection
 import time
-from register import QuantumRegister as QReg
+from helpers.register import QuantumRegister as QReg
 import math
 H = Hadamard()
 R = Reflection()
