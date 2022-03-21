@@ -1,9 +1,6 @@
-
-import sys
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
-from pauli_X import Pauli_X as X
-from pauli_Z import Pauli_Z as Z
 import numpy as np
+from gates.pauli_X import Pauli_X as X
+from gates.pauli_Z import Pauli_Z as Z
 X = X()
 Z = Z()
 

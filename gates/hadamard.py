@@ -1,6 +1,4 @@
-from gate import Gate
-#from helpers.acts_on import Stu_acts_on, acts_on_all
-import math
+from .gate import Gate
 import numpy as np
 
 

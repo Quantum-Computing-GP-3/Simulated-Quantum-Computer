@@ -1,7 +1,4 @@
-from gate import Gate
-import sys
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-
+from .gate import Gate
 
 class Pauli_Z(Gate):
 

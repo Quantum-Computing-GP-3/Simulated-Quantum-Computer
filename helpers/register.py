@@ -1,5 +1,3 @@
-import sys
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
 import numpy as np
 
 

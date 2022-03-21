@@ -1,19 +1,12 @@
-
-import sys
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
-from gate import Gate
+from .gate import Gate
 import copy
-from register import QuantumRegister as QReg
-from algorithm import Algorithm
-from hadamard import Hadamard
-from grover_gate import Grover
-from oracle import Oracle
-from cnot import CNOT
-from toffoli import Toffoli
-from pauli_X import Pauli_X as X
-from pauli_Z import Pauli_Z as Z
+from helpers.register import QuantumRegister as QReg
+from algorithms.algorithm import Algorithm
+from .hadamard import Hadamard
+from .cnot import CNOT
+from .toffoli import Toffoli
+from .pauli_X import Pauli_X as X
+from .pauli_Z import Pauli_Z as Z
 import numpy as np
 H = Hadamard()
 CNOT = CNOT()
@@ -21,7 +14,6 @@ T = Toffoli()
 X = X()
 Z = Z()
 import time
-import math
 
 
 class Reflection(Gate):

@@ -1,27 +1,13 @@
-
-from algorithm import Algorithm
-import sys
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/gates')
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/register')
-
-
-from hadamard import Hadamard
-from cnot import CNOT
-from toffoli import Toffoli
-from pauli_X import Pauli_X as X
-from pauli_Z import Pauli_Z as Z
-from register import QuantumRegister as QReg
-from error_channel import error_channel
-
-
-
 import numpy as np
+from algorithm import Algorithm
+from gates.hadamard import Hadamard
+from gates.cnot import CNOT
+from gates.toffoli import Toffoli
+from helpers.register import QuantumRegister as QReg
+from helpers.error_channel import error_channel
 H = Hadamard()
 CNOT = CNOT()
 T = Toffoli()
-X = X()
-Z = Z()
 
 
 class QECorrection(Algorithm):

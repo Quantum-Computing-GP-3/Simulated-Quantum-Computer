@@ -1,7 +1,5 @@
 import numpy as np
-
-from gate import Gate
-#from helpers.acts_on import Stu_acts_on, acts_on_all
+from .gate import Gate
 
 
 class Toffoli(Gate):

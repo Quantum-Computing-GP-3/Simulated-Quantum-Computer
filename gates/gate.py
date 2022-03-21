@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from register import QuantumRegister as QReg
+from helpers.register import QuantumRegister as QReg
 
 class Gate(ABC):
     """

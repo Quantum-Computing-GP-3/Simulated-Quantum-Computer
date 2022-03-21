@@ -1,22 +1,10 @@
-from algorithm import Algorithm
 import sys
-"""
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
-"""
-
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/gates')
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/register')
-
-
-from hadamard import Hadamard
-from grover_gate import Grover
-from oracle import Oracle
-from register import QuantumRegister as QReg
 import numpy as np
-import math
+from algorithm import Algorithm
+from gates.hadamard import Hadamard
+from gates.grover_gate import Grover
+from gates.oracle import Oracle
+from helpers.register import QuantumRegister as QReg
 H = Hadamard()
 G = Grover()
 O = Oracle()
@@ -63,7 +51,7 @@ class Grover(Algorithm):
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.
         #the number of Grover iterations is given by the following calculation
-        n_iter = int((math.pi / 4 * math.sqrt(2 ** n))/len(marked_list))
+        n_iter = int((np.pi / 4 * np.sqrt(2 ** n))/len(marked_list))
         
         if n_iter == 0:
             print("n = 0 so do once")
