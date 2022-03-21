@@ -22,11 +22,10 @@ class Pauli_Z(Gate):
         self.Error_checker(Reg_obj, q, all)
 
 
-        #*********************
-
         if all == True:
             q = [i for i in range(Reg_obj.n)]
 
+        #action of Z: signflip if qbit is 1
         for qbit in q:
             i = 2 ** qbit
             while i <= Reg_obj.N - 1:

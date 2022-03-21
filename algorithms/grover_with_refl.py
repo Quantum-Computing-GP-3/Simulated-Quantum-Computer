@@ -32,65 +32,62 @@ class Grover_Reflection(Algorithm):
         Triggers the start of Grover's algorithm
         """
 
-
         """
-                Function to act grover using Qgate objects, a QReg object and a given state
-                :param Reg_obj: QReg object
-                    register object
-                :param state: string of 1&0's etc "1100"
-                    state for oracle
-                :return:
+
+        Function to act grover using Qgate objects, a QReg object and a given state
+            :param Reg_obj: QReg object
+                register object
+            :param state: string of 1&0's etc "1100"
+                state for oracle
+            :return:
+
                 """
 
-        # Reg_obj is register object, Reg is Quantum_Register class function
-        # define number of qubits in register
-
+        # Reg_obj_state is register object describing the whole statevector
+        # Reg_obj_marked is register object containing the states-to-be-marked
+        # Reg is Quantum_Register class function
+        # define number n of qubits in register
         Reg_obj_state = QReg(n)
         Reg_obj_marked = QReg(n)
         
-
-        a = 0
+        Reg_obj_marked.Reg[0] = 0 
+        #our register initialization: not as (0 0 0 0 0) but (1 0 0 0 0)^t - the state needs one nonzero entry to be normalized and a proper quantum state)
+        # due to this initializtaon, one needs to manually set the first entry to zero here
         for elm in marked_list:
             Reg_obj_marked.Reg[elm] = 1
-            if elm == 0:
-                a += 1 
-        if a == 0:
-            Reg_obj_marked.Reg[0] = 0
 
-        Reg_obj_marked.norm
-        Reg_obj_state.norm
-        """
-        #make the state into a list of 1's and 0's
-        state_list = list(state)
-        for i in range(len(state_list)):
-            state_list[i] = int(state_list[i])
-        if len(state_list) != n:
-            sys.exit("the state you have supplied is for the wrong number of qubits")
-        """
+        Reg_obj_marked.norm()
 
         # act hadamard on all qubits
         H.acts_on(Reg_obj_state, all=True)
 
         Reg_obj_Psi_0 =  copy.deepcopy(Reg_obj_state)
+        #store the initialized state with equal probabilities for the Grover reflection later
 
+
+        #possible error: IS THIS RIGHT?????*******
         if (max(marked_list) + 1) ** (1 / n) > 2:
             sys.exit("An index given is too large for the register")
+        #*****************************************
+
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.
-        n_iter = int((math.pi / 4 * math.sqrt(2 ** n))/len(marked_list))
+        #the number of Grover iterations is given by the following calculation
+        n_iter = int((math.pi / 4 * np.sqrt(2 ** n))/len(marked_list))
+
+
+        #IS THIS RIGHT``````````
         if n_iter == 0:
             print("n = 0 so do once")
             n_iter = 1
-        print(n_iter)
     
         #now we do O and G, both with a call to the reflection operator
         # O reflects Reg around our desired states
         #don't forget *(-1): since effect is '1 - projection on s'
-        # G reflecs our new Reg around the initial state of equal probability superpositions
+        # G reflects our new Reg around the initial state of equal probability superpositions
         for _ in range (n_iter):
             R.acts_on(Reg_obj_state, Reg_obj_marked) 
             Reg_obj_state.Reg *= (-1)
-            #print(Reg_obj_state.Reg)
             R.acts_on (Reg_obj_state, Reg_obj_Psi_0)
             
             
@@ -124,7 +121,9 @@ if __name__ == "__main__":
     #print('5,    [10] refl \n')
     #main(5,[10])
     t1 = time.time()
+
     main(3, [0,1,3,5,6,7])
+    main(6, [3])
     t2 = time.time()
     dif= t2-t1
     print(round(dif,3))

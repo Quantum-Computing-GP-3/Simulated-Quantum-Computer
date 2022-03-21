@@ -15,6 +15,8 @@ from register import QuantumRegister as QReg
 from error_channel import error_channel
 
 
+
+import numpy as np
 H = Hadamard()
 CNOT = CNOT()
 T = Toffoli()
@@ -29,6 +31,12 @@ class QECorrection(Algorithm):
 
     def launch(self, alpha, beta, pbit=0., psign=0.):
         """
+
+        runs the Shor code for error correction for one qubit in state Psi = alpha * ket(0)+ beta * ket(1)
+        the qubit in state Psi is qubit 0
+        the errorchannel acts on this qubit
+        in order to reverse effect of errorchannel, one needs 8 ancilla states
+
         :param alpha: real number
             coefficient for 0-state
         :param beta: real number
@@ -37,10 +45,8 @@ class QECorrection(Algorithm):
             probability of bitflip
         :param psign: real number between 0 and 1
             probability of signflip
-        runs the Shor code for error correction for one qubit in state Psi = alpha * ket(0)+ beta * ket(1)
-        the qubit in state Psi is qubit 0
-        the errorchannel acts on this qubit
-        in order to reverse effect of errorchannel, one needs 8 ancilla states
+
+
         """
         Reg_obj = QReg(9)
         Reg_obj.Reg[0] = alpha
@@ -56,7 +62,9 @@ class QECorrection(Algorithm):
         C_list2 = [[0, 2], [3, 5], [6, 8]]
         T_list = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
 
+
         # now we follow the quantum error correction protocol
+
         CNOT.acts_on(Reg_obj, [0, 3])
         CNOT.acts_on(Reg_obj, [0, 6])
         H.acts_on(Reg_obj, [0, 3, 6])
@@ -69,6 +77,9 @@ class QECorrection(Algorithm):
 
         # error channel corrupts bit and sign with a probability given by pbit, psign
         error_channel(Reg_obj,[0], pbit, psign)
+
+
+
 
         for i in range(3):
             CNOT.acts_on(Reg_obj, C_list1[i])
@@ -88,6 +99,7 @@ class QECorrection(Algorithm):
         # but alpha and beta stayed the same!!!:
         alpha_new = 0
         beta_new = 0
+        print(Reg_obj.Reg)
         for i in range(Reg_obj.N):
             if i % 2 == 0:  # 0-coefficients
                 alpha_new += Reg_obj.Reg[i]
@@ -101,11 +113,18 @@ def __main__(alpha, beta, pbit=0., psign=0.):
     shor.launch(alpha, beta, pbit, psign)
 
 
+
+
+
+
+
+def __main__(alpha, beta,pbit=0., psign=0. ):
+    shor = QECorrection()
+    shor.launch(alpha, beta,pbit, psign)
+
+
 if __name__ == "__main__":
-    # alpha, beta do not need to be normalized as input
-    __main__(0.2, 0.7, 1, 1)
-
-
-
+    #alpha, beta do not need to be normalized as input
+    __main__( 0.2,0.7, 0.,0.)
 
 

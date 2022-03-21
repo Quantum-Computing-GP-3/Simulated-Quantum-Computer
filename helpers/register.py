@@ -17,27 +17,17 @@ class QuantumRegister(object):
         """
 
         # First step is to initialise a quantum register of n qubits to the 0 state.
-        #reg = np.zeros((2 ** n), dtype=complex)
-        # For now, initialise with the first state = 1
-        #reg[0] = 1
-        #print(reg)
-        reg = np.array([0,]*2**n, dtype='complex')
+        reg = np.zeros((2 ** n), dtype=complex)
+        #For now, initialise with the first state = 1
         reg[0] = 1
-        #print(reg)
 
-
-        self.n = n
-        self.N = 2**n
+        self.n = n     #number of qubits
+        self.N = 2**n  #length of register
         self.Reg = reg
 
         # Useful sometimes for visualisation and troubleshooting particularly cnot
         if increasing_integers:
             self.inc_int_vector()
-
-
-
-    def Error_catch(self):
-
 
 
     def tensor_notation(self):
@@ -68,11 +58,49 @@ class QuantumRegister(object):
             self.Reg[i] = i
         return
 
+
+    def error_channel(self, q, pbit=0., psign=0.):
+        """
+        :param q: integer
+            qubit that the error_channel actson
+        :param pbit: real number between 0 and 1
+            probability of bitflip
+        :param psign: real number between 0 and 1
+            probability of signflip
+
+        error channel is the channel that corrupts the single qubit with certain probability
+        it acts on a qubit q. for the easiest case of shor's algorithm, there is only one
+        possible qubit to act on and that is qbit 0
+        """
+
+        #errors*************
+
+
+
+
+        # now decide randomly if qbit will be corrupted
+        # this depends on the corruption probability
+        # with this one can tune the noise up or down
+        corruptionbit = np.random.random()
+        corruptionsign = np.random.random()
+
+        if corruptionsign < psign:
+            print('signcorruption')
+            Z.acts_on(self, q)
+        else:
+            print('no signcorruption')
+
+        if corruptionbit < pbit:
+            print('bitcorruption')
+            X.acts_on(self, q)
+        else:
+            print('no bitcorruption')
+
+
+
     def norm(self):
         '''
         function to normalize state
-        :param Reg_obj: obj
-            register
         '''
 
         # errors*************************
@@ -80,6 +108,7 @@ class QuantumRegister(object):
         # *******************************
 
         sum = 0
+
         # sprint('testnorm')
 
         for i in range(2 ** (self.n)):
@@ -92,6 +121,14 @@ class QuantumRegister(object):
         # print(Norm)
 
         # self.Reg = [Norm * i for i in self.Reg]
+
+
+        
+        for i in range(2 ** (self.n)):
+            sum += self.Reg[i] ** 2
+            #sum over all probabilities ( = (entries of register)**2)
+        Norm = 1 / np.sqrt(sum)
+
 
         self.Reg *= Norm
 

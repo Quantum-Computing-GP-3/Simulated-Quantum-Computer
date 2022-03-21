@@ -1,7 +1,7 @@
 from gate import Gate
 #from helpers.acts_on import Stu_acts_on, acts_on_all
 import math
-
+import numpy as np
 
 
 class Hadamard(Gate):
@@ -17,11 +17,31 @@ class Hadamard(Gate):
             whether Hadamard should be acted on all qubits
         '''
 
+
         self.Error_checker(Reg_obj, q, all)
         if all == True:
             q = [i for i in range(Reg_obj.n)]
 
 
+        
+        """ERRORS
+        #max(q) does not work
+        print('test', Reg_obj.n, max(q))
+        #errors************
+        #q indices need to be within the register size
+        if max(q) -1 > Reg_obj.n:
+            raise IndexError ('Error: the qubits you want to act on exceed the Register size')
+
+        #type of q is list or similar
+        if isinstance(q, (list,tuple)) == False:
+            raise TypeError('Error: gate expects list of qubit arguments')
+
+        #type of each entry in q is int (qbit number from 0 to n-1)
+        for qbit in q:
+            if isinstance(qbit, (int)) == False:
+                raise TypeError('Error: gate expects list of integer qubit arguments')
+        """
+        #******************
 
         if all == True:
             q = [i for i in range(Reg_obj.n)]
@@ -42,8 +62,8 @@ class Hadamard(Gate):
                     # action of H on both states at once -> less looping
 
                     #then we need to redefine the amplitudes of states i and i+2**qbit, considering the action of H
-                    Reg_obj.Reg[i] = 1 / math.sqrt(2) * (a + b)
-                    Reg_obj.Reg[i + 2 ** qbit] = 1 / math.sqrt(2) * (a - b)
+                    Reg_obj.Reg[i] = 1 / np.sqrt(2) * (a + b)
+                    Reg_obj.Reg[i + 2 ** qbit] = 1 / np.sqrt(2) * (a - b)
                     
                     i += 1
                 i += 2 ** qbit
