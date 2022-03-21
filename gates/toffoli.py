@@ -15,23 +15,6 @@ class Toffoli(Gate):
             qubits to act on, expects list with three nonidentical entries
         '''
 
-        #errors******************
-        """
-        #q needs to be triple with nonidentical entries
-        if len(q)!= 3 or len(q) != len(set(q)):
-            raise ValueError('Error: gate expects 3 nonidentical qubit arguments')
-    
-        #q indices need to be within the register size
-        if max(q) -1 > Reg_obj.n:
-            raise IndexError ('Error: the qubits you want to act on exceed the Register size')
-
-        if isinstance(q, (list,tuple)) == False:
-            raise TypeError('Error: gate expects list of qubit arguments')
-
-        for qbit in q:
-            if isinstance(qbit, (int)) == False:
-                raise TypeError('Error: gate expects list of integer qubit arguments')
-        """
                 
         #************************
         #errors******************

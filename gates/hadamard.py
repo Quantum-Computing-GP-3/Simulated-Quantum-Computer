@@ -24,23 +24,7 @@ class Hadamard(Gate):
 
 
         
-        """ERRORS
-        #max(q) does not work
-        print('test', Reg_obj.n, max(q))
-        #errors************
-        #q indices need to be within the register size
-        if max(q) -1 > Reg_obj.n:
-            raise IndexError ('Error: the qubits you want to act on exceed the Register size')
 
-        #type of q is list or similar
-        if isinstance(q, (list,tuple)) == False:
-            raise TypeError('Error: gate expects list of qubit arguments')
-
-        #type of each entry in q is int (qbit number from 0 to n-1)
-        for qbit in q:
-            if isinstance(qbit, (int)) == False:
-                raise TypeError('Error: gate expects list of integer qubit arguments')
-        """
         #******************
 
         if all == True:

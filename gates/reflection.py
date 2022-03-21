@@ -39,12 +39,6 @@ class Reflection(Gate):
             Register Object around which to reflect about
         """
 
-        #errors***********
-        """
-        if len(Reg_obj_op.Reg) != len(Reg_obj_state.Reg):
-            raise ValueError('Error: the register sizes need to be the same')
-        """
-        #*****************
         #No error check for this yet!!!!!!!
 
 

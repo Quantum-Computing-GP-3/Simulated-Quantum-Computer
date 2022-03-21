@@ -2,8 +2,7 @@ import numpy as np
 from gate import Gate
 import sys
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-from cartesian_products import stu_cartesian_product_n_qubits
-from misc import get_state_index
+
 
 
 
@@ -32,17 +31,6 @@ class CNOT(Gate):
             qubits to act on
         '''
 
-        #errors**************
-        """
-        #q needs to be tuple with nonidentical entries
-        if len(q)!= 2 or len(q) != len(set(q)):
-            raise ValueError('Error: gate expects 2 nonidentical qubit arguments')
-    
-        #q indices need to be within the register size
-        if max(q) -1 > Reg_obj.n:
-            raise IndexError ('Error: the qubits you want to act on exceed the Register size')
-        #********************
-        """
 
         #errors**************
         self.Error_checker(Reg_obj, q, None)

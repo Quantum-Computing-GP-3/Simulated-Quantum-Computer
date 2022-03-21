@@ -1,8 +1,7 @@
 from gate import Gate
 import sys
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-from cartesian_products import stu_cartesian_product_n_qubits
-from misc import get_state_index
+
 
 
 class Pauli_X(Gate):
@@ -17,24 +16,6 @@ class Pauli_X(Gate):
             whether X should be acted on all qubits
         '''
 
-        """
-        #errors *********
-
-        self.Error_checker(Reg_obj, q, all)
-        #q indices need to be within the register size
-        if max(q) -1 > Reg_obj.n:
-            raise IndexError ('Error: the qubits you want to act on exceed the Register size')
-
-        #type of q is list or similar
-        if isinstance(q, (list,tuple)) == False:
-            raise TypeError('Error: gate expects list of qubit arguments')
-
-        #type of each entry in q is int (qbit number from 0 to n-1)
-        for qbit in q:
-            if isinstance(qbit, (int)) == False:
-                raise TypeError('Error: gate expects list of integer qubit arguments')
-        """
-        #****************
 
 
         if all == True:

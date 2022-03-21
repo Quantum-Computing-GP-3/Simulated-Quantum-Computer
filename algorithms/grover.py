@@ -14,12 +14,6 @@ sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/Gi
 from hadamard import Hadamard
 from grover_gate import Grover
 from oracle import Oracle
-from cnot import CNOT
-from toffoli import Toffoli
-from pauli_X import Pauli_X as X
-from pauli_Z import Pauli_Z as Z
-import copy
-from reflection import Reflection
 from register import QuantumRegister as QReg
 import numpy as np
 import math
@@ -51,28 +45,9 @@ class Grover(Algorithm):
             raise TypeError("Error: The number of searchg states supplied must be less than half the size of the register")
 
 
-        """
-                Function to act grover using Qgate objects, a QReg object and a given state
-                :param Reg_obj: QReg object
-                    register object
-                :param state: string of 1&0's etc "1100"
-                    state for oracle
-                :return:
-                """
-
-
         # Reg_obj is register object, Reg is Quantum_Register class function
         # define number n of qubits in register
         Reg_obj = QReg(n)
-
-        """IS THIS NECESSARY???????????
-        #make the state into a list of 1's and 0's
-        state_list = list(state)
-        for i in range(len(state_list)):
-            state_list[i] = int(state_list[i])
-        if len(state_list) != n:
-            sys.exit("the state you have supplied is for the wrong number of qubits")
-        """
 
         # act hadamard on all qubits
         H.acts_on(Reg_obj, all=True)

@@ -17,17 +17,7 @@ def error_channel(Reg_obj, q, pbit=0., psign=0.):
     possible qubit to act on and that is qbit 0
     """
 
-    # errors*************
-    """
-    #q index needs to be within the register size
-    if q -1 > self.n:
-        raise IndexError ('Error: the qubit you want to act on with error_channel exceeds the Register size')
 
-    #type of q is int (qbit number from 0 to n-1)
-    if isinstance(q, (int)) == False:
-        raise TypeError('Error: error_channel expects list of integer qubit arguments')
-    """
-    # *******************
 
     # now decide randomly if qbit will be corrupted
     # this depends on the corruption probability

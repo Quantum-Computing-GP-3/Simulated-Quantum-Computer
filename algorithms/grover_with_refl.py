@@ -9,6 +9,7 @@ sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/Gi
 sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/helpers')
 sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/register')
 
+import numpy as np
 from hadamard import Hadamard
 import copy
 from reflection import Reflection
@@ -29,10 +30,7 @@ class Grover_Reflection(Algorithm):
 
     def launch(self,n,marked_list):
         """
-        Triggers the start of Grover's algorithm
-        """
 
-        """
 
         Function to act grover using Qgate objects, a QReg object and a given state
             :param Reg_obj: QReg object
@@ -68,7 +66,7 @@ class Grover_Reflection(Algorithm):
         #possible error: IS THIS RIGHT?????*******
         if (max(marked_list) + 1) ** (1 / n) > 2:
             sys.exit("An index given is too large for the register")
-        #*****************************************
+
 
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.

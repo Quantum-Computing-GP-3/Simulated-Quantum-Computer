@@ -14,9 +14,6 @@ class Grover(Gate):
 
         #no error check yet
         
-        n = Reg_obj.n
-        N = Reg_obj.N
-
         n = Reg_obj.n #number of qubits
         N = Reg_obj.N #length of register
 
@@ -25,7 +22,7 @@ class Grover(Gate):
         rest = 2/N   #entries on non-diagonals of grover matrix
 
         reg_old = Reg_obj.Reg
-        reg_new = np.zeros(N) #we don't necessarily need this to be a register object; an array does the work as well
+        reg_new = np.zeros(N, dtype = "complex") #we don't necessarily need this to be a register object; an array does the work as well
         
         #act the 'matrix' on the statevectorregister
         for i in range(N):
