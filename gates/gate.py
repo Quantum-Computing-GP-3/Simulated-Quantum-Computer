@@ -30,6 +30,7 @@ class Gate(ABC):
                 raise TypeError(
                     'Error: gate expects list of qubit arguments')  # type of each entry in q is int (qbit number from 0 to n-1)
             if max(q) - 1 > Reg_obj.n:
+
                 raise IndexError(
                     'Error: the qubits you want to act on exceed the Register size')  # type of q is list or similar
 
