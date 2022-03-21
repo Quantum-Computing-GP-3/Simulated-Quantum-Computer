@@ -1,10 +1,12 @@
 import sys
 import numpy as np
-from .algorithm import Algorithm
+from algorithm import Algorithm
+#Stu has to take away this dot for now, if I forget to put it back: soryyyy
 from gates.hadamard import Hadamard
 from gates.grover_gate import Grover
 from gates.oracle import Oracle
 from helpers.register import QuantumRegister as QReg
+import matplotlib.pyplot as plt
 H = Hadamard()
 G = Grover()
 O = Oracle()
@@ -83,7 +85,10 @@ class Grover(Algorithm):
         for i in range(len(marked_list)):
             print(Reg_obj.Reg[marked_list[i]])
 
-        print(np.degrees(angle_list))
+        print("hello")
+        #print(np.degrees(angle_list))
+        self.barchart(Reg_obj)
+        print("hi")
 
     def angle_vector(self, array_coefficients):
         """
@@ -104,17 +109,50 @@ class Grover(Algorithm):
 
         return array_angles
 
+    def barchart(self, Reg_obj):
+
+        Reals = np.real(Reg_obj.Reg)
+        Reals = np.abs(Reals)
+
+        maximum = np.max(Reals)
+        arg_max = np.argwhere(np.isclose(Reals, maximum))
+        max_arr = Reals[arg_max]
+        strings = []
+
+        for n in range(0, len(arg_max[:, 0])):
+            strings.append(str(bin(arg_max[n, 0])))
+
+        # find binary string values
+        for s in range(len(strings)):
+            string = strings[s].lstrip("0")
+            string = string.lstrip("b")
+            strings[s] = string
+
+        strings.append("all others")
+        minimum = np.min(Reals)
+        full_arr = np.append(max_arr, minimum)
+
+        plt.title("Amplified states")
+        plt.xlabel("Binary state")
+        plt.ylabel("Probability")
+        plt.bar(strings, np.real(full_arr ** 2), color="teal")
+        plt.show()
 
 
-def main(n,marked_list,animation=True):
+
+
+
+
+
+def main(n,marked_list,animation=False):
 
     grover = Grover(n, marked_list)
-    grover.launch(n,marked_list, animation = True)
+    grover.launch(n,marked_list, animation = animation)
 
 
 if __name__ == "__main__":
-    main(5, [0],animation=True)
-
+    #main(5, [0],animation=True)
+    main(5, [0,1,2])
     """
     print('5,    [0,3] \n')
     main(5,[0,3])
