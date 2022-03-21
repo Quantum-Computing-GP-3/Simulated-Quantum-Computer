@@ -6,7 +6,7 @@ from misc import get_state_index
 
 
 class Pauli_X(Gate):
-    def acts_on(self, Reg_obj, q, all = False):
+    def acts_on(self, Reg_obj, q= None, all = None):
         '''
         function to act X
         :param Reg_obj: obj
@@ -20,20 +20,7 @@ class Pauli_X(Gate):
 
         #errors *********
 
-        #q indices need to be within the register size
-        if max(q) -1 > Reg_obj.n:
-            raise IndexError ('Error: the qubits you want to act on exceed the Register size')
-
-        #type of q is list or similar
-        if isinstance(q, (list,tuple)) == False:
-            raise TypeError('Error: gate expects list of qubit arguments')
-
-        #type of each entry in q is int (qbit number from 0 to n-1)
-        for qbit in q:
-            if isinstance(qbit, (int)) == False:
-                raise TypeError('Error: gate expects list of integer qubit arguments')
-
-        #****************
+        self.Error_checker(Reg_obj, q, all)
 
         if all == True:
             q = [i for i in range(Reg_obj.n)]

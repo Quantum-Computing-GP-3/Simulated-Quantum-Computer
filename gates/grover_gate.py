@@ -31,6 +31,7 @@ class Grover(Gate):
             Register object
         """
 
+        #no error check yet
         
         n = Reg_obj.n
         N = Reg_obj.N

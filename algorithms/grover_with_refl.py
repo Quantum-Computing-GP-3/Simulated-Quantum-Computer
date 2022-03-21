@@ -1,20 +1,19 @@
 from algorithm import Algorithm
 import sys
+"""
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
+"""
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/gates')
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/helpers')
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/register')
+
 from hadamard import Hadamard
-from grover_gate import Grover
-from oracle import Oracle
-from cnot import CNOT
-from toffoli import Toffoli
-from pauli_X import Pauli_X as X
-from pauli_Z import Pauli_Z as Z
 import copy
 from reflection import Reflection
 import time
 from register import QuantumRegister as QReg
-import numpy as np
 import math
 H = Hadamard()
 R = Reflection()
@@ -33,8 +32,6 @@ class Grover_Reflection(Algorithm):
         Triggers the start of Grover's algorithm
         """
 
-        print("WOo Grover reflection worked")
-        print("Hi")
 
         """
                 Function to act grover using Qgate objects, a QReg object and a given state
@@ -127,7 +124,7 @@ if __name__ == "__main__":
     #print('5,    [10] refl \n')
     #main(5,[10])
     t1 = time.time()
-    main(10, [3])
+    main(3, [0,1,3,5,6,7])
     t2 = time.time()
     dif= t2-t1
     print(round(dif,3))

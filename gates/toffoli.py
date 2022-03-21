@@ -34,7 +34,10 @@ class Toffoli(Gate):
         """
                 
         #************************
-
+        #errors******************
+        self.Error_checker(Reg_obj,q, None)
+        if len(q) != 3 or len(q) != len(set(q)):
+            raise ValueError('Error: gate expects 3 nonidentical qubit arguments')
 
 
 

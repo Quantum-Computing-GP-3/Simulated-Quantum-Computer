@@ -19,6 +19,8 @@ class Oracle(Gate):
         """
 
         #errors***************
+        # no proper error check yet
+
 
         #state indices need to be within the register size
         if max(marked_list) -1 > Reg_obj.N:

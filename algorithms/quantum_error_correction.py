@@ -1,19 +1,19 @@
+
 from algorithm import Algorithm
 import sys
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
-sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/gates')
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/helpers')
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/register')
+
+
 from hadamard import Hadamard
-from grover_gate import Grover
-from oracle import Oracle
 from cnot import CNOT
 from toffoli import Toffoli
 from pauli_X import Pauli_X as X
 from pauli_Z import Pauli_Z as Z
-
-
 from register import QuantumRegister as QReg
-import numpy as np
+from error_channel import error_channel
+
 
 H = Hadamard()
 CNOT = CNOT()
@@ -22,23 +22,31 @@ X = X()
 Z = Z()
 
 
-
 class QECorrection(Algorithm):
     """
-    Runs Shor's algorithm
+    Runs Quantum Error Correction Algorithm
     """
 
-    def launch(self, n, q, alpha, beta, pbit=0., psign=0.):
+    def launch(self, alpha, beta, pbit=0., psign=0.):
         """
-        I DONT THINK THIS WORKS YET
-        this runs the Shor code for one qubit in state Psi
-        this is qubit 0
-        it needs 8 ancilla states
+        :param alpha: real number
+            coefficient for 0-state
+        :param beta: real number
+            coefficient for 1-state
+        :param pbit: real number between 0 and 1
+            probability of bitflip
+        :param psign: real number between 0 and 1
+            probability of signflip
+        runs the Shor code for error correction for one qubit in state Psi = alpha * ket(0)+ beta * ket(1)
+        the qubit in state Psi is qubit 0
+        the errorchannel acts on this qubit
+        in order to reverse effect of errorchannel, one needs 8 ancilla states
         """
-        Reg_obj = QReg(n, q)
+        Reg_obj = QReg(9)
         Reg_obj.Reg[0] = alpha
         Reg_obj.Reg[1] = beta
-        Reg_obj.norm() #necessary normalization since alpha and beta can be chosen arbitrarily by user
+
+        Reg_obj.norm()  # necessary normalization since alpha and beta can be chosen arbitrarily by user
 
         print('alpha', Reg_obj.Reg[0], 'beta', Reg_obj.Reg[1])
 
@@ -48,9 +56,10 @@ class QECorrection(Algorithm):
         C_list2 = [[0, 2], [3, 5], [6, 8]]
         T_list = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
 
+        # now we follow the quantum error correction protocol
         CNOT.acts_on(Reg_obj, [0, 3])
         CNOT.acts_on(Reg_obj, [0, 6])
-        CNOT.acts_on(Reg_obj, [0, 3, 6])
+        H.acts_on(Reg_obj, [0, 3, 6])
 
         for i in range(3):
             CNOT.acts_on(Reg_obj, C_list1[i])
@@ -58,7 +67,8 @@ class QECorrection(Algorithm):
         for i in range(3):
             CNOT.acts_on(Reg_obj, C_list2[i])
 
-        Reg_obj.error_channel([0], pbit, psign)
+        # error channel corrupts bit and sign with a probability given by pbit, psign
+        error_channel(Reg_obj,[0], pbit, psign)
 
         for i in range(3):
             CNOT.acts_on(Reg_obj, C_list1[i])
@@ -83,15 +93,19 @@ class QECorrection(Algorithm):
                 alpha_new += Reg_obj.Reg[i]
             else:  # 1-coefficients
                 beta_new += Reg_obj.Reg[i]
-        print('alphanew',alpha_new,'betanew', beta_new)
+        print('alphanew', alpha_new, 'betanew', beta_new)
 
 
-
-def __main__(n,q, alpha, beta,pbit=0., psign=0. ):
+def __main__(alpha, beta, pbit=0., psign=0.):
     shor = QECorrection()
-    shor.launch(n,q, alpha, beta,pbit, psign)
+    shor.launch(alpha, beta, pbit, psign)
 
 
 if __name__ == "__main__":
-    __main__(9,0, 0.2,0.7, 0.8,0.8)
+    # alpha, beta do not need to be normalized as input
+    __main__(0.2, 0.7, 1, 1)
+
+
+
+
 

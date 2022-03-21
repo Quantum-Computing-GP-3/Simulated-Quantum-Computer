@@ -46,6 +46,11 @@ class CNOT(Gate):
         #********************
         """
 
+        #errors**************
+        self.Error_checker(Reg_obj, q, None)
+        if len(q) != 2 or len(q) != len(set(q)):
+            raise ValueError('Error: gate expects 2 nonidentical qubit arguments')
+
         c = q[0]  # control position
         t = q[1]  # target position
 

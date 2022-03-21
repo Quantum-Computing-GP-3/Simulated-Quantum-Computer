@@ -1,8 +1,16 @@
 from algorithm import Algorithm
 import sys
+"""
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/gates')
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/helpers')
 sys.path.append ('C:/Users/admin/Documents/GitHub/Simulated-Quantum-Computer/register')
+"""
+
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/gates')
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/helpers')
+sys.path.append ('C:/Users/stuar/OneDrive - University of Edinburgh/Documents/GitHub/Simulated-Quantum-Computer/register')
+
+
 from hadamard import Hadamard
 from grover_gate import Grover
 from oracle import Oracle
@@ -36,8 +44,9 @@ class Grover(Algorithm):
         Triggers the start of Grover's algorithm
         """
 
-        print("WOo Grover worked")
-        print("Hi")
+        if len(marked_list)>=2**(self.n_qbits-1):
+            raise TypeError("Error: The number of searchg states supplied must be less than half the size of the register")
+
 
         """
                 Function to act grover using Qgate objects, a QReg object and a given state
@@ -95,6 +104,8 @@ def main(n,marked_list):
 
 
 if __name__ == "__main__":
+    main(3, [0, 1, 3])
+    """
     print('5,    [0,3] \n')
     main(5,[0,3])
     print('6,    [2] \n')
@@ -105,3 +116,4 @@ if __name__ == "__main__":
     main(5,[0, 30])
     print('5,    [10] \n')
     main(5,[10])
+    """

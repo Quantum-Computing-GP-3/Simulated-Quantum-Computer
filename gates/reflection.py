@@ -47,6 +47,8 @@ class Reflection(Gate):
             raise ValueError('Error: the register sizes need to be the same')
         """
         #*****************
+        #No error check for this yet!!!!!!!
+
 
         n = Reg_obj_op.n 
         N = 2**n
