@@ -6,7 +6,12 @@ from gates.hadamard import Hadamard
 from gates.grover_gate import Grover
 from gates.oracle import Oracle
 from helpers.register import QuantumRegister as QReg
-import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib import pyplot as plt
+
+from colour import Color
+
+
 H = Hadamard()
 G = Grover()
 O = Oracle()
@@ -85,10 +90,14 @@ class Grover(Algorithm):
         for i in range(len(marked_list)):
             print(Reg_obj.Reg[marked_list[i]])
 
-        print("hello")
-        #print(np.degrees(angle_list))
+
         self.barchart(Reg_obj)
-        print("hi")
+
+        # only if user wants animation
+        if animation == True:
+            print("here")
+            self.plot_angles(angle_list)
+
 
     def angle_vector(self, array_coefficients):
         """
@@ -108,6 +117,30 @@ class Grover(Algorithm):
         array_angles = np.arccos(np.real(array_coefficients))
 
         return array_angles
+
+
+    def plot_angles(self, angle_list):
+        #define the max and min x values for each line
+        x_lines = np.zeros((len(angle_list), 2))
+        x_lines[:,1] = np.sin(angle_list)
+
+        # define the max and min y values for each line
+        y_lines = np.zeros((len(angle_list), 2))
+        y_lines[:,1] = np.cos(angle_list)
+
+        #create colour gradient
+        colors = np.linspace(0.8,0,len(angle_list), dtype = "str")
+
+        #plot lines
+        plt.xlabel("x?????")
+        plt.ylabel("y?????")
+        plt.title("idk man")
+        for i in range(len(angle_list)):
+            plt.plot(x_lines[i,:],y_lines[i,:], color = colors[i])
+        plt.show()
+
+
+
 
     def barchart(self, Reg_obj):
 
@@ -152,19 +185,7 @@ def main(n,marked_list,animation=False):
 
 if __name__ == "__main__":
     #main(5, [0],animation=True)
-    main(5, [0,1,2])
-    """
-    print('5,    [0,3] \n')
-    main(5,[0,3])
-    print('6,    [2] \n')
-    main(6,[2])
-    print('4,    [1,2,3] \n')
-    main(4,[1,2,3])
-    print('5,    [0,30] \n')
-    main(5,[0, 30])
-    print('5,    [10] \n')
+    main(8, [0], animation = True)
 
-    main(5,[10])
-    """
 
 
