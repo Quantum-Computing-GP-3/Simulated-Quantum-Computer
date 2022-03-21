@@ -112,7 +112,7 @@ class QuantumRegister(object):
         # sprint('testnorm')
 
         for i in range(2 ** (self.n)):
-            sum += self.Reg[i] ** 2
+            sum += self.Reg[i] *np.conjugate(self.Reg[i])
             # print('within norm', self.Reg[i]**2)
         Norm = 1 / np.sqrt(sum)
 

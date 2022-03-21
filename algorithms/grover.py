@@ -27,10 +27,11 @@ class Grover(Algorithm):
     """
 
     def __init__(self, n_qbits, marked_list):
+
         self.n_qbits = n_qbits
         self.marked_list = marked_list
 
-    def launch(self,n,marked_list):
+    def launch(self,n,marked_list, animation = False):
         """
         Triggers the start of Grover's algorithm
         Function to act grover using Qgate objects, a QReg object and a given state
@@ -40,9 +41,13 @@ class Grover(Algorithm):
                 state for oracle
             :return:
         """
+        #error checks ****************
+        if animation == True:
+            if len(marked_list) != 1:
+                raise ValueError("Error: animation only works if only one state is being amplified")
 
         if len(marked_list)>=2**(self.n_qbits-1):
-            raise TypeError("Error: The number of searchg states supplied must be less than half the size of the register")
+            raise TypeError("Error: The number of searching states supplied must be less than half the size of the register")
 
 
         # Reg_obj is register object, Reg is Quantum_Register class function
@@ -64,29 +69,63 @@ class Grover(Algorithm):
             print("n = 0 so do once")
             n_iter = 1
 
-        #do Grover iteration
+
+        #only if user wants animation
+        #firt angle for animation
+        if animation == True:
+            angle_list = []
+            coeff = Reg_obj.Reg[marked_list[0]]
+            angle = self.angle_vector(coeff)
+            angle_list.append(angle)
+
+        # do Grover iteration
         for i in range(n_iter):
             O.acts_on(Reg_obj, marked_list)
             G.acts_on(Reg_obj)
+
+            #only if user wants animation
+            if animation == True:
+                #take coefficient for plot
+                coeff = Reg_obj.Reg[marked_list[0]]
+                angle = self.angle_vector(coeff)
+                angle_list.append(angle)
 
         print("The resulting quantum register should have a certain state (or states) amplified:")
         print(Reg_obj.Reg)
         for i in range(len(marked_list)):
             print(Reg_obj.Reg[marked_list[i]])
 
+        print(np.degrees(angle_list))
+
+    def angle_vector(self, array_coefficients):
+        """
+        Calculates the angle between the quantum register and the basis state we wish to
+        amplify. After every iteration of Grover's algorithm, this angle should eventually
+        be very close to 0.
+        Parameters
+        ----------
+        array_coefficients : Complex Numpy Array
+            List of coefficients of the basis state we are interested in.
+        Returns
+        -------
+        array_angles : Numpy Array
+
+            Contains angle between quantum register and the basis state we wish to amplify.
+        """
+        array_angles = np.arccos(np.real(array_coefficients))
+
+        return array_angles
 
 
 
-
-
-def main(n,marked_list):
+def main(n,marked_list,animation=True):
 
     grover = Grover(n, marked_list)
-    grover.launch(n,marked_list)
+    grover.launch(n,marked_list, animation = True)
 
 
 if __name__ == "__main__":
-    main(3, [0, 1, 3])
+    main(5, [0],animation=True)
 
     """
     print('5,    [0,3] \n')
