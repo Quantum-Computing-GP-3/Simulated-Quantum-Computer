@@ -3,7 +3,7 @@ from pathlib import Path
 from os.path import join
 import matplotlib.pyplot as plt
 
-from PyQt5 import uic
+from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox, QSpinBox, QLineEdit
 
 from algorithms.grover import Grover
@@ -11,45 +11,6 @@ from algorithms.quantum_error_correction import QECorrection
 from algorithms.grover_with_refl import Grover_Reflection
 
 PKG_PATH = Path(__file__).parent.parent  # Simulated-Quantum-Computer package path
-ALGORITHMS = ["Grover (O & G gates)", "Grover (Reflection gates)", "Grover (Tensor representation)", "Quantum Error Correction"]  # List of algorithms
-
-
-class MainGUI(QWidget):
-    """
-    PyQt5 GUI object allowing users to interact with the simulation graphically
-    """
-    def __init__(self):
-        super(MainGUI, self).__init__()
-        uic.loadUi(join(PKG_PATH, 'resource', 'mainpage.ui'), self)
-        self.widget = None
-
-        # Add Algorithms listed in the appropriate directory
-        self.ALG_MENU = self.findChild(QComboBox, "Selector")
-        self.ALG_MENU.clear()
-        for alg in ALGORITHMS:
-            self.ALG_MENU.addItem(alg)
-
-        # Connect Launch button with its callback
-        self.LAUNCH_BUTTON = self.findChild(QPushButton, "Launch")
-        self.LAUNCH_BUTTON.clicked.connect(self.launch_callback)
-
-        # Display GUI- should always run last in constructor
-        self.show()
-
-    # Launch appropriate window
-    def launch_callback(self):
-        alg_to_run = self.ALG_MENU.currentText()
-        if alg_to_run == "Grover (O & G gates)":
-            self.widget = GroverOGGUI()  # Launch Grover O&G GUI
-        elif alg_to_run == "Grover (Reflection gates)":
-            self.widget = GroverRefGUI() # Launch Grover Reflection GUI
-        elif alg_to_run == "Grover (Tensor representation)":
-            # self.widget = GroverRefGUI() # Launch Grover Tensor GUI
-            pass
-        elif alg_to_run == "Quantum Error Correction":
-            self.widget = QECGUI()  # Launch Shor GUI
-        else:
-            sys.exit("ERROR: Invalid Algorithm in Selector.")
 
 
 class GroverOGGUI(QWidget):
@@ -58,7 +19,7 @@ class GroverOGGUI(QWidget):
     """
     def __init__(self):
         super(GroverOGGUI, self).__init__()
-        uic.loadUi(join(PKG_PATH, 'resource', 'groverOG.ui'), self)
+        loadUi(join(PKG_PATH, 'resource', 'groverOG.ui'), self)
 
         # Connect launch button to Grover's algorithm
         self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
@@ -78,13 +39,14 @@ class GroverOGGUI(QWidget):
         grover = Grover(n_qbits, state)
         grover.launch()
 
+
 class GroverRefGUI(QWidget):
     """
     PyQt5 GUI object for visualising Grover's algorithm using reflections
     """
     def __init__(self):
         super(GroverRefGUI, self).__init__()
-        uic.loadUi(join(PKG_PATH, 'resource', 'groverRef.ui'), self)
+        loadUi(join(PKG_PATH, 'resource', 'groverRef.ui'), self)
 
         # Connect launch button to Grover's algorithm
         self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
@@ -104,13 +66,14 @@ class GroverRefGUI(QWidget):
         grover = Grover_Reflection(n_qbits, state)
         grover.launch()
 
+
 class GroverTensGUI(QWidget):
     """
     PyQt5 GUI object for visualising Grover's algorithm using tensor notation
     """
     def __init__(self):
         super(GroverTensGUI, self).__init__()
-        uic.loadUi(join(PKG_PATH, 'resource', 'groverTens.ui'), self)
+        loadUi(join(PKG_PATH, 'resource', 'groverTens.ui'), self)
 
         # Connect launch button to Grover's algorithm
         self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
@@ -146,6 +109,42 @@ class QECGUI(QWidget):
     def QEC_launch(self):
         qec = QECorrection()
         qec.launch()
+
+
+class MainGUI(QWidget):
+    """
+    PyQt5 GUI object allowing users to interact with the simulation graphically
+    """
+    def __init__(self):
+        super(MainGUI, self).__init__()
+        loadUi(join(PKG_PATH, 'resource', 'mainpage.ui'), self)
+        self.widget = None
+
+        # Dict of algorithms
+        self.algs = {
+            "Grover (O & G gates)": GroverOGGUI,
+            "Grover (Reflection gates)": GroverRefGUI,
+            "Grover (Tensor representation)": None,
+            "Quantum Error Correction": QECGUI
+            }
+
+        # Add Algorithms listed in the appropriate directory
+        self.ALG_MENU = self.findChild(QComboBox, "Selector")
+        self.ALG_MENU.clear()
+        for alg in self.algs.keys():
+            self.ALG_MENU.addItem(alg)
+
+        # Connect Launch button with its callback
+        self.LAUNCH_BUTTON = self.findChild(QPushButton, "Launch")
+        self.LAUNCH_BUTTON.clicked.connect(self.launch_callback)
+
+        # Display GUI- should always run last in constructor
+        self.show()
+
+    # Launch appropriate window
+    def launch_callback(self):
+        alg_to_run = self.ALG_MENU.currentText()
+        self.widget = self.algs[alg_to_run]()
 
 
 def main():
