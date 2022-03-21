@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-from algorithm import Algorithm
+from .algorithm import Algorithm
 #Stu has to take away this dot for now, if I forget to put it back: soryyyy
 from gates.hadamard import Hadamard
 from gates.grover_gate import Grover
