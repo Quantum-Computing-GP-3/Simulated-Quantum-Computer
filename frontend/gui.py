@@ -11,7 +11,7 @@ from algorithms.quantum_error_correction import QECorrection
 from algorithms.grover_with_refl import Grover_Reflection
 
 PKG_PATH = Path(__file__).parent.parent  # Simulated-Quantum-Computer package path
-ALGORITHMS = ["Grover", "Shor"]  # List of algorithms
+ALGORITHMS = ["Grover (O & G gates)", "Grover (Reflection gates)", "Grover (Tensor representation)", "Quantum Error Correction"]  # List of algorithms
 
 
 class MainGUI(QWidget):
@@ -39,20 +39,20 @@ class MainGUI(QWidget):
     # Launch appropriate window
     def launch_callback(self):
         alg_to_run = self.ALG_MENU.currentText()
-        if alg_to_run == "Grover":
-            self.widget = GroverGUI()  # Launch Grover GUI
-        elif alg_to_run == "Shor":
-            self.widget = ShorGUI()  # Launch Shor GUI
+        if alg_to_run == "Grover (O & G gates)":
+            self.widget = GroverOGGUI()  # Launch Grover GUI
+        elif alg_to_run == "Quantum Error Correction":
+            self.widget = QECGUI()  # Launch Shor GUI
         else:
             sys.exit("ERROR: Invalid Algorithm in Selector.")
 
 
-class GroverGUI(QWidget):
+class GroverOGGUI(QWidget):
     """
     PyQt5 GUI object for visualising Grover's algorithm
     """
     def __init__(self):
-        super(GroverGUI, self).__init__()
+        super(GroverOGGUI, self).__init__()
         uic.loadUi(join(PKG_PATH, 'resource', 'grover.ui'), self)
 
         # Connect launch button to Grover's algorithm
@@ -74,20 +74,20 @@ class GroverGUI(QWidget):
         grover.launch()
 
 
-class ShorGUI(QWidget):
+class QECGUI(QWidget):
     """
     PyQt5 GUI object for visualising Shor's algorithm
     """
 
     def __init__(self):
-        super(ShorGUI, self).__init__()
+        super(QECGUI, self).__init__()
 
         # Display GUI- should always run last in constructor
         self.show()
 
     # Launch Shor's algorithm
     def shor_launch(self):
-        shor = Shor()
+        shor = QECorrection()
         shor.launch()
 
 
