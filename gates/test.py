@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import numpy as np
 import math
 
@@ -22,3 +23,7 @@ print(Reg_obj.Reg)
 
 H.acts_on(Reg_obj,test_q,all)
 print("H",Reg_obj.Reg)
+=======
+
+
+>>>>>>> Stashed changes
