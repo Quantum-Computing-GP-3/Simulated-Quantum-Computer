@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>461</width>
-    <height>224</height>
+    <width>673</width>
+    <height>326</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>0</y>
-     <width>441</width>
-     <height>211</height>
+     <width>651</width>
+     <height>311</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -78,7 +78,37 @@
     <item>
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>We simulate two seperate algorithms: Grover's algorithm and Shor's algorithm.</string>
+       <string>We simulate a number of different algorithms.</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>This package implements 3 different Grover's algorithms:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>One using O and G gates, one using reflections,</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>and a third implementation which uses a tensor representation to generalise quantum gates</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -98,7 +128,7 @@
     <item>
      <widget class="QLabel" name="label_4">
       <property name="text">
-       <string> You may select either algorithm from the drop-down menu below.</string>
+       <string> You may select an algorithm from the drop-down menu below.</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

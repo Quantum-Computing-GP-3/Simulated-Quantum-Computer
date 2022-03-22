@@ -6,7 +6,7 @@ register. This is the file to run.
 """
 # From ListQuantumGates we import the number of qubits of the quantum register (n)
 # and the needed quantum gates.
-from ListQuantumGates import n, Hadamard, O, G
+from .ListQuantumGates import n, Hadamard, O, G
 import numpy as np
 import time
 

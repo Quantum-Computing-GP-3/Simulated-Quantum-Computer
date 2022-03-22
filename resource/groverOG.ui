@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>637</width>
+    <height>395</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>19</x>
+     <x>9</x>
      <y>9</y>
-     <width>361</width>
-     <height>271</height>
+     <width>611</width>
+     <height>331</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -29,7 +29,7 @@
        <string notr="true">font: 20pt &quot;MS Sans Serif&quot;;</string>
       </property>
       <property name="text">
-       <string>Grover's Algorithm</string>
+       <string>Grover's Algorithm (Oracle and Grover gates)</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -46,7 +46,7 @@
     <item>
      <widget class="QLabel" name="label_4">
       <property name="text">
-       <string>This window is used to configre and run Grover's algorithm</string>
+       <string>This GUI allows users to configure and run an implementation of Grover's algorithm which uses</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -56,7 +56,27 @@
     <item>
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>Enter some input here (maybe oracle)</string>
+       <string>the Oracle and Grover gates.</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Enter a list of unique integers between 0 and 2^n, where n is the number of Qbits.</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Each integer in this list corresponds to a quantum state which should be amplified by Grover's algorithm.</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -86,7 +106,7 @@
         <item>
          <widget class="QSpinBox" name="RegisterSize">
           <property name="minimum">
-           <number>1</number>
+           <number>2</number>
           </property>
           <property name="maximum">
            <number>30</number>
@@ -96,9 +116,9 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="RunGrover">
+       <widget class="QPushButton" name="Run">
         <property name="text">
-         <string>Run Grover</string>
+         <string>Run</string>
         </property>
        </widget>
       </item>

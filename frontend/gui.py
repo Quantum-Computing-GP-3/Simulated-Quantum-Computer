@@ -10,6 +10,8 @@ from algorithms.grover import Grover
 from algorithms.quantum_error_correction import QECorrection
 from algorithms.grover_with_refl import Grover_Reflection
 
+from groverTensorRepresentation import Grover as Grover_Tens
+
 PKG_PATH = Path(__file__).parent.parent  # Simulated-Quantum-Computer package path
 
 
@@ -22,80 +24,102 @@ class GroverOGGUI(QWidget):
         loadUi(join(PKG_PATH, 'resource', 'groverOG.ui'), self)
 
         # Connect launch button to Grover's algorithm
-        self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
+        self.LAUNCH_GROVER = self.findChild(QPushButton, "Run")
         self.LAUNCH_GROVER.clicked.connect(self.grover_launch)
 
         # Parameters for Grover
         self.QBIT_SELECTION = self.findChild(QSpinBox, "RegisterSize")
         self.STATE_SELECTION = self.findChild(QLineEdit, "State")
+        self.STATE_SELECTION.setText("e.g. 1, 2, 3, 4...")
 
         # Display GUI- should always run last in constructor
         self.show()
 
     # Launch Grover's algorithm
     def grover_launch(self):
-        try:
-            n_qbits = int(self.QBIT_SELECTION.value())
-            marked_list = np.array(self.STATE_SELECTION.text().replace(" ", "").split(','), dtype=int)
-            grover = Grover(n_qbits, marked_list)
-            grover.launch()
-        except Exception as exc:
-            print(exc)
-            return
+        n_qbits = int(self.QBIT_SELECTION.value())
+        marked_list = self.STATE_SELECTION.text().replace(" ", "").split(',')
+        state = []
+        for item in marked_list:
+            if item.isdigit() and (0 < int(item) < (2**(n_qbits) - 1)) and (int(item) not in state):
+                state.append(int(item))
+            else:
+                print("Input Error: '{}' is not a valid index. Inputs must be unique, comma seperated integers from 0 -> 2^no.qbits - 1".format(item))
+                return
         
+        grover = Grover(n_qbits, state)
+        grover.launch()
 
+        
 class GroverRefGUI(QWidget):
     """
-    PyQt5 GUI object for visualising Grover's algorithm using reflections
+    PyQt5 GUI object for visualising Grover's algorithm using O and G gates
     """
     def __init__(self):
         super(GroverRefGUI, self).__init__()
         loadUi(join(PKG_PATH, 'resource', 'groverRef.ui'), self)
 
         # Connect launch button to Grover's algorithm
-        self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
+        self.LAUNCH_GROVER = self.findChild(QPushButton, "Run")
         self.LAUNCH_GROVER.clicked.connect(self.grover_launch)
 
         # Parameters for Grover
         self.QBIT_SELECTION = self.findChild(QSpinBox, "RegisterSize")
         self.STATE_SELECTION = self.findChild(QLineEdit, "State")
+        self.STATE_SELECTION.setText("e.g. 1, 2, 3, 4...")
 
         # Display GUI- should always run last in constructor
         self.show()
 
     # Launch Grover's algorithm
     def grover_launch(self):
-        n_qbits = self.QBIT_SELECTION.value()
-        state = self.STATE_SELECTION.text()
+        n_qbits = int(self.QBIT_SELECTION.value())
+        marked_list = self.STATE_SELECTION.text().replace(" ", "").split(',')
+        state = []
+        for item in marked_list:
+            if item.isdigit() and (0 < int(item) < (2**(n_qbits) - 1)) and (int(item) not in state):
+                state.append(int(item))
+            else:
+                print("Input Error: '{}' is not a valid index. Inputs must be unique, comma seperated integers from 0 -> 2^no.qbits - 1".format(item))
+                return
+        
         grover = Grover_Reflection(n_qbits, state)
         grover.launch()
 
 
 class GroverTensGUI(QWidget):
     """
-    PyQt5 GUI object for visualising Grover's algorithm using tensor notation
+    PyQt5 GUI object for visualising Grover's algorithm using O and G gates
     """
     def __init__(self):
         super(GroverTensGUI, self).__init__()
         loadUi(join(PKG_PATH, 'resource', 'groverTens.ui'), self)
 
         # Connect launch button to Grover's algorithm
-        self.LAUNCH_GROVER = self.findChild(QPushButton, "RunGrover")
+        self.LAUNCH_GROVER = self.findChild(QPushButton, "Run")
         self.LAUNCH_GROVER.clicked.connect(self.grover_launch)
 
         # Parameters for Grover
         self.QBIT_SELECTION = self.findChild(QSpinBox, "RegisterSize")
         self.STATE_SELECTION = self.findChild(QLineEdit, "State")
+        self.STATE_SELECTION.setText("e.g. 1, 2, 3, 4...")
 
         # Display GUI- should always run last in constructor
         self.show()
 
     # Launch Grover's algorithm
     def grover_launch(self):
-        n_qbits = self.QBIT_SELECTION.value()
-        state = self.STATE_SELECTION.text()
-        # grover = Grover(n_qbits, state)
-        # grover.launch()
+        n_qbits = int(self.QBIT_SELECTION.value())
+        marked_list = self.STATE_SELECTION.text().replace(" ", "").split(',')
+        state = []
+        for item in marked_list:
+            if item.isdigit() and (0 < int(item) < (2**(n_qbits) - 1)) and (int(item) not in state):
+                state.append(int(item))
+            else:
+                print("Input Error: '{}' is not a valid index. Inputs must be unique, comma seperated integers from 0 -> 2^no.qbits - 1".format(item))
+                return
+
+        Grover_Tens.main()
 
 
 class QECGUI(QWidget):
@@ -128,7 +152,7 @@ class MainGUI(QWidget):
         self.algs = {
             "Grover (O & G gates)": GroverOGGUI,
             "Grover (Reflection gates)": GroverRefGUI,
-            "Grover (Tensor representation)": None,
+            "Grover (Tensor representation)": GroverTensGUI,
             "Quantum Error Correction": QECGUI
             }
 

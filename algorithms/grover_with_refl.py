@@ -1,4 +1,4 @@
-from algorithm import Algorithm
+from .algorithm import Algorithm
 import sys
 
 import numpy as np
@@ -21,7 +21,7 @@ class Grover_Reflection(Algorithm):
         self.n_qbits = n_qbits
         self.marked_list = marked_list
 
-    def launch(self,n,marked_list):
+    def launch(self):
         """
 
 
@@ -34,7 +34,7 @@ class Grover_Reflection(Algorithm):
 
                 """
 
-        if len(marked_list)>=2**(self.n_qbits-1):
+        if len(self.marked_list)>=2**(self.n_qbits-1):
             raise TypeError("Error: The number of searching states supplied must be less than half the size of the register")
 
 
@@ -42,13 +42,13 @@ class Grover_Reflection(Algorithm):
         # Reg_obj_marked is register object containing the states-to-be-marked
         # Reg is Quantum_Register class function
         # define number n of qubits in register
-        Reg_obj_state = QReg(n)
-        Reg_obj_marked = QReg(n)
+        Reg_obj_state = QReg(self.n_qbits)
+        Reg_obj_marked = QReg(self.n_qbits)
         
         Reg_obj_marked.Reg[0] = 0 
         #our register initialization: not as (0 0 0 0 0) but (1 0 0 0 0)^t - the state needs one nonzero entry to be normalized and a proper quantum state)
         # due to this initializtaon, one needs to manually set the first entry to zero here
-        for elm in marked_list:
+        for elm in self.marked_list:
             Reg_obj_marked.Reg[elm] = 1
 
         Reg_obj_marked.norm()
@@ -61,14 +61,14 @@ class Grover_Reflection(Algorithm):
 
 
         #possible error: IS THIS RIGHT?????*******
-        if (max(marked_list) + 1) ** (1 / n) > 2:
+        if (max(self.marked_list) + 1) ** (1 / self.n_qbits) > 2:
             sys.exit("An index given is too large for the register")
 
 
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.
         #the number of Grover iterations is given by the following calculation
-        n_iter = int((math.pi / 4 * np.sqrt(2 ** n))/len(marked_list))*2
+        n_iter = int((math.pi / 4 * np.sqrt(2 ** self.n_qbits))/len(self.marked_list))*2
 
 
         #IS THIS RIGHT``````````
@@ -92,8 +92,8 @@ class Grover_Reflection(Algorithm):
             
         print("The resulting quantum register should have a certain state (or states) amplified:")
         #print(Reg_obj_state.Reg)
-        for i in range(len(marked_list)):
-            print(Reg_obj_state.Reg[marked_list[i]])
+        for i in range(len(self.marked_list)):
+            print(Reg_obj_state.Reg[self.marked_list[i]])
 
         self.barchart(Reg_obj_state)
 
