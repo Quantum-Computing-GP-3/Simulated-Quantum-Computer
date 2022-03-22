@@ -3,8 +3,6 @@ from .gate import Gate
 
 class Oracle(Gate):
 
-    #def __init__(self):
-    #self.state = state
 
     def acts_on(self, Reg_obj, marked_list):
         """

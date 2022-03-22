@@ -68,39 +68,44 @@ class Grover_Reflection(Algorithm):
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.
         #the number of Grover iterations is given by the following calculation
-        n_iter = int((math.pi / 4 * np.sqrt(2 ** self.n_qbits))/len(self.marked_list))*2
+        n_iter = int((math.pi / 4 * np.sqrt(2 ** self.n_qbits))/len(self.marked_list))#*2
 
 
         #IS THIS RIGHT``````````
         if n_iter == 0:
-            print("n = 0 so do once")
             n_iter = 1
     
-        print(n_iter)
+
+        print("before")
+        print(Reg_obj_state.Reg)
         #print('beide regs',Reg_obj_state.Reg, Reg_obj_marked.Reg)
         #now we do O and G, both with a call to the reflection operator
         # O reflects Reg around our desired states
         #don't forget *(-1): since effect is '1 - projection on s'
         # G reflects our new Reg around the initial state of equal probability superpositions
         for _ in range (n_iter):
+
             R.acts_on(Reg_obj_state, Reg_obj_marked) 
            # print(Reg_obj_state.Reg)
             Reg_obj_state.Reg *= (-1)
             R.acts_on (Reg_obj_state, Reg_obj_Psi_0)
-            print('after',Reg_obj_state.Reg)
+
+            print("before")
+            print(_)
+            print(Reg_obj_state.Reg)
+
+
             
             
         print("The resulting quantum register should have a certain state (or states) amplified:")
-        #print(Reg_obj_state.Reg)
+
+        print(Reg_obj_state.Reg)
         for i in range(len(self.marked_list)):
             print(Reg_obj_state.Reg[self.marked_list[i]])
 
         self.barchart(Reg_obj_state)
 
-
-
-    def barchart(self,Reg_obj):
-
+    def barchart(self, Reg_obj):
 
         Reals = np.real(Reg_obj.Reg)
         Reals = np.abs(Reals)
@@ -110,28 +115,30 @@ class Grover_Reflection(Algorithm):
         max_arr = Reals[arg_max]
         strings = []
 
-        for n in range(0,len(arg_max[:,0])):
-            strings.append(str(bin(arg_max[n,0])))
+        for n in range(0, len(arg_max[:, 0])):
+            # append index
+            strings.append(str(arg_max[n, 0]))
+            # or append binary value
+            # strings.append(str(bin(arg_max[n, 0])))
+            # print(strings)
 
-
-        #find binary string values
+        """
+        # find binary string values
         for s in range(len(strings)):
             string = strings[s].lstrip("0")
             string = string.lstrip("b")
             strings[s] = string
+        """
 
         strings.append("all others")
         minimum = np.min(Reals)
         full_arr = np.append(max_arr, minimum)
 
-
-        plt.title("Amplified states")
-        plt.xlabel("Binary state")
-        plt.ylabel("Probability")
-        plt.bar(strings, np.real(full_arr**2), color = "teal")
+        plt.title("Quantum Register after Grover's Algorithm")
+        plt.xlabel("Basis states in decimal representation")
+        plt.ylabel("Probability of measuring basis state")
+        plt.bar(strings, np.real(full_arr ** 2), color="teal")
         plt.show()
-
-
 
 
 def main(n,marked_list):
@@ -141,21 +148,13 @@ def main(n,marked_list):
 
 
 if __name__ == "__main__":
-   # print('5,    [0,3] refl \n')
-    #main(5,[0,3])
-    #print('6,    [2] refl \n')
-    #main(6,[2])
-    #print('4,    [1,2,3] refl \n')
-    #main(4,[1,2,3])
-    #print('5,    [0,30] refl \n')
-    #main(5,[0, 30])
-    #print('5,    [10] refl \n')
-    #main(5,[10])
-    t1 = time.time()
+    
+    time_list = []
+    for i in range(3,10):
+        start = time.time()
 
-    #main(5, [0,1,3])
-    #main(3, [1,2,3])
-    main(10, [1])
-    t2 = time.time()
-    dif= t2-t1
-    print(round(dif,3))
+        main(5, [1,2,8])
+        end = time.time()
+        diff= end-start
+        time_list.append(diff)
+

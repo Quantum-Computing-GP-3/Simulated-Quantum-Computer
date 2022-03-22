@@ -1,15 +1,13 @@
 import sys
 import numpy as np
-from .algorithm import Algorithm
+from algorithm import Algorithm
 #Stu has to take away this dot for now, if I forget to put it back: soryyyy
 from gates.hadamard import Hadamard
 from gates.grover_gate import Grover
 from gates.oracle import Oracle
 from helpers.register import QuantumRegister as QReg
-import matplotlib
 from matplotlib import pyplot as plt
 
-from colour import Color
 
 
 H = Hadamard()
@@ -26,7 +24,9 @@ class Grover(Algorithm):
         self.n_qbits = n_qbits
         self.marked_list = marked_list
 
-    def launch(self, animation = False):
+
+    def launch(self,n,marked_list, angle_plot = False):
+
         """
         Triggers the start of Grover's algorithm
         Function to act grover using Qgate objects, a QReg object and a given state
@@ -37,10 +37,11 @@ class Grover(Algorithm):
             :return:
         """
         #error checks ****************
-        if animation == True:
-            if len(self.marked_list) != 1:
-                raise ValueError("Error: animation only works if only one state is being amplified")
+        if angle_plot == True:
+            if len(marked_list) != 1:
+                raise ValueError("Error: angle plot only works if only one state is being amplified")
 
+        #check that the length of the marked list is less than half the size of the register
         if len(self.marked_list)>=2**(self.n_qbits-1):
             raise TypeError("Error: The number of searching states supplied must be less than half the size of the register")
 
@@ -65,9 +66,9 @@ class Grover(Algorithm):
             n_iter = 1
 
 
-        #only if user wants animation
-        #firt angle for animation
-        if animation == True:
+        #only if user wants angle_plot
+        #firt angle for angle_plot
+        if angle_plot == True:
             angle_list = []
             coeff = Reg_obj.Reg[self.marked_list[0]]
             angle = self.angle_vector(coeff)
@@ -78,8 +79,8 @@ class Grover(Algorithm):
             O.acts_on(Reg_obj, self.marked_list)
             G.acts_on(Reg_obj)
 
-            #only if user wants animation
-            if animation == True:
+            #only if user wants angle_plot
+            if angle_plot == True:
                 #take coefficient for plot
                 coeff = Reg_obj.Reg[self.marked_list[0]]
                 angle = self.angle_vector(coeff)
@@ -93,8 +94,8 @@ class Grover(Algorithm):
 
         self.barchart(Reg_obj)
 
-        # only if user wants animation
-        if animation == True:
+        # only if user wants angle_plot
+        if angle_plot == True:
             print("here")
             self.plot_angles(angle_list)
 
@@ -132,12 +133,32 @@ class Grover(Algorithm):
         colors = np.linspace(0.8,0,len(angle_list), dtype = "str")
 
         #plot lines
-        plt.xlabel("x?????")
-        plt.ylabel("y?????")
-        plt.title("idk man")
+        plt.xlabel("Register component perpendicular to Amplified State ")
+        plt.ylabel("Register component parallel to amplified State ")
+        plt.title("Evolution of amplified state | Grover's")
+
         for i in range(len(angle_list)):
-            plt.plot(x_lines[i,:],y_lines[i,:], color = colors[i])
+
+            if len(angle_list) > 6 and len(angle_list) <= 9:
+                if i/2 == i//2:
+                    plt.plot(x_lines[i,:],y_lines[i,:], color = colors[i], label = "iteration  "+str(i))
+                else:
+                    plt.plot(x_lines[i, :], y_lines[i, :], color=colors[i])
+            elif len(angle_list) > 9:
+                if i/3 == i//3:
+                    plt.plot(x_lines[i,:],y_lines[i,:], color = colors[i], label = "iteration  "+str(i))
+                else:
+                    plt.plot(x_lines[i, :], y_lines[i, :], color=colors[i])
+            else:
+                plt.plot(x_lines[i, :], y_lines[i, :], color=colors[i], label="iteration  " + str(i))
+
+        plt.legend(loc = 1)
+        plt.gca().set_aspect('equal')#
+
+
         plt.show()
+
+
 
 
 
@@ -153,21 +174,29 @@ class Grover(Algorithm):
         strings = []
 
         for n in range(0, len(arg_max[:, 0])):
-            strings.append(str(bin(arg_max[n, 0])))
+            #append index
+            strings.append(str(arg_max[n, 0]))
+            #or append binary value
+            #strings.append(str(bin(arg_max[n, 0])))
+            #print(strings)
 
+
+        """
         # find binary string values
         for s in range(len(strings)):
             string = strings[s].lstrip("0")
             string = string.lstrip("b")
             strings[s] = string
+        """
+
 
         strings.append("all others")
         minimum = np.min(Reals)
         full_arr = np.append(max_arr, minimum)
 
-        plt.title("Amplified states")
-        plt.xlabel("Binary state")
-        plt.ylabel("Probability")
+        plt.title("Quantum Register after Grover's Algorithm")
+        plt.xlabel("Basis states in decimal representation")
+        plt.ylabel("Probability of measuring basis state")
         plt.bar(strings, np.real(full_arr ** 2), color="teal")
         plt.show()
 
@@ -177,16 +206,16 @@ class Grover(Algorithm):
 
 
 
-def main(n,marked_list,animation=False):
+def main(n,marked_list,angle_plot=False):
 
     grover = Grover(n, marked_list)
-    grover.launch(n,marked_list, animation = animation)
+    grover.launch(n,marked_list, angle_plot = angle_plot)
 
 
 if __name__ == "__main__":
-    #main(5, [0],animation=True)
-    #main(8, [0], animation = True)
-    Reg_1 = QReg(6, index = [0,1,2], weight = [1,2,3])#increasing_integers = True)
+    #main(6, [0],angle_plot=True)
+    main(8, [0], angle_plot = True)
+    #Reg_1 = QReg(6,increasing_integers= True)#weights = np.array([[0,1,2],[1,2,3]]))#increasing_integers = True)
 
 
 

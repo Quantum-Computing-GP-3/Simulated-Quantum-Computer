@@ -37,14 +37,4 @@ class Grover(Gate):
         #print('iteration grovergate', max(reg_new)**2)
 
         Reg_obj.Reg = reg_new #update register state vector
-        
-        """
-        former version: matrix multiplication
-        matrix_G = np.ones((N, N)) * 2 / N
-        for i in range(N):
-            matrix_G[i, i] -= 1
 
-        Reg_obj.Reg = np.matmul(matrix_G, Reg_obj.Reg)
-        Reg_obj.vector_notation()
-        return Reg_obj
-        """
