@@ -10,7 +10,7 @@ from algorithms.grover import Grover
 from algorithms.quantum_error_correction import QECorrection
 from algorithms.grover_with_refl import Grover_Reflection
 
-from groverTensorRepresentation import Grover as Grover_Tens
+# from groverTensorRepresentation import Grover as Grover_Tens
 
 PKG_PATH = Path(__file__).parent.parent  # Simulated-Quantum-Computer package path
 
@@ -119,7 +119,8 @@ class GroverTensGUI(QWidget):
                 print("Input Error: '{}' is not a valid index. Inputs must be unique, comma seperated integers from 0 -> 2^no.qbits - 1".format(item))
                 return
 
-        Grover_Tens.main()
+        # Grover_Tens.main()
+        print("Running Grover Tensor")
 
 
 class QECGUI(QWidget):
@@ -129,6 +130,7 @@ class QECGUI(QWidget):
 
     def __init__(self):
         super(QECGUI, self).__init__()
+        loadUi(join(PKG_PATH, 'resource', 'errorCorrection.ui'), self)
 
         # Display GUI- should always run last in constructor
         self.show()

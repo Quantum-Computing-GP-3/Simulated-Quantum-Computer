@@ -98,7 +98,6 @@ class Grover_Reflection(Algorithm):
             
             
         print("The resulting quantum register should have a certain state (or states) amplified:")
-
         print(Reg_obj_state.Reg)
         for i in range(len(self.marked_list)):
             print(Reg_obj_state.Reg[self.marked_list[i]])
