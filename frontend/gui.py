@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 from os.path import join
-import matplotlib.pyplot as plt
+import numpy as np
 
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox, QSpinBox, QLineEdit
@@ -34,11 +34,15 @@ class GroverOGGUI(QWidget):
 
     # Launch Grover's algorithm
     def grover_launch(self):
-        n_qbits = self.QBIT_SELECTION.value()
-        state = self.STATE_SELECTION.text()
-        grover = Grover(n_qbits, state)
-        grover.launch()
-
+        try:
+            n_qbits = int(self.QBIT_SELECTION.value())
+            marked_list = np.array(self.STATE_SELECTION.text().replace(" ", "").split(','), dtype=int)
+            grover = Grover(n_qbits, marked_list)
+            grover.launch()
+        except Exception as exc:
+            print(exc)
+            return
+        
 
 class GroverRefGUI(QWidget):
     """
