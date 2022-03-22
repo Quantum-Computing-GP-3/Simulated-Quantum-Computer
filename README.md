@@ -69,7 +69,7 @@ Home-page: https://github.com/Quantum-Computing-GP-3/Simulated-Quantum-Computer
 Author: Cameron Matthew
 Author-email: cambobmat@icloud.com
 License: GPL-3.0
-Location: c:\users\cambo\cameron matthew projects\simulated-quantum-computer
+Location: /path/to/package/directory
 Requires: colour, matplotlib, numpy, pathlib, PyQt5
 Required-by:
 ```
