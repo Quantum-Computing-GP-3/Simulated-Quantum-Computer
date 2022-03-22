@@ -7,6 +7,7 @@ A series of quantum computer algorithm simulations for Edinburgh University Scho
   - [Requirements](#requirements)
   - [Installation](#installation)
   - [Entry Points](#entry-points)
+- [Pydoc](#pydoc)
 
 ## Package Structure
 This repository has the following structure:
@@ -89,3 +90,5 @@ If you wish to run individual python modules independently, you must modify the 
 $ python -m relative.path.to.module
 ```
 
+## Pydoc
+This project supports documentation in the form of pydoc. Every class and method should contain the appropriate docstring in order to make this kind of auto-documentation useful. Instructions on how to generate this documentation locally can be found [here](https://www.tutorialspoint.com/documentation-generation-using-the-pydoc-module-in-python#:~:text=You%20can%20access%20the%20interactive,to%20launch%20the%20interactive%20shell).
