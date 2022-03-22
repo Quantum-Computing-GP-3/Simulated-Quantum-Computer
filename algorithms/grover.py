@@ -25,7 +25,9 @@ class Grover(Algorithm):
         self.n_qbits = n_qbits
         self.marked_list = marked_list
 
+
     def launch(self,n,marked_list, angle_plot = False):
+
         """
         Triggers the start of Grover's algorithm
         Function to act grover using Qgate objects, a QReg object and a given state
@@ -38,26 +40,27 @@ class Grover(Algorithm):
         #error checks ****************
         if angle_plot == True:
             if len(marked_list) != 1:
-                raise ValueError("Error: angle_plot only works if only one state is being amplified")
+                raise ValueError("Error: angle plot only works if only one state is being amplified")
 
-        if len(marked_list)>=2**(self.n_qbits-1):
+
+        if len(self.marked_list)>=2**(self.n_qbits-1):
             raise TypeError("Error: The number of searching states supplied must be less than half the size of the register")
 
 
         # Reg_obj is register object, Reg is Quantum_Register class function
         # define number n of qubits in register
-        Reg_obj = QReg(n)
+        Reg_obj = QReg(self.n_qbits)
 
         # act hadamard on all qubits
         H.acts_on(Reg_obj, all=True)
 
         #errors: IS THIS RIGHT????????
-        if (max(marked_list) + 1) ** (1 / n) > 2:
+        if (max(self.marked_list) + 1) ** (1 / self.n_qbits) > 2:
             sys.exit("An index given is too large for the register")
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.
         #the number of Grover iterations is given by the following calculation
-        n_iter = int((np.pi / 4 * np.sqrt(2 ** n))/len(marked_list))
+        n_iter = int((np.pi / 4 * np.sqrt(2 ** self.n_qbits))/len(self.marked_list))
         
         if n_iter == 0:
             print("n = 0 so do once")
@@ -68,26 +71,26 @@ class Grover(Algorithm):
         #firt angle for angle_plot
         if angle_plot == True:
             angle_list = []
-            coeff = Reg_obj.Reg[marked_list[0]]
+            coeff = Reg_obj.Reg[self.marked_list[0]]
             angle = self.angle_vector(coeff)
             angle_list.append(angle)
 
         # do Grover iteration
         for i in range(n_iter):
-            O.acts_on(Reg_obj, marked_list)
+            O.acts_on(Reg_obj, self.marked_list)
             G.acts_on(Reg_obj)
 
             #only if user wants angle_plot
             if angle_plot == True:
                 #take coefficient for plot
-                coeff = Reg_obj.Reg[marked_list[0]]
+                coeff = Reg_obj.Reg[self.marked_list[0]]
                 angle = self.angle_vector(coeff)
                 angle_list.append(angle)
 
         print("The resulting quantum register should have a certain state (or states) amplified:")
         print(Reg_obj.Reg)
-        for i in range(len(marked_list)):
-            print(Reg_obj.Reg[marked_list[i]])
+        for i in range(len(self.marked_list)):
+            print(Reg_obj.Reg[self.marked_list[i]])
 
 
         self.barchart(Reg_obj)
