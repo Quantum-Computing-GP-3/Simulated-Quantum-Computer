@@ -6,7 +6,6 @@ gate.
 
 """
 import numpy as np
-import sys
 
 class QuantumGate(object):
     def __init__(self, matrix):
@@ -22,7 +21,14 @@ class QuantumGate(object):
         -------
         None.
         """
-        self.matrix = matrix
+        # We first check that the matrix we have introduced is unitary.
+        m_times_m_t_is_identity = np.allclose(np.eye(len(matrix)), matrix  @ matrix.T.conj())
+        m_t_times_m_is_identity = np.allclose(np.eye(len(matrix)), matrix.T.conj()  @ matrix)
+        
+        if (m_times_m_t_is_identity and m_t_times_m_is_identity):
+            self.matrix = matrix
+        else:
+            raise ValueError("The matrix representation of this gate is not unitary.")
         
         # self.size is the number of qubits the gate is designed to act on.
         # Can be obtained by looking at the number of rows in its matrix representation.
@@ -62,11 +68,11 @@ class QuantumGate(object):
         
         # Checks we are acting on the amount of qubits the quantum gate is designed for.
         if len(q) != self.size:
-            sys.exit("This quantum gate does not act on the number of qubits specified")
+            raise ValueError("This quantum gate does not act on the number of qubits specified")
         
         # Checks we are not acting on more qubits than exist in the register.
         if len(q) > np.ndim(reg):
-            sys.exit("You cannot act on more qubits than exist in the register.")
+            raise ValueError("You cannot act on more qubits than exist in the register.")
         
         # The first cartesian product is for iterating over the unprimed indices.
         for xs in cartesian_product_n_qubits(np.ndim(reg)):  

@@ -5,7 +5,6 @@ computer will need.
 """
 from .QuantumGate import QuantumGate
 import numpy as np 
-import sys
 
 #---------------------------- HADAMARD -------------------------------------
 Hadamard = QuantumGate(1/np.sqrt(2)*np.array([[1,1],
@@ -18,7 +17,7 @@ Hadamard = QuantumGate(1/np.sqrt(2)*np.array([[1,1],
 CNOT = QuantumGate(np.array([[1,0,0,0],
                              [0,1,0,0],
                              [0,0,0,1],
-                             [0,0,1,0]]))
+                             [0,0,1,0,]]))
 #---------------------------------------------------------------------------
 
 
@@ -51,7 +50,7 @@ state = "110011"
 
 # We check that "state" has the same length as the number of qubits in the register. 
 if len(state) != n:
-    sys.exit("The state the oracle should single out is not a valid basis state of the quantum register.")
+    raise ValueError("The state the oracle should single out is not a valid basis state of the quantum register.")
 
 # "state" is then converted to decimal in order to modify the correct diagonal entry
 # of the Oracle matrix representation.
@@ -59,9 +58,6 @@ matrix_O[int(state,2), int(state,2)] = -1
 
 O = QuantumGate(matrix_O)
 #---------------------------------------------------------------------------
-
-np.allclose(np.eye(len(m)), m.dot(m.T.conj()))
-
 
     
     
