@@ -7,6 +7,9 @@ from .QuantumGate import QuantumGate
 import numpy as np 
 
 #---------------------------- HADAMARD -------------------------------------
+def get_Hadadamard():
+    
+
 Hadamard = QuantumGate(1/np.sqrt(2)*np.array([[1,1],
                                               [1,-1]]))
 #---------------------------------------------------------------------------

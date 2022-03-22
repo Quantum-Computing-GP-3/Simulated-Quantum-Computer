@@ -6,11 +6,11 @@ register. This is the file to run.
 """
 # From ListQuantumGates we import the number of qubits of the quantum register (n)
 # and the needed quantum gates.
-from .ListQuantumGates import n, Hadamard, O, G
+from .ListQuantumGates import  get_Hadamard, get_O, get_G
 import numpy as np
 import matplotlib.pyplot as plt
 
-def main():
+def launch(n, marked_state):
     # First step is to initialise a quantum register of n qubits to the 0th state.
     reg = np.zeros((2,)*n, dtype = complex) 
     reg[(0,)*n] = 1 
@@ -123,5 +123,5 @@ def plot_angles(array_angles):
 
     
 # Execute main method, but only when directly invoked
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()
