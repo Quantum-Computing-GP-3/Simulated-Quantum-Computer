@@ -213,9 +213,9 @@ def main(n,marked_list,angle_plot=False):
 
 
 if __name__ == "__main__":
-    main(6, [0],angle_plot=True)
+    #main(6, [0],angle_plot=True)
     #main(8, [0], angle_plot = True)
-    #Reg_1 = QReg(6, index = [0,1,2], weight = [1,2,3])#increasing_integers = True)
+    Reg_1 = QReg(6,weights = np.array([[0,1,2],[1,2,3]]))#increasing_integers = True)
 
 
 
