@@ -39,8 +39,6 @@ setup(name=PACKAGE_NAME,
       entry_points={
           'console_scripts': [
                 "qStart = frontend.gui:main",
-                "pabloSim = pabloSim.Grover:main",
-                "stuartSim = stuartSim.Quantum_Computer:main",
               ]
           }
       )
