@@ -1,0 +1,4 @@
+[console_scripts]
+pabloSim = pabloSim.Grover:main
+stuartSim = stuartSim.Quantum_Computer:main
+

@@ -1,0 +1,72 @@
+Metadata-Version: 2.1
+Name: Simulated-Quantum-Computer
+Version: 2.0.0
+Summary: A series of quantum computer simulations for Edinburgh University School of Physics and Astronomy "Quantum Computing Project" course
+Home-page: https://github.com/Quantum-Computing-GP-3/Simulated-Quantum-Computer
+Author: Cameron Matthew
+Author-email: cambobmat@icloud.com
+License: GPL-3.0
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Simulated Quantum Computer
+A series of quantum computer simulations for Edinburgh University School of Physics and Astronomy "Quantum Computing Project" course.
+
+## Contents
+- [Package Structure](#package-structure)
+- [Usage](#usage)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Entry Points](#entry-points)
+
+## Package Structure
+This repository has the following structure:
+```
+Simulated-Quantum-Computer/
+  pabloSim/
+    __init__.py
+    ...
+  stuartSim/
+    __init__.py
+    ...
+  README.md
+  requirements.txt
+  setup.py
+```
+- `stuartSim` Is a python package containing version 2.0 of the simulated quantum computer, in this version each operator has a bespoke `acts_on` method allowing for decreased computation time.
+- `pabloSim` Is a python package containing version 1.0 of the simulated quantum computer, implementing our first attempt at Grover's algorithm.
+- The `README.md` file contains long-form documentation for the package. See [Make a README](https://www.makeareadme.com/).
+- The `requirements.txt` file contains a list of all third party python packages required to run this package. These are automatically installed by pip when this package is installed.
+- The `setup.py` file is the file used to install our package. It contains key package information such as version, authors, dependencies, entry points etc...
+
+## Usage
+
+### Requirements
+- [Python 3.8](https://www.python.org/downloads/) or greater
+- [pip](https://pip.pypa.io/en/stable/installation/)
+
+### Installation
+To install package dependencies and console entry points, navigate to the `Simulated-Quantum-Computer` directory in your terminal/console and run:
+
+```bash
+$ pip install -e .
+```
+We add the `-e` flag so that the python modules can be edited without having to reinstall.
+
+You may need to uninstall then reinstall this package if you edit `setup.py`. To uninstall run:
+```bash
+$ pip uninstall Simulated-Quantum-Computer
+```
+### Entry Points
+This package is configured such that the simulation can run from the command line using custom commands. To run Grover's algorithm as written in pabloSim, then run:
+```bash
+$ pabloSim
+```
+To run Grover's algorithm as written in stuartSim, run:
+```bash
+$ stuartSim
+```
+
+
+
