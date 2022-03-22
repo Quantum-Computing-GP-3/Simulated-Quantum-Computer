@@ -1,4 +1,4 @@
-from .algorithm import Algorithm
+from algorithm import Algorithm
 import sys
 
 import numpy as np
@@ -68,7 +68,7 @@ class Grover_Reflection(Algorithm):
 
         # We now apply the Grover and Oracle gates in order to amplify the required state.
         #the number of Grover iterations is given by the following calculation
-        n_iter = int((math.pi / 4 * np.sqrt(2 ** n))/len(marked_list))
+        n_iter = int((math.pi / 4 * np.sqrt(2 ** n))/len(marked_list))*2
 
 
         #IS THIS RIGHT``````````
@@ -76,14 +76,18 @@ class Grover_Reflection(Algorithm):
             print("n = 0 so do once")
             n_iter = 1
     
+        print(n_iter)
+        #print('beide regs',Reg_obj_state.Reg, Reg_obj_marked.Reg)
         #now we do O and G, both with a call to the reflection operator
         # O reflects Reg around our desired states
         #don't forget *(-1): since effect is '1 - projection on s'
         # G reflects our new Reg around the initial state of equal probability superpositions
         for _ in range (n_iter):
             R.acts_on(Reg_obj_state, Reg_obj_marked) 
+           # print(Reg_obj_state.Reg)
             Reg_obj_state.Reg *= (-1)
             R.acts_on (Reg_obj_state, Reg_obj_Psi_0)
+            print('after',Reg_obj_state.Reg)
             
             
         print("The resulting quantum register should have a certain state (or states) amplified:")
@@ -150,7 +154,8 @@ if __name__ == "__main__":
     t1 = time.time()
 
     #main(5, [0,1,3])
-    main(3, [1,2,3])
+    #main(3, [1,2,3])
+    main(10, [1])
     t2 = time.time()
     dif= t2-t1
     print(round(dif,3))

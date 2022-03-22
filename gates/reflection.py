@@ -41,6 +41,7 @@ class Reflection(Gate):
         Reg_obj_op.norm()
         Reg_obj_state.norm()
 
+        #print('morm', Reg_obj_state.Reg)
         #in order to calculate all entries, one needs to save the original register state separately
         reg_original = copy.deepcopy(Reg_obj_state)
 

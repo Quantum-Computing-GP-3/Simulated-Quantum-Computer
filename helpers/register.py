@@ -84,12 +84,12 @@ class QuantumRegister(object):
 
 
 
-        
+        """
         for i in range(2 ** (self.n)):
             sum += self.Reg[i] ** 2
             #sum over all probabilities ( = (entries of register)**2)
         Norm = 1 / np.sqrt(sum)
 
-
+        """
         self.Reg *= Norm
 
