@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 
-VERSION = '2.0.0'
+VERSION = '3.0.0'
 PACKAGE_NAME = 'Simulated-Quantum-Computer'
 AUTHOR = 'Cameron Matthew'
 AUTHOR_EMAIL = 'cambobmat@icloud.com'
