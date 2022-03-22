@@ -12,11 +12,11 @@ class QuantumRegister(object):
         :param n: int
             number of qubits in register
 
-        :param weights: (2xN) array
+        :param weights: (Nx2) array
             N weights to apply to N index's, where index's are first row and weights are column
 
         :param increasing_integers: bool
-            Forms a register of increasing values with index
+            Forms a register of increasing values with index. Anything given works apart from NoneType
 
 
         """
@@ -36,9 +36,16 @@ class QuantumRegister(object):
 
         #if user has given index and corresponding weights, apply them
         if isinstance(weights, np.ndarray) == True:
+            print(np.ndim(weights))
+            if len(weights[:, 0]) !=2:
+                raise TypeError("Error: Weights must be an (Nx2) numpy array")
             index = weights[0, :]
             weight = weights[1, :]
             self.Reg[index] = weight
+        elif weights !=None:
+            raise TypeError("Error: Weights must be an (Nx2) numpy array")
+
+
 
         # Useful sometimes for visualisation and troubleshooting particularly cnot
         elif increasing_integers != None:
@@ -50,7 +57,6 @@ class QuantumRegister(object):
             self.Reg[0] = 1
 
         self.norm()
-        print(self.Reg)
 
 
     def inc_int_vector(self):
@@ -76,7 +82,6 @@ class QuantumRegister(object):
 
         for i in range(2 ** (self.n)):
             sum += self.Reg[i] *np.conjugate(self.Reg[i])
-            # print('within norm', self.Reg[i]**2)
         Norm = 1 / np.sqrt(sum)
 
         self.Reg *= Norm

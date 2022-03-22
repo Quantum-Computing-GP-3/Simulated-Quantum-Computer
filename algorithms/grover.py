@@ -41,7 +41,7 @@ class Grover(Algorithm):
             if len(marked_list) != 1:
                 raise ValueError("Error: angle plot only works if only one state is being amplified")
 
-
+        #check that the length of the marked list is less than half the size of the register
         if len(self.marked_list)>=2**(self.n_qbits-1):
             raise TypeError("Error: The number of searching states supplied must be less than half the size of the register")
 
@@ -136,7 +136,7 @@ class Grover(Algorithm):
         plt.xlabel("Register component perpendicular to Amplified State ")
         plt.ylabel("Register component parallel to amplified State ")
         plt.title("Evolution of amplified state | Grover's")
-        print(len(angle_list))
+
         for i in range(len(angle_list)):
 
             if len(angle_list) > 6 and len(angle_list) <= 9:
@@ -152,7 +152,7 @@ class Grover(Algorithm):
             else:
                 plt.plot(x_lines[i, :], y_lines[i, :], color=colors[i], label="iteration  " + str(i))
 
-        plt.legend()
+        plt.legend(loc = 1)
         plt.gca().set_aspect('equal')#
 
 
@@ -214,8 +214,8 @@ def main(n,marked_list,angle_plot=False):
 
 if __name__ == "__main__":
     #main(6, [0],angle_plot=True)
-    #main(8, [0], angle_plot = True)
-    Reg_1 = QReg(6,weights = np.array([[0,1,2],[1,2,3]]))#increasing_integers = True)
+    main(8, [0], angle_plot = True)
+    #Reg_1 = QReg(6,increasing_integers= True)#weights = np.array([[0,1,2],[1,2,3]]))#increasing_integers = True)
 
 
 
