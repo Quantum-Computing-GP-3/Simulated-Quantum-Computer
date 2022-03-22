@@ -6,7 +6,6 @@ from gates.hadamard import Hadamard
 from gates.grover_gate import Grover
 from gates.oracle import Oracle
 from helpers.register import QuantumRegister as QReg
-import matplotlib
 from matplotlib import pyplot as plt
 
 
