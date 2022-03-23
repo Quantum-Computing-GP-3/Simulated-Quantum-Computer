@@ -38,7 +38,7 @@ setup(name=PACKAGE_NAME,
       packages=find_packages(),
       entry_points={
           'console_scripts': [
-                "qStart = frontend.gui:main",
-              ]
-          }
+              "qStart = frontend.gui:main",
+          ]
+      }
       )
