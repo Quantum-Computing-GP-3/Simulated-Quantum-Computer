@@ -3,6 +3,7 @@ A series of quantum computer algorithm simulations for Edinburgh University Scho
 
 ## Contents
 - [Package Structure](#package-structure)
+- [Flow Chart](#flow-chart)
 - [Usage](#usage)
   - [Requirements](#requirements)
   - [Installation](#installation)
@@ -40,7 +41,7 @@ Simulated-Quantum-Computer/
 - The `requirements.txt` file contains a list of all third party python packages required to run this package. These are automatically installed by pip when this package is installed.
 - The `setup.py` file is the file used to install our package. It contains key package information such as version, authors, dependencies, entry points etc...
 
-## Structure FlowChart
+## Flow Chart
 
 ![System Architecture Diagram](resource/Simulated-Quantum-Computer.png)
 
