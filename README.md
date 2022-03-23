@@ -59,7 +59,7 @@ To install package dependencies and console entry points, navigate to the `Simul
 ```bash
 $ pip install -e .
 ```
-We add the `-e` flag so that the python modules can be edited without having to reinstall.
+We add the `-e` flag so that the python modules can be edited without having to reinstall. Note that you _may_ have to run your terminal as an administrator/super user in order for the installation to succeed.
 
 To verify that the package has been installed, run:
 ```bash
@@ -94,6 +94,7 @@ If you wish to run individual python modules independently, you must modify the 
 ```bash
 $ python -m relative.path.to.module
 ```
+Note that you should omit the '.py' extension in this path.
 
 ## Pydoc
 This project supports documentation in the form of pydoc. Every class and method should contain the appropriate docstring in order to make this kind of auto-documentation useful. Instructions on how to generate this documentation locally can be found [here](https://www.tutorialspoint.com/documentation-generation-using-the-pydoc-module-in-python#:~:text=You%20can%20access%20the%20interactive,to%20launch%20the%20interactive%20shell).

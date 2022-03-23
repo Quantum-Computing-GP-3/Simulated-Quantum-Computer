@@ -1,4 +1,3 @@
-import time
 from .gate import Gate
 import copy
 from helpers.register import QuantumRegister as QReg

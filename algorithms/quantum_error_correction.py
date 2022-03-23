@@ -1,4 +1,3 @@
-import numpy as np
 from .algorithm import Algorithm
 from gates.hadamard import Hadamard
 from gates.cnot import CNOT
@@ -40,7 +39,9 @@ class QECorrection(Algorithm):
 
         Reg_obj.norm()  # necessary normalization since alpha and beta can be chosen arbitrarily by user
 
-        print('alpha', Reg_obj.Reg[0], 'beta', Reg_obj.Reg[1])
+        print("The normalised input state is:")
+        print('alpha = {} and beta = {}'.format(Reg_obj.Reg[0], Reg_obj.Reg[1]))
+        print()
 
         # we always act with C(NOT) and T on the same configuration of qubits,
         # therefore those actions can be carried out in loops over the
@@ -83,16 +84,13 @@ class QECorrection(Algorithm):
         # but alpha and beta stayed the same!!!:
         alpha_new = 0
         beta_new = 0
-        print(Reg_obj.Reg)
         for i in range(Reg_obj.N):
             if i % 2 == 0:  # 0-coefficients
                 alpha_new += Reg_obj.Reg[i]
             else:  # 1-coefficients
                 beta_new += Reg_obj.Reg[i]
-        print('alphanew', alpha_new, 'betanew', beta_new)
-
-
-
+        print("The corrected alpha and beta values are:")
+        print('alpha = {} and beta = {}'.format(alpha_new, beta_new))
 
 
 #main to run it

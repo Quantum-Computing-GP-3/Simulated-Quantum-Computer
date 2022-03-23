@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>583</width>
-    <height>489</height>
+    <width>629</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>0</y>
-     <width>546</width>
-     <height>451</height>
+     <x>30</x>
+     <y>10</y>
+     <width>581</width>
+     <height>491</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -83,7 +83,17 @@
     <item>
      <widget class="QLabel" name="label_8">
       <property name="text">
-       <string>Input coefficients for the Qbit state which you want to check.</string>
+       <string>Input the coefficients for the Qbit state to be corrupted.</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>This is equivalent to |ψ&gt; = α|0&gt; + β|1&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -199,7 +209,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>Probability of flipping the state's sign</string>
+           <string>Probability of enacting a sign flip:</string>
           </property>
          </widget>
         </item>
@@ -220,7 +230,7 @@
         <item>
          <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>Probability of flipping a bit</string>
+           <string>Probability of enacting a bit flip:</string>
           </property>
          </widget>
         </item>

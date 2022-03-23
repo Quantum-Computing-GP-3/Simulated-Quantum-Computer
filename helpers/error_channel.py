@@ -21,13 +21,21 @@ def error_channel(Reg_obj, q, pbit=0., psign=0.):
     corruptionsign = np.random.random()
 
     if corruptionsign < psign:
-        print('signcorruption')
+        print('The sign has been corrupted')
+        print()
         Z.acts_on(Reg_obj, q)
     else:
-        print('no signcorruption')
+        print('No sign corruption')
+        print()
 
     if corruptionbit < pbit:
-        print('bitcorruption')
+        print('The bit has been corrupted')
+        print()
         X.acts_on(Reg_obj, q)
     else:
-        print('no bitcorruption')
+        print('No bit corruption')
+        print()
+
+    print("The new corrupted state is:")
+    print(Reg_obj.Reg)
+    print()

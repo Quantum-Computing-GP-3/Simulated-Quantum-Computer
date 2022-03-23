@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>764</width>
-    <height>405</height>
+    <width>781</width>
+    <height>429</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>30</x>
      <y>20</y>
-     <width>721</width>
-     <height>361</height>
+     <width>731</width>
+     <height>381</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -93,7 +93,7 @@
     <item>
      <widget class="QLabel" name="label_10">
       <property name="text">
-       <string>In this formulation you may only choose one state to be amplified.</string>
+       <string>In this formulation, you may only choose one state to be amplified.</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
