@@ -40,7 +40,5 @@ class Grover(Gate):
                 else:
                     reg_new[i] += rest * reg_old[j]
 
-        # the following is for the iteration comparison
-        #print('iteration grovergate', max(reg_new)**2)
 
         Reg_obj.Reg = reg_new  # update register state vector
