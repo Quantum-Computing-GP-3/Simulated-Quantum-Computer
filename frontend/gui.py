@@ -48,7 +48,7 @@ class GroverOGGUI(QWidget):
                 return
         
         grover = Grover(n_qbits, state)
-        grover.launch()
+        grover.launch(angle_plot=True)
 
         
 class GroverRefGUI(QWidget):

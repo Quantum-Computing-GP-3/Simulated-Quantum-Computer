@@ -25,7 +25,7 @@ class Grover(Algorithm):
         self.marked_list = marked_list
 
 
-    def launch(self,n,marked_list, angle_plot = False):
+    def launch(self, angle_plot = False):
 
         """
         Triggers the start of Grover's algorithm
@@ -38,7 +38,7 @@ class Grover(Algorithm):
         """
         #error checks ****************
         if angle_plot == True:
-            if len(marked_list) != 1:
+            if len(self.marked_list) != 1:
                 raise ValueError("Error: angle plot only works if only one state is being amplified")
 
         #check that the length of the marked list is less than half the size of the register

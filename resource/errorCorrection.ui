@@ -211,7 +211,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="PFlip">
+         <widget class="QDoubleSpinBox" name="pFlip">
           <property name="maximum">
            <double>1.000000000000000</double>
           </property>
