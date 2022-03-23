@@ -93,7 +93,7 @@
     <item>
      <widget class="QLabel" name="label_10">
       <property name="text">
-       <string>In this formulation we you may only chose one state to be amplified.</string>
+       <string>In this formulation you may only choose one state to be amplified.</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -103,7 +103,7 @@
     <item>
      <widget class="QLabel" name="label_11">
       <property name="text">
-       <string>The amplified state is represented by a tuple of length equal to the number of Qbits.</string>
+       <string>The amplified state is represented by a comma seperated list of length equal to the number of Qbits.</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
