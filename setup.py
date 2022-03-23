@@ -19,7 +19,7 @@ if os.path.isfile(README_PATH):
         LONG_DESCRIPTION = f.read()
 
 REQUIREMENETS = os.path.join(HERE, "requirements.txt")
-INSTALL_REQUIRES = ["setuptools"]
+INSTALL_REQUIRES = []
 
 if os.path.isfile(REQUIREMENETS):
     with open(REQUIREMENETS) as f:
