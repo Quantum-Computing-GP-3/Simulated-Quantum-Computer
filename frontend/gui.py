@@ -4,7 +4,7 @@ from os.path import join
 import numpy as np
 
 from PyQt5.uic import loadUi
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox, QSpinBox, QLineEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox, QSpinBox, QDoubleSpinBox, QLineEdit
 
 from algorithms.grover import Grover
 from algorithms.quantum_error_correction import QECorrection
@@ -132,13 +132,25 @@ class QECGUI(QWidget):
         super(QECGUI, self).__init__()
         loadUi(join(PKG_PATH, 'resource', 'errorCorrection.ui'), self)
 
+        self.ALPHA_SPIN = self.findChild(QDoubleSpinBox, "AlphaSpin")
+        self.BETA_SPIN = self.findChild(QDoubleSpinBox, "BetaSpin")
+        self.P_FLIP = self.findChild(QDoubleSpinBox, "pFlip")
+        self.P_SIGN = self.findChild(QDoubleSpinBox, "pSign")
+        self.RUN = self.findChild(QPushButton, "RunQEC")
+        self.RUN.clicked.connect(self.QEC_launch)
+
         # Display GUI- should always run last in constructor
         self.show()
 
     # Launch Error Correction algorithm
     def QEC_launch(self):
+        alpha = float(self.ALPHA_SPIN.value())
+        beta = float(self.BETA_SPIN.value())
+        pSign = float(self.P_SIGN.value())
+        pFlip = float(self.P_FLIP.value())
+
         qec = QECorrection()
-        qec.launch()
+        qec.launch(alpha, beta, pFlip, pSign)
 
 
 class MainGUI(QWidget):
