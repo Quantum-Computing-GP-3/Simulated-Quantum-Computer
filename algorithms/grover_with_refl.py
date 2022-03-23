@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 H = Hadamard()
 R = Reflection()
 
+
 class Grover_Reflection(Algorithm):
     """
     Runs Grover's algorithm
@@ -34,9 +35,9 @@ class Grover_Reflection(Algorithm):
 
                 """
 
-        if len(self.marked_list)>=2**(self.n_qbits-1):
-            raise TypeError("Error: The number of searching states supplied must be less than half the size of the register")
-
+        if len(self.marked_list) >= 2**(self.n_qbits - 1):
+            raise TypeError(
+                "Error: The number of searching states supplied must be less than half the size of the register")
 
         # Reg_obj_state is register object describing the whole statevector
         # Reg_obj_marked is register object containing the states-to-be-marked
@@ -44,10 +45,11 @@ class Grover_Reflection(Algorithm):
         # define number n of qubits in register
         Reg_obj_state = QReg(self.n_qbits)
         Reg_obj_marked = QReg(self.n_qbits)
-        
-        Reg_obj_marked.Reg[0] = 0 
-        #our register initialization: not as (0 0 0 0 0) but (1 0 0 0 0)^t - the state needs one nonzero entry to be normalized and a proper quantum state)
-        # due to this initializtaon, one needs to manually set the first entry to zero here
+
+        Reg_obj_marked.Reg[0] = 0
+        # our register initialization: not as (0 0 0 0 0) but (1 0 0 0 0)^t - the state needs one nonzero entry to be normalized and a proper quantum state)
+        # due to this initializtaon, one needs to manually set the first entry
+        # to zero here
         for elm in self.marked_list:
             Reg_obj_marked.Reg[elm] = 1
 
@@ -56,47 +58,42 @@ class Grover_Reflection(Algorithm):
         # act hadamard on all qubits
         H.acts_on(Reg_obj_state, all=True)
 
-        Reg_obj_Psi_0 =  copy.deepcopy(Reg_obj_state)
-        #store the initialized state with equal probabilities for the Grover reflection later
+        Reg_obj_Psi_0 = copy.deepcopy(Reg_obj_state)
+        # store the initialized state with equal probabilities for the Grover
+        # reflection later
 
-
-        #possible error: IS THIS RIGHT?????*******
+        # possible error: IS THIS RIGHT?????*******
         if (max(self.marked_list) + 1) ** (1 / self.n_qbits) > 2:
             sys.exit("An index given is too large for the register")
 
-
-
         # We now apply the Grover and Oracle gates in order to amplify the required state.
-        #the number of Grover iterations is given by the following calculation
-        n_iter = int((math.pi / 4 * np.sqrt(2 ** self.n_qbits))/len(self.marked_list))#*2
+        # the number of Grover iterations is given by the following calculation
+        n_iter = int((math.pi / 4 * np.sqrt(2 ** self.n_qbits)) /
+                     len(self.marked_list))  # *2
 
-
-        #IS THIS RIGHT``````````
+        # IS THIS RIGHT``````````
         if n_iter == 0:
             n_iter = 1
-    
 
         print("before")
         print(Reg_obj_state.Reg)
         #print('beide regs',Reg_obj_state.Reg, Reg_obj_marked.Reg)
-        #now we do O and G, both with a call to the reflection operator
+        # now we do O and G, both with a call to the reflection operator
         # O reflects Reg around our desired states
-        #don't forget *(-1): since effect is '1 - projection on s'
-        # G reflects our new Reg around the initial state of equal probability superpositions
-        for _ in range (n_iter):
+        # don't forget *(-1): since effect is '1 - projection on s'
+        # G reflects our new Reg around the initial state of equal probability
+        # superpositions
+        for _ in range(n_iter):
 
-            R.acts_on(Reg_obj_state, Reg_obj_marked) 
+            R.acts_on(Reg_obj_state, Reg_obj_marked)
            # print(Reg_obj_state.Reg)
             Reg_obj_state.Reg *= (-1)
-            R.acts_on (Reg_obj_state, Reg_obj_Psi_0)
+            R.acts_on(Reg_obj_state, Reg_obj_Psi_0)
 
             print("before")
             print(_)
             print(Reg_obj_state.Reg)
 
-
-            
-            
         print("The resulting quantum register should have a certain state (or states) amplified:")
         print(Reg_obj_state.Reg)
         for i in range(len(self.marked_list)):
@@ -140,20 +137,19 @@ class Grover_Reflection(Algorithm):
         plt.show()
 
 
-def main(n,marked_list):
+def main(n, marked_list):
 
     grover = Grover_Reflection(n, marked_list)
-    grover.launch(n,marked_list)
+    grover.launch(n, marked_list)
 
 
 if __name__ == "__main__":
-    
+
     time_list = []
-    for i in range(3,10):
+    for i in range(3, 10):
         start = time.time()
 
-        main(5, [1,2,8])
+        main(5, [1, 2, 8])
         end = time.time()
-        diff= end-start
+        diff = end - start
         time_list.append(diff)
-

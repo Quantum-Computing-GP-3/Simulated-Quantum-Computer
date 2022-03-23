@@ -43,11 +43,11 @@ class QECorrection(Algorithm):
         print('alpha', Reg_obj.Reg[0], 'beta', Reg_obj.Reg[1])
 
         # we always act with C(NOT) and T on the same configuration of qubits,
-        # therefore those actions can be carried out in loops over the following lists
+        # therefore those actions can be carried out in loops over the
+        # following lists
         C_list1 = [[0, 1], [3, 4], [6, 7]]
         C_list2 = [[0, 2], [3, 5], [6, 8]]
         T_list = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
-
 
         # now we follow the quantum error correction protocol
 
@@ -61,11 +61,9 @@ class QECorrection(Algorithm):
         for i in range(3):
             CNOT.acts_on(Reg_obj, C_list2[i])
 
-        # error channel corrupts bit and sign with a probability given by pbit, psign
-        error_channel(Reg_obj,[0], pbit, psign)
-
-
-
+        # error channel corrupts bit and sign with a probability given by pbit,
+        # psign
+        error_channel(Reg_obj, [0], pbit, psign)
 
         for i in range(3):
             CNOT.acts_on(Reg_obj, C_list1[i])
@@ -99,18 +97,11 @@ def __main__(alpha, beta, pbit=0., psign=0.):
     shor.launch(alpha, beta, pbit, psign)
 
 
-
-
-
-
-
-def __main__(alpha, beta,pbit=0., psign=0. ):
+def __main__(alpha, beta, pbit=0., psign=0.):
     shor = QECorrection()
-    shor.launch(alpha, beta,pbit, psign)
+    shor.launch(alpha, beta, pbit, psign)
 
 
 if __name__ == "__main__":
-    #alpha, beta do not need to be normalized as input
-    __main__( 0.2,0.7, 0.,0.)
-
-
+    # alpha, beta do not need to be normalized as input
+    __main__(0.2, 0.7, 0., 0.)

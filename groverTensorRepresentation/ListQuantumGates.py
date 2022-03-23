@@ -4,10 +4,10 @@ Uses the QuantumGate class to create all the quantum gates that the quantum
 computer will need.
 """
 from .QuantumGate import QuantumGate
-import numpy as np 
+import numpy as np
 
 
-#---------------------------- HADAMARD -------------------------------------
+# ---------------------------- HADAMARD -------------------------------------
 def get_Hadamard():
     """
     Returns the Hadamard gate.
@@ -19,15 +19,14 @@ def get_Hadamard():
 
     """
 
-    Hadamard = QuantumGate(1/np.sqrt(2)*np.array([[1,1],
-                                                  [1,-1]]))
-    
+    Hadamard = QuantumGate(1 / np.sqrt(2) * np.array([[1, 1],
+                                                      [1, -1]]))
+
     return Hadamard
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 
 
-
-#------------------------------ CNOT ---------------------------------------
+# ------------------------------ CNOT ---------------------------------------
 def get_CNOT():
     """
     Returns the CNOT gate.
@@ -38,21 +37,19 @@ def get_CNOT():
         Represents the CNOT gate.
 
     """
-    CNOT = QuantumGate(np.array([[1,0,0,0],
-                                 [0,1,0,0],
-                                 [0,0,0,1],
-                                 [0,0,1,0,]]))
-    
+    CNOT = QuantumGate(np.array([[1, 0, 0, 0],
+                                 [0, 1, 0, 0],
+                                 [0, 0, 0, 1],
+                                 [0, 0, 1, 0, ]]))
+
     return CNOT
-#---------------------------------------------------------------------------
-
-
+# ---------------------------------------------------------------------------
 
 
 # The Oracle and Grover gates act on the n qubit register. Thus, in order to define
 # these gates we need to know how many qubits the register has.
 
-#------------------------------ GROVER -------------------------------------
+# ------------------------------ GROVER -------------------------------------
 def get_Grover(n):
     """
     Returns the Grover gate.
@@ -70,18 +67,18 @@ def get_Grover(n):
     """
     N = 2**n
 
-    matrix_G = np.ones((N, N)) * 2/N
-    
+    matrix_G = np.ones((N, N)) * 2 / N
+
     for i in range(N):
-        matrix_G[i,i] -= 1
-    
+        matrix_G[i, i] -= 1
+
     G = QuantumGate(matrix_G)
-    
+
     return G
-#---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 
 
-#------------------------------ ORACLE -------------------------------------
+# ------------------------------ ORACLE -------------------------------------
 def get_Oracle(n, marked_state):
     """
     Returns the Oracle gate, which will amplify the marked_state.
@@ -101,25 +98,24 @@ def get_Oracle(n, marked_state):
 
     """
     N = 2**n
-    
+
     matrix_O = np.eye(N)
-    
+
     # Here we define what state the oracle picks out.
     # "1100" refers to the basis state |1,1,0,0>
-    state = "".join(map(str,marked_state))
-    
-    # We check that "state" has the same length as the number of qubits in the register. 
+    state = "".join(map(str, marked_state))
+
+    # We check that "state" has the same length as the number of qubits in the
+    # register.
     if len(state) != n:
-        raise ValueError("The state the oracle should single out is not a valid basis state of the quantum register.")
-    
+        raise ValueError(
+            "The state the oracle should single out is not a valid basis state of the quantum register.")
+
     # "state" is then converted to decimal in order to modify the correct diagonal entry
     # of the Oracle matrix representation.
-    matrix_O[int(state,2), int(state,2)] = -1
-    
+    matrix_O[int(state, 2), int(state, 2)] = -1
+
     O = QuantumGate(matrix_O)
-    
+
     return O
-#---------------------------------------------------------------------------
-
-    
-
+# ---------------------------------------------------------------------------

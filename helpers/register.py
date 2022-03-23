@@ -3,7 +3,7 @@ import numpy as np
 
 class QuantumRegister(object):
 
-    def __init__(self, n, weights = None, increasing_integers = None):
+    def __init__(self, n, weights=None, increasing_integers=None):
         """
          Initialise register object
 
@@ -21,34 +21,28 @@ class QuantumRegister(object):
 
         """
 
-
-
-
-        # First step is to initialise a quantum register of n qubits to the 0 state.
+        # First step is to initialise a quantum register of n qubits to the 0
+        # state.
         reg = np.zeros((2 ** n), dtype=complex)
 
+        self.n = n  # number of qubits
+        self.N = 2**n  # length of register
+        self.Reg = reg  # actual array
 
-        self.n = n      #number of qubits
-        self.N = 2**n   #length of register
-        self.Reg = reg  #actual array
-
-
-
-        #if user has given index and corresponding weights, apply them
-        if isinstance(weights, np.ndarray) == True:
+        # if user has given index and corresponding weights, apply them
+        if isinstance(weights, np.ndarray):
             print(np.ndim(weights))
-            if len(weights[:, 0]) !=2:
+            if len(weights[:, 0]) != 2:
                 raise TypeError("Error: Weights must be an (Nx2) numpy array")
             index = weights[0, :]
             weight = weights[1, :]
             self.Reg[index] = weight
-        elif weights !=None:
+        elif weights is not None:
             raise TypeError("Error: Weights must be an (Nx2) numpy array")
 
-
-
-        # Useful sometimes for visualisation and troubleshooting particularly cnot
-        elif increasing_integers != None:
+        # Useful sometimes for visualisation and troubleshooting particularly
+        # cnot
+        elif increasing_integers is not None:
             self.inc_int_vector()
 
         # if user wants the simplest register
@@ -57,7 +51,6 @@ class QuantumRegister(object):
             self.Reg[0] = 1
 
         self.norm()
-
 
     def inc_int_vector(self):
         """
@@ -71,18 +64,15 @@ class QuantumRegister(object):
             self.Reg[i] = i
         return
 
-
     def norm(self):
         '''
         function to normalize state
         '''
 
-
         sum = 0
 
         for i in range(2 ** (self.n)):
-            sum += self.Reg[i] *np.conjugate(self.Reg[i])
+            sum += self.Reg[i] * np.conjugate(self.Reg[i])
         Norm = 1 / np.sqrt(sum)
 
         self.Reg *= Norm
-
