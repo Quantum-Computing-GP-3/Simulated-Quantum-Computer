@@ -1,8 +1,14 @@
 import numpy as np
 from .gate import Gate
-
+from helpers.register import QuantumRegister as QReg
 
 class Grover(Gate):
+
+    def Error_checker(self, Reg_obj):
+        if isinstance(Reg_obj, QReg) != True:
+            raise TypeError("Error: gate expects register object as input")
+
+
 
     def acts_on(self, Reg_obj):
         """
@@ -11,8 +17,10 @@ class Grover(Gate):
             Register object
         """
 
-        # no error check yet
-
+        
+        #errors***************
+        self.Error_checker(Reg_obj)
+    
         n = Reg_obj.n  # number of qubits
         N = Reg_obj.N  # length of register
 

@@ -16,8 +16,7 @@ class Gate(ABC):
 
     def Error_checker(self, Reg_obj, q, all):
 
-        # check they have supplied a register object, not array or anything
-        # else
+        # check they have supplied a register object, not array or anything else
         if isinstance(Reg_obj, QReg) != True:
             # check either q or all are supplied
             raise TypeError("Error: gate expects register object as input")

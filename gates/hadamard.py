@@ -15,22 +15,21 @@ class Hadamard(Gate):
             whether Hadamard should be acted on all qubits
         '''
 
+        #errorchecker *****************************
         self.Error_checker(Reg_obj, q, all)
         if all:
             q = [i for i in range(Reg_obj.n)]
-
-        # ******************
+        # *****************************************
 
         if all:
             q = [i for i in range(Reg_obj.n)]
 
         for qbit in q:
-            # Hadamard action separately for each selected qubit in the passed
-            # q list
+            # Hadamard action separately for each selected qubit in the passed q list
+            
             i = 0
             # i is iteration of H action on qbit over the basis states;
-            # due to handling action of two states simultaneously, that makes
-            # N/2 iterations
+            # due to handling action of two states simultaneously, that makes N/2 iterations
 
             while i <= Reg_obj.N - 2 ** qbit:
                 for _ in range(2 ** qbit):
@@ -49,5 +48,4 @@ class Hadamard(Gate):
                     i += 1
                 i += 2 ** qbit
                 # the variation of the step width achieves that we don't loop
-                # over any second state i+2**qbit again that we already took
-                # care of
+                # over any second state i+2**qbit again that we already took care of

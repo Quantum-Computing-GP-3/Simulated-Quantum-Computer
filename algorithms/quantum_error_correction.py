@@ -92,15 +92,13 @@ class QECorrection(Algorithm):
         print('alphanew', alpha_new, 'betanew', beta_new)
 
 
+
+
+
+#main to run it
 def __main__(alpha, beta, pbit=0., psign=0.):
     shor = QECorrection()
     shor.launch(alpha, beta, pbit, psign)
-
-
-def __main__(alpha, beta, pbit=0., psign=0.):
-    shor = QECorrection()
-    shor.launch(alpha, beta, pbit, psign)
-
 
 if __name__ == "__main__":
     # alpha, beta do not need to be normalized as input

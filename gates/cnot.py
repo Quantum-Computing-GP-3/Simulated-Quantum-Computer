@@ -4,20 +4,6 @@ from .gate import Gate
 
 class CNOT(Gate):
 
-    def __init__(self):
-        """
-        initialise CNOT gate
-        can be done algorithimically or by matrices, so matrices could be included.
-        """
-        # IS THIS STILL NECESSARY??
-        self.matrix = (np.array([[1, 0, 0, 0],
-                                 [0, 1, 0, 0],
-                                 [0, 0, 0, 1],
-                                 [0, 0, 1, 0]]))
-
-        self.size = int(np.round(np.log2(self.matrix.shape[0])))
-        self.tensor = np.reshape(self.matrix, (2, 2, 2, 2))
-
     def acts_on(self, Reg_obj, q):
         '''
         function to act CNOT
@@ -32,11 +18,13 @@ class CNOT(Gate):
         if len(q) != 2 or len(q) != len(set(q)):
             raise ValueError(
                 'Error: gate expects 2 nonidentical qubit arguments')
+        #**********************
+
 
         c = q[0]  # control position
         t = q[1]  # target position
 
-        i = 0
+        i = 0     #index counting variable
 
         if c < t:
             cond1 = 2 ** c
@@ -47,16 +35,18 @@ class CNOT(Gate):
         # these two conditions define the steps that have to be taken to target the right register indices/basis states
         #cond1 < cond2
 
-        between = cond2 / (cond1 * 2)
+        between = cond2 / (cond1 * 2) 
+        #between defines the number of same-state-blocks of the qubit with the smallest number position within one same-state-block of the larger qubit number position
 
-        # starting index is first one where control qubit is 1
+        
         i = 2 ** (c)
+        # starting index is first one where control qubit is 1
 
         while i < Reg_obj.N - 1:
             for _ in range(int(between)):
                 for _ in range(cond1):
                     a = Reg_obj.Reg[i]
-                    # CNOT flips the entries of state i and state i+2**t
+                    # NOT gate flips the entries of state i and state i+2**t
                     b = Reg_obj.Reg[i + 2 ** t]
                     Reg_obj.Reg[i] = b
                     Reg_obj.Reg[i + 2 ** t] = a
