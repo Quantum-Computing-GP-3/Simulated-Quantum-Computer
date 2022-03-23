@@ -1,8 +1,6 @@
-from os import stat
 import sys
 from pathlib import Path
 from os.path import join
-import numpy as np
 
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QComboBox, QSpinBox, QDoubleSpinBox, QLineEdit
