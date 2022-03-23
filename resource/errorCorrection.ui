@@ -74,6 +74,13 @@
      </widget>
     </item>
     <item>
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QLabel" name="label_8">
       <property name="text">
        <string>Input coefficients for the Qbit state which you want to check.</string>
@@ -169,6 +176,13 @@
      </layout>
     </item>
     <item>
+     <widget class="Line" name="line_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QLabel" name="label_7">
       <property name="text">
        <string>Error Probabilities:</string>
@@ -223,6 +237,13 @@
        </layout>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
