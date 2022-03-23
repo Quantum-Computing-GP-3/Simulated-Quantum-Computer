@@ -53,6 +53,10 @@ class GroverOGGUI(QWidget):
                     "Input Error: '{}' is not a valid index. Inputs must be unique, comma seperated integers from 0 -> 2^no.qbits - 1".format(item))
                 return
 
+        if len(state) >= 2**(n_qbits - 1):
+            print("Input Error: The number of searching states supplied must be less than half the size of the register")
+            return
+
         if len(state) == 1:
             angle_plot = True
         else:
@@ -99,6 +103,10 @@ class GroverRefGUI(QWidget):
                 print(
                     "Input Error: '{}' is not a valid index. Inputs must be unique, comma seperated integers from 0 -> 2^no.qbits - 1".format(item))
                 return
+
+        if len(state) >= 2**(n_qbits - 1):
+            print("Input Error: The number of searching states supplied must be less than half the size of the register")
+            return
 
         grover = Grover_Reflection(n_qbits, state)
         grover.launch()
