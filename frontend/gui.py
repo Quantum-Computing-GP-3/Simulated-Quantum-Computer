@@ -10,7 +10,7 @@ from algorithms.grover import Grover
 from algorithms.quantum_error_correction import QECorrection
 from algorithms.grover_with_refl import Grover_Reflection
 
-# from groverTensorRepresentation import Grover as Grover_Tens
+from groverTensorRepresentation import Grover as Grover_Tens
 
 PKG_PATH = Path(__file__).parent.parent  # Simulated-Quantum-Computer package path
 
@@ -102,7 +102,6 @@ class GroverTensGUI(QWidget):
         # Parameters for Grover
         self.QBIT_SELECTION = self.findChild(QSpinBox, "RegisterSize")
         self.STATE_SELECTION = self.findChild(QLineEdit, "State")
-        self.STATE_SELECTION.setText("e.g. 1, 2, 3, 4...")
 
         # Display GUI- should always run last in constructor
         self.show()
@@ -111,16 +110,22 @@ class GroverTensGUI(QWidget):
     def grover_launch(self):
         n_qbits = int(self.QBIT_SELECTION.value())
         marked_list = self.STATE_SELECTION.text().replace(" ", "").split(',')
-        state = []
+        state = ()
         for item in marked_list:
-            if item.isdigit() and (0 < int(item) < (2**(n_qbits) - 1)) and (int(item) not in state):
-                state.append(int(item))
+            if item.isdigit() and (int(item) in [0, 1]):
+                state += (int(item),)
             else:
-                print("Input Error: '{}' is not a valid index. Inputs must be unique, comma seperated integers from 0 -> 2^no.qbits - 1".format(item))
+                print("Input Error: '{}' is invalid. Input indices must be either 0 or 1".format(item))
                 return
 
-        # Grover_Tens.main()
-        print("Running Grover Tensor")
+        if len(state) != n_qbits:
+            print("Input Error: The amplified state must be a tuple of length equal to the number of Qbits")
+            return
+
+        print(state)
+
+        grover = Grover_Tens
+        grover.launch(n_qbits, state)
 
 
 class QECGUI(QWidget):
