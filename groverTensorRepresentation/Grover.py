@@ -71,6 +71,7 @@ def launch(n, marked_state):
     print(f"Probability of measuring it is: {abs(reg[ind])**2}")
 
     # We now create a plot of the situation
+    fig1 = plt.figure("Figure 1")
     plt.bar([f"{ind}", "all other states"], [
             abs(reg[ind])**2, 1 - abs(reg[ind])**2], color='teal')
     plt.ylabel("Probability of measuring basis state")
@@ -130,6 +131,8 @@ def plot_angles(array_angles):
     colors = np.linspace(0.8, 0, len(array_angles), dtype="str")
 
     # plot lines
+    fig2 = plt.figure("Figure 2")
+
     plt.xlabel("Register component perpendicular to amplified state ")
     plt.ylabel("Register component parallel to amplified atate ")
     plt.title("Evolution of Amplified State | Grover's")

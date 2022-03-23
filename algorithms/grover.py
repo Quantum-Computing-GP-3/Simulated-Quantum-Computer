@@ -130,6 +130,7 @@ class Grover(Algorithm):
         colors = np.linspace(0.8, 0, len(angle_list), dtype="str")
 
         # plot lines
+        fig2 = plt.figure("Figure 2")
         plt.xlabel("Register component perpendicular to Amplified State ")
         plt.ylabel("Register component parallel to amplified State ")
         plt.title("Evolution of amplified state | Grover's")
@@ -186,6 +187,7 @@ class Grover(Algorithm):
         minimum = np.min(Reals)
         full_arr = np.append(max_arr, minimum)
 
+        fig1 = plt.figure("Figure 1")
         plt.title("Quantum Register after Grover's Algorithm")
         plt.xlabel("Basis states in decimal representation")
         plt.ylabel("Probability of measuring basis state")

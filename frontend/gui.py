@@ -142,8 +142,6 @@ class GroverTensGUI(QWidget):
                 "Input Error: The amplified state must be a tuple of length equal to the number of Qbits")
             return
 
-        print(state)
-
         grover = Grover_Tens
         grover.launch(n_qbits, state)
 
