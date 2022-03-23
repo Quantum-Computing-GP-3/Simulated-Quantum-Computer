@@ -23,7 +23,6 @@ class Reflection(Gate):
         if isinstance(Reg_obj_op, QReg) != True:
             raise TypeError("Error: gate expects register object as input")
 
-
     def acts_on(self, Reg_obj_state, Reg_obj_op):
         """
         function to reflect around
@@ -43,14 +42,12 @@ class Reflection(Gate):
         Reg_obj_op.norm()
         Reg_obj_state.norm()
 
-       
         # in order to calculate all entries, one needs to save the original
         # register state separately:
         reg_original = copy.deepcopy(Reg_obj_state)
 
-
-        #the following loop calculates the projection operator ket(Psi_op)bra(Psi_op) acting on the state
-        #this is analogous to vector/matrix calculations done by hand
+        # the following loop calculates the projection operator ket(Psi_op)bra(Psi_op) acting on the state
+        # this is analogous to vector/matrix calculations done by hand
         for i in range(N):
             regentryi = 0
             for j in range(N):
@@ -61,5 +58,3 @@ class Reflection(Gate):
         # reflection
         Reg_obj_state.Reg = 2 * Reg_obj_state.Reg - reg_original.Reg
         Reg_obj_state.norm()
-
-

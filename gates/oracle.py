@@ -1,13 +1,15 @@
 from .gate import Gate
 from helpers.register import QuantumRegister as QReg
 
+
 class Oracle(Gate):
 
     def Error_checker(self, Reg_obj, marked_list):
-        if marked_list == None or Reg_obj == None:
+        if marked_list is None or Reg_obj is None:
             raise TypeError("Error: gate expects 2 inputs")
         if len(marked_list) > Reg_obj.N:
-            raise IndexError('Error: the marked list you want to act on exceed the Register size')
+            raise IndexError(
+                'Error: the marked list you want to act on exceed the Register size')
         if isinstance(Reg_obj, QReg) != True:
             raise TypeError("Error: gate expects register object as input")
         if isinstance(marked_list, list) != True:
@@ -24,10 +26,9 @@ class Oracle(Gate):
         """
 
         # errors***************
-        self.Error_checker(Reg_obj,marked_list)
+        self.Error_checker(Reg_obj, marked_list)
 
         n = Reg_obj.n
-
 
         for i in range(len(marked_list)):
             # assumes numerical state

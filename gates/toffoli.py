@@ -35,12 +35,13 @@ class Toffoli(Gate):
 
         between1 = cond2 / (cond1 * 2)
         between2 = cond3 / (cond2 * 2)
-        # this is the number of iterations over one of the cond-steps in alternation
+        # this is the number of iterations over one of the cond-steps in
+        # alternation
 
         # starting from the first state where both control quits are 1
         i = 2 ** (c1) + 2 ** (c2)
 
-        # iteration over all states for which both control qubits are 1, 
+        # iteration over all states for which both control qubits are 1,
         # then define action on target
         while i < Reg_obj.N - 1:
             for _ in range(int(between2)):

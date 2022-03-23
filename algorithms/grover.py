@@ -45,10 +45,9 @@ class Grover(Algorithm):
             raise TypeError(
                 "Error: The number of searching states supplied must be less than half the size of the register")
 
-        #error for index too large for register
+        # error for index too large for register
         if (max(self.marked_list) + 1) ** (1 / self.n_qbits) > 2:
             sys.exit("An index given is too large for the register")
-
 
         # Reg_obj is register object, Reg is Quantum_Register class function
         # define number n of qubits in register
@@ -57,19 +56,15 @@ class Grover(Algorithm):
         # act hadamard on all qubits
         H.acts_on(Reg_obj, all=True)
 
-
-
         # We now apply the Grover and Oracle gates in order to amplify the required state.
         # the number of Grover iterations is given by the following calculation
-        n_iter = int((np.pi / 4 * np.sqrt(2 ** self.n_qbits)) /np.sqrt(len(self.marked_list)))
+        n_iter = int((np.pi / 4 * np.sqrt(2 ** self.n_qbits)) /
+                     np.sqrt(len(self.marked_list)))
 
-        #due to the approximation in the iteration number, there might be cases, where n_iter is between 0 and 1 -> int(n_iter) = 0
-        #in these cases, n_iter is set to 1
+        # due to the approximation in the iteration number, there might be cases, where n_iter is between 0 and 1 -> int(n_iter) = 0
+        # in these cases, n_iter is set to 1
         if n_iter == 0:
             n_iter = 1
-
-
-
 
         # only if user wants angle_plot
         # first angle for angle_plot
@@ -79,9 +74,7 @@ class Grover(Algorithm):
             angle = self.angle_vector(coeff)
             angle_list.append(angle)
 
-
-
-        #********************************************
+        # ********************************************
         # do Grover iteration
         for i in range(n_iter):
             O.acts_on(Reg_obj, self.marked_list)
@@ -94,22 +87,19 @@ class Grover(Algorithm):
                 angle = self.angle_vector(coeff)
                 angle_list.append(angle)
 
-
-        #*******************************************
-          #*******************************************
+        # *******************************************
+          # *******************************************
         print("The resulting quantum register should have a certain state (or states) amplified:")
-        if self.n_qbits <=4:
+        if self.n_qbits <= 4:
             print(Reg_obj.Reg)
         for i in range(len(self.marked_list)):
-            print('probability of amplified state', i, 'is',Reg_obj.Reg[self.marked_list[i]])
+            print('probability of amplified state', i,
+                  'is', Reg_obj.Reg[self.marked_list[i]])
         self.barchart(Reg_obj)
 
         # only if user wants angle_plot
         if angle_plot:
             self.plot_angles(angle_list)
-
-
-
 
     def angle_vector(self, array_coefficients):
         """
@@ -129,9 +119,6 @@ class Grover(Algorithm):
         array_angles = np.arccos(np.real(array_coefficients))
 
         return array_angles
-
-
-        
 
     def plot_angles(self, angle_list):
         # define the max and min x values for each line
@@ -176,7 +163,9 @@ class Grover(Algorithm):
 
     def barchart(self, Reg_obj):
 
-        Reals = np.real(Reg_obj.Reg)#we only work with real entries for Grover, but the register is set up more generalized
+        # we only work with real entries for Grover, but the register is set up
+        # more generalized
+        Reals = np.real(Reg_obj.Reg)
         Reals = np.abs(Reals)
 
         maximum = np.max(Reals)
@@ -187,10 +176,11 @@ class Grover(Algorithm):
         for n in range(0, len(arg_max[:, 0])):
             # append index
             strings.append(str(arg_max[n, 0]))
- 
 
         strings.append("all others")
-        minimum = np.min(Reals)#we know that all other states should have the same probability amplitude (aside from numerical accuracy errors)
+        # we know that all other states should have the same probability
+        # amplitude (aside from numerical accuracy errors)
+        minimum = np.min(Reals)
         full_arr = np.append(max_arr, minimum)
 
         fig1 = plt.figure("Figure 1")
@@ -201,11 +191,7 @@ class Grover(Algorithm):
         plt.show()
 
 
-
-
-
-
-#main to run it
+# main to run it
 def main(n, marked_list, angle_plot=False):
     grover = Grover(n, marked_list)
     grover.launch(angle_plot=angle_plot)

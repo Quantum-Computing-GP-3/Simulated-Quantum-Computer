@@ -40,7 +40,10 @@ class QECorrection(Algorithm):
         Reg_obj.norm()  # necessary normalization since alpha and beta can be chosen arbitrarily by user
 
         print("The normalised input state is:")
-        print('alpha = {} and beta = {}'.format(Reg_obj.Reg[0], Reg_obj.Reg[1]))
+        print(
+            'alpha = {} and beta = {}'.format(
+                Reg_obj.Reg[0],
+                Reg_obj.Reg[1]))
         print()
 
         # we always act with C(NOT) and T on the same configuration of qubits,
@@ -93,10 +96,11 @@ class QECorrection(Algorithm):
         print('alpha = {} and beta = {}'.format(alpha_new, beta_new))
 
 
-#main to run it
+# main to run it
 def __main__(alpha, beta, pbit=0., psign=0.):
     shor = QECorrection()
     shor.launch(alpha, beta, pbit, psign)
+
 
 if __name__ == "__main__":
     # alpha, beta do not need to be normalized as input

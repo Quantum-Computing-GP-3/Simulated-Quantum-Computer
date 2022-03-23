@@ -17,13 +17,12 @@ class CNOT(Gate):
         if len(q) != 2 or len(q) != len(set(q)):
             raise ValueError(
                 'Error: gate expects 2 nonidentical qubit arguments')
-        #**********************
-
+        # **********************
 
         c = q[0]  # control position
         t = q[1]  # target position
 
-        i = 0     #index counting variable
+        i = 0  # index counting variable
 
         if c < t:
             cond1 = 2 ** c
@@ -34,10 +33,11 @@ class CNOT(Gate):
         # these two conditions define the steps that have to be taken to target the right register indices/basis states
         #cond1 < cond2
 
-        between = cond2 / (cond1 * 2) 
-        #between defines the number of same-state-blocks of the qubit with the smallest number position within one same-state-block of the larger qubit number position
+        between = cond2 / (cond1 * 2)
+        # between defines the number of same-state-blocks of the qubit with the
+        # smallest number position within one same-state-block of the larger
+        # qubit number position
 
-        
         i = 2 ** (c)
         # starting index is first one where control qubit is 1
 

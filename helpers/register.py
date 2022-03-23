@@ -21,7 +21,8 @@ class QuantumRegister(object):
 
         """
 
-        # First step is to initialise a quantum register of n qubits to the 0 state.
+        # First step is to initialise a quantum register of n qubits to the 0
+        # state.
         reg = np.zeros((2 ** n), dtype=complex)
 
         self.n = n  # number of qubits
@@ -39,7 +40,8 @@ class QuantumRegister(object):
         elif weights is not None:
             raise TypeError("Error: Weights must be an (Nx2) numpy array")
 
-        # Useful sometimes for visualisation and troubleshooting, particularly for H, CNOT, Toffoli
+        # Useful sometimes for visualisation and troubleshooting, particularly
+        # for H, CNOT, Toffoli
         elif increasing_integers is not None:
             self.inc_int_vector()
 
