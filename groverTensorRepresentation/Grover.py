@@ -6,11 +6,35 @@ register. This is the file to run.
 """
 # From ListQuantumGates we import the number of qubits of the quantum register (n)
 # and the needed quantum gates.
-from .ListQuantumGates import n, Hadamard, O, G
+from .ListQuantumGates import  get_Hadamard, get_Oracle, get_Grover
 import numpy as np
 import matplotlib.pyplot as plt
 
-def main():
+def launch(n, marked_state):
+    """
+    This is the function called by the GUI. It prints out two graphs which show
+    the effect of Grover's algorithm.
+
+    Parameters
+    ----------
+    n : Integer
+        Number of qubits in the system.
+    marked_state : Tuple
+        Represents the state that needs to be amplified.
+
+    Returns
+    -------
+    None.
+
+    """
+    #----------------------------- CREATE GATES -------------------------------------
+    # The marked_state given by the user is not used by Grover's algorithm. It is 
+    # only used to create the oracle gate.
+    Hadamard = get_Hadamard()
+    G = get_Grover(n)
+    O = get_Oracle(n, marked_state)
+    
+    #-------------------------- GROVER'S ALGORITHM ----------------------------------
     # First step is to initialise a quantum register of n qubits to the 0th state.
     reg = np.zeros((2,)*n, dtype = complex) 
     reg[(0,)*n] = 1 
@@ -31,14 +55,17 @@ def main():
         reg = O.acts_on([j for j in range(n)], reg)
         reg = G.acts_on([j for j in range(n)], reg)
         
-        ind_amplified = np.unravel_index(np.argmax(reg, axis = None), reg.shape)
-        coefficient_list.append(reg[ind_amplified])
+        # We now search for the index of the amplified state
+        ind = np.unravel_index(np.argmax(reg, axis = None), reg.shape)
+        coefficient_list.append(reg[ind])
     
-    # We now search for the index of the amplified state.
-    ind = np.unravel_index(np.argmax(reg, axis = None), reg.shape)
+    # We will now once again make use of the index of the amplified state.
+    
+    print("The resulting quantum register should have an amplified state:")
+    print(reg)
     
     print(f"\nIn this case the amplified state is {ind}:")
-    print(f"Probability of measuring it is: {abs(reg[ind])}")
+    print(f"Probability of measuring it is: {abs(reg[ind])**2}")
     
     # We now create a plot of the situation
     plt.bar([f"{ind}", "all other states"], [abs(reg[ind])**2, 1 - abs(reg[ind])**2], color = 'teal')
@@ -60,6 +87,7 @@ def angle_vector(array_coefficients):
     ----------
     array_coefficients : Complex Numpy Array
         List of coefficients of the basis state we are interested in.
+        
     Returns
     -------
     array_angles : Numpy Array
@@ -119,9 +147,3 @@ def plot_angles(array_angles):
     plt.axis('square')
     
     plt.show()
-            
-
-    
-# Execute main method, but only when directly invoked
-if __name__ == "__main__":
-    main()
